@@ -18,7 +18,7 @@ const DynamicGraph = dynamic(
     { loading: () => <p>Loading ...</p>, ssr: false }
 )
 
-export default function Home({graphData, content, tree, flattenNodes, backLinks}) {
+export default function Home({graphData, content, tree, flattenNodes, backLinks}): JSX.Element {
     return (
         <Layout>
             <div className = 'container'>
@@ -40,6 +40,7 @@ export function getStaticProps() {
     const flattenNodes = getFlattenArray(tree)
     const listOfEdges =   edges.filter(anEdge => anEdge.target === "index")
     const internalLinks = listOfEdges.map(anEdge => nodes.find(aNode => aNode.slug === anEdge.source)).filter(element => element !== undefined)
+    // @ts-ignore I don't know what internalLinks type is.
     const backLinks = [...new Set(internalLinks)]
 
     const graphData = getLocalGraphData("index");
