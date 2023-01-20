@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "rm -rf graph-data.json && next dev",
     "build": "rm -rf graph-data.json && next build",
     "start": "next start",
-    "deploy": "yarn build && git add . && git commit -m '...' && git push"
+    "deploy": "pnpm build && git add . && git commit -m '...' && git push"
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -57,5 +58,6 @@
     "remark-react": "^8.0.0",
     "remark-stringify": "^9.0.0",
     "uuid": "^8.3.2"
-  }
+  },
+  "packageManager": "pnpm@7.25.0"
 }
