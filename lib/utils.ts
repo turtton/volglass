@@ -272,7 +272,7 @@ export function convertObject(thisObject: DirectoryTree): MdObject {
     const newObject: MdObject = {
         name: thisObject.name,
         children: children,
-        id: routerPath ?? "" + thisObject.name,
+        id: thisObject.name + thisObject.type,
         routePath: routerPath || null
     };
 
