@@ -18,6 +18,7 @@
     "next-env.d.ts"
   ],
   "extends": [
+    "next/core-web-vitals",
     "plugin:react/recommended",
     "standard-with-typescript",
     "prettier"
