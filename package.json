@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push",
-    "format": "prettier --write \"**/*.{ts,tsx}\""
+    "format": "prettier --write \"[^.]**/*.{ts,tsx,js}\"",
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -61,10 +62,18 @@
     "@types/react-dom": "^17.0.18",
     "@types/unist": "^2.0.6",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
     "bimap": "^0.0.15",
     "cytoscape": "^3.17.0",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-standard-with-typescript": "^31.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3",
     "remark-frontmatter": "^3.0.0",
     "remark-react": "^8.0.0",
