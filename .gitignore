@@ -30,4 +30,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
-graph-data.json
+
+/graph-data.json
