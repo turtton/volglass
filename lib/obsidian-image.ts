@@ -4,7 +4,7 @@ import { Settings } from "unified";
 import { VFile } from "vfile";
 
 const regex = /!\[\[(([a-z\-_0-9\\/:]+\s*)+\.(jpg|jpeg|png|gif|svg|webp))]]/gi;
-const regex2 = /!\[\[(([a-z\-_0-9\\/:]+\s*)+\.(jpg|jpeg|png|gif|svg|webp))]]/gi; //TODO why can't I reuse regex literal???
+const regex2 = /!\[\[(([a-z\-_0-9\\/:]+\s*)+\.(jpg|jpeg|png|gif|svg|webp))]]/gi; // TODO why can't I reuse regex literal???
 
 interface CustomNode extends Node {
   type: "text-temp" | "text" | "image" | "paragraph";
@@ -49,11 +49,11 @@ function convertTextNode(node): CustomNode {
   const matches = searchText.matchAll(regex);
 
   let startIndex = 0;
-  let endIndex = searchText.length;
+  // let endIndex = searchText.length;
 
-  let children: CustomNode[] = [];
+  const children: CustomNode[] = [];
   for (const match of matches) {
-    endIndex = match.index;
+    // endIndex = match.index;
 
     // Constructing text node from un-matched string
     // const textNode: TextNode = {
@@ -64,14 +64,14 @@ function convertTextNode(node): CustomNode {
 
     const imageNode: ImageNode = {
       type: "image",
-      //TODO: Use some kind of option to pass in default images path
-      url: encodeURI(`/images/${match[1]}`), //encode white space from file name
+      // TODO: Use some kind of option to pass in default images path
+      url: encodeURI(`/images/${match[1]}`), // encode white space from file name
       alt: match[1],
     };
 
     children.push(imageNode);
 
-    startIndex = match.index + match[0].length;
+    startIndex = (match.index ?? 0) + match[0].length;
   }
 
   if (startIndex < searchText.length) {
@@ -84,7 +84,7 @@ function convertTextNode(node): CustomNode {
 
   return {
     type: "paragraph",
-    children: children,
+    children,
   };
 }
 

@@ -11,10 +11,10 @@ import {
 } from "../lib/utils";
 import FolderTree from "../components/FolderTree";
 import dynamic from "next/dynamic";
-import MDContent from "../components/MDContent";
+import MDContent from "../components/MDContentData";
 
 // This trick is to dynamically load component that interact with window object (browser only)
-const DynamicGraph = dynamic(() => import("../components/Graph"), {
+const DynamicGraph = dynamic(async () => await import("../components/Graph"), {
   loading: () => <p>Loading ...</p>,
   ssr: false,
 });
@@ -61,13 +61,13 @@ export default function Home({
 }
 const { nodes, edges } = constructGraphData();
 
-export type Prop = {
+export interface Prop {
   content: string[];
   tree: MdObject;
   flattenNodes: MdObject[];
   graphData: LocalGraphData;
   backLinks: CustomNode[];
-};
+}
 
 export function getStaticProps(): { props: Prop } {
   const tree = getDirectoryData();
@@ -85,10 +85,10 @@ export function getStaticProps(): { props: Prop } {
   return {
     props: {
       content: contentData.data,
-      tree: tree,
-      flattenNodes: flattenNodes,
-      graphData: graphData,
-      backLinks: backLinks,
+      tree,
+      flattenNodes,
+      graphData,
+      backLinks,
     },
   };
 }

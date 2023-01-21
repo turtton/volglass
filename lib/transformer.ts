@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import unified from "unified";
+import unified, {Settings} from "unified";
 import markdown from "remark-parse";
 import { wikiLinkPlugin } from "remark-wiki-link";
 import html from "remark-html";
@@ -13,19 +13,19 @@ import obsidianImage from "./obsidian-image";
 import { CustomNode, getAllMarkdownFiles, toFilePath, toSlug } from "./utils";
 
 export const Transformer = {
-  haveFrontMatter: function (content) {
-    //console.log("\t Front matter data content", content)
-    if (!content) return false;
+  haveFrontMatter: function (content: string | undefined): boolean {
+    // console.log("\t Front matter data content", content)
+    if (content === undefined || content === "") return false;
     const indexOfFirst = content.indexOf("---");
-    //console.log("\t Front matter data firstIndex  ", indexOfFirst)
-    //console.log("index first", indexOfFirst)
+    // console.log("\t Front matter data firstIndex  ", indexOfFirst)
+    // console.log("index first", indexOfFirst)
     if (indexOfFirst === -1) {
       return false;
     }
-    let indexOfSecond = content.indexOf("---", indexOfFirst + 1);
+    const indexOfSecond = content.indexOf("---", indexOfFirst + 1);
     return indexOfSecond !== -1;
   },
-  getFrontMatterData: function (filecontent) {
+  getFrontMatterData: function (filecontent: string) {
     if (Transformer.haveFrontMatter(filecontent)) {
       return matter(filecontent).data;
     }
@@ -35,7 +35,7 @@ export const Transformer = {
   pageResolver: function (pageName) {
     const allFileNames = getAllMarkdownFiles();
     const result = allFileNames.find((aFile) => {
-      let parseFileNameFromPath = Transformer.parseFileNameFromPath(aFile);
+      const parseFileNameFromPath = Transformer.parseFileNameFromPath(aFile);
       return (
         Transformer.normalizeFileName(parseFileNameFromPath) ===
         Transformer.normalizeFileName(pageName)
@@ -51,18 +51,18 @@ export const Transformer = {
     // console.log("Internal Link resolved:   [" + pageName + "] ==> [" + temp[0] +"]")
     return result !== undefined && result.length > 0 ? [toSlug(result)] : ["/"];
   },
-  hrefTemplate: function (permalink) {
+  hrefTemplate: function (permalink: string) {
     // permalink = Transformer.normalizeFileName(permalink)
     permalink = permalink.replace("ç", "c").replace("ı", "i").replace("ş", "s");
     return `/note/${permalink}`;
   },
   getHtmlContent: function (content: string): string[] {
-    let htmlContent: Array<string> = [];
+    const htmlContent: string[] = [];
     const sanitizedContent = Transformer.preprocessThreeDashes(content);
 
-    // @ts-ignore
+    const settings: Settings = { gfm: true }
     unified()
-      .use(markdown, { gfm: true })
+      .use(markdown, settings)
       .use(obsidianImage)
       .use(highlight)
       .use(externalLinks, { target: "_blank", rel: ["noopener"] })
@@ -83,8 +83,8 @@ export const Transformer = {
       .use(rehypeStringify)
       .process(sanitizedContent, function (err, file) {
         htmlContent.push(String(file).replace("\n", ""));
-        if (err) {
-          console.log("ERRROR:" + err);
+        if (err != null) {
+          console.log(`ERRROR:${err.message}`);
         }
       });
 
@@ -127,32 +127,32 @@ export const Transformer = {
       processedFileName = processedFileName
         .split(letterPair[0])
         .join(letterPair[1]);
-      //processedFileName = processedFileName.replace(letterPair[0], letterPair[1])
+      // processedFileName = processedFileName.replace(letterPair[0], letterPair[1])
     });
-    //console.log("filename", processedFileName)
+    // console.log("filename", processedFileName)
     return processedFileName;
   },
   /* Parse file name from path then sanitize it */
-  parseFileNameFromPath: function (filepath) {
-    if (typeof filepath === "string" && filepath.includes("/")) {
+  parseFileNameFromPath: function (filepath: string): string | null {
+    if (filepath.includes("/")) {
       const parsedFileFromPath =
         filepath.split("/")[filepath.split("/").length - 1];
       return parsedFileFromPath.replace(".md", "");
     } else {
-      console.log("Failed: CANNOT Parse" + filepath);
+      console.log(`Failed: CANNOT Parse ${filepath}`);
       return null;
     }
   },
-  /* Pair provided and existing Filenames*/
+  /* Pair provided and existing Filenames */
   getInternalLinks: function (aFilePath) {
     const fileContent = Node.readFileSync(aFilePath);
-    const internalLinks: Array<CustomNode> = [];
+    const internalLinks: CustomNode[] = [];
     const sanitizedContent = Transformer.preprocessThreeDashes(fileContent);
-    // @ts-ignore
+    const settings: Settings = { gfm: true }
     unified()
-      .use(markdown, { gfm: true })
+      .use(markdown, settings)
       .use(wikiLinkPlugin, {
-        pageResolver: function (pageName) {
+        pageResolver: function (pageName: string) {
           // let name = [Transformer.parseFileNameFromPath(pageName)];
 
           let canonicalSlug: string;
@@ -176,11 +176,7 @@ export const Transformer = {
             shortSummary: canonicalSlug,
           };
 
-          // @ts-ignore
-          if (
-            canonicalSlug != null &&
-            internalLinks.indexOf(canonicalSlug) < 0
-          ) {
+          if (canonicalSlug != null && !internalLinks.includes(backLink)) {
             internalLinks.push(backLink);
           }
 

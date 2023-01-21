@@ -13,12 +13,12 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
           <div className="backlink-container">
             {linkList.map((aLink) => (
               <div key={aLink.slug} className="backlink">
-                {/*<Link href={aLink.slug}>*/}
+                {/* <Link href={aLink.slug}> */}
                 <a href={aLink.slug}>
                   <p className="backlink-title">{aLink.title}</p>
                   <p className="backlink-preview">{aLink.shortSummary} </p>
                 </a>
-                {/*</Link>*/}
+                {/* </Link> */}
               </div>
             ))}
           </div>
@@ -33,17 +33,17 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
   );
 }
 
-export type MDContent = {
+export interface MDContentData {
   content: string[];
   backLinks: CustomNode[];
   handleOpenNewContent?: (content: string[]) => void;
-};
+}
 
 function MDContent({
   content,
   backLinks,
   handleOpenNewContent,
-}: MDContent): JSX.Element {
+}: MDContentData): JSX.Element {
   // function handleInternalLinkClick() {
   //     //Processing fetching
   //     //pass result up to parent container
@@ -54,14 +54,14 @@ function MDContent({
   useRouter();
   return (
     <div className="markdown-rendered">
-      {/*<Alert severity="info">*/}
-      {/*    <AlertTitle>Want to know more?</AlertTitle>*/}
-      {/*    🌱 <strong>Follow</strong> or <strong>DM</strong> me on Twitter at <span><a*/}
-      {/*    href="https://twitter.com/tuancm">@tuancm</a></span>*/}
-      {/*</Alert>*/}
+      {/* <Alert severity="info"> */}
+      {/*    <AlertTitle>Want to know more?</AlertTitle> */}
+      {/*    🌱 <strong>Follow</strong> or <strong>DM</strong> me on Twitter at <span><a */}
+      {/*    href="https://twitter.com/tuancm">@tuancm</a></span> */}
+      {/* </Alert> */}
       <div dangerouslySetInnerHTML={{ __html: content.join() }} />
-      {/*<button onClick={handleInternalLinkClick}>Click me</button>*/}
-      {/*<hr/>*/}
+      {/* <button onClick={handleInternalLinkClick}>Click me</button> */}
+      {/* <hr/> */}
       <div>
         <BackLinks linkList={backLinks} />
       </div>

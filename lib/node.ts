@@ -13,12 +13,12 @@ export const Node = {
   getFullPath: function (folderPath) {
     return fs.readdirSync(folderPath).map((fn) => path.join(folderPath, fn));
   },
-  getFiles: function (dir: fs.PathLike): string[] {
+  getFiles: function (dir: string): string[] {
     let results: string[] = [];
     fs.readdirSync(dir).forEach(function (file) {
       file = dir + "/" + file;
       const stat = fs.statSync(file);
-      if (stat && stat.isDirectory()) {
+      if (stat?.isDirectory()) {
         /* Recurse into a subdirectory */
         results = results.concat(Node.getFiles(file));
       } else {

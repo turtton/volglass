@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import CytoscapeComponent from "react-cytoscapejs";
+import {Core} from "cytoscape";
 
 const layout = {
   name: "circle",
@@ -15,13 +16,13 @@ const layout = {
   spacingFactor: 0.9, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
   radius: 150, // the radius of the circle
   startAngle: (-2 / 4) * Math.PI, // where nodes start in radians
-  //sweep: undefined, // how many radians should be between the first and last node (defaults to full circle)
+  // sweep: undefined, // how many radians should be between the first and last node (defaults to full circle)
   clockwise: true, // whether the layout should go clockwise (true) or counterclockwise/anticlockwise (false)
   sort: undefined, // a sorting function to order the nodes; e.g. function(a, b){ return a.data('weight') - b.data('weight') }
   animate: false, // whether to transition the node positions
   animationDuration: 500, // duration of animation in ms if enabled
   animationEasing: undefined, // easing of animation if enabled
-  //animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+  // animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
   ready: undefined, // callback on layoutready
   stop: undefined, // callback on layoutstop
   transform: function (node, position) {
@@ -58,16 +59,15 @@ const styleSheet = [
 ];
 
 function Graph({ graph }): JSX.Element {
-  const [width, setWidth] = useState("300px");
-  const [height, setHeight] = useState("300px");
-  const [graphData, setGraphData] = useState({
+  const [width] = useState("300px");
+  const [height] = useState("300px");
+  const [graphData] = useState({
     nodes: graph.nodes,
     edges: graph.edges,
   });
 
-  let myCyRef;
   const router = useRouter();
-  //TODO: Listen to query change/ graphdata change to update state of this component
+  // TODO: Listen to query change/ graphdata change to update state of this component
   // Can use this: https://github.com/vercel/next.js/discussions/12661
 
   return (
@@ -84,7 +84,7 @@ function Graph({ graph }): JSX.Element {
           <CytoscapeComponent
             elements={CytoscapeComponent.normalizeElements(graphData)}
             // pan={{ x: 200, y: 200 }}
-            style={{ width: width, height: height }}
+            style={{ width, height }}
             zoomingEnabled={true}
             maxZoom={2}
             minZoom={0.5}
@@ -93,16 +93,15 @@ function Graph({ graph }): JSX.Element {
             layout={layout}
             stylesheet={styleSheet}
             cy={(cy) => {
-              myCyRef = cy;
-
-              console.log("EVT", cy);
+              // console.log("EVT", cy);
 
               cy.on("tap", "node", (evt) => {
-                var node = evt.target;
-                let nodeData = node.data();
-                if (typeof nodeData.id === "string") {
-                  const path = "/note/" + node.data().id;
-                  router.push(path);
+                const node: Core = evt.target;
+                const {id}: { id: any } = node.data();
+                console.log("id", id)
+                if (typeof id === "string") {
+                  const path = "/note/" + id;
+                  void router.push(path);
                 }
               });
             }}

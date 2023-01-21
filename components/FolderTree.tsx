@@ -20,10 +20,11 @@ const TCTreeItem = styled(TreeItem)(() => ({
 }));
 
 export default function FolderTree(props: {
+  onNodeSelect?: () => void;
   tree: MdObject;
   flattenNodes: MdObject[];
 }): JSX.Element {
-  const renderTree = (nodes: MdObject) => (
+  const renderTree = (nodes: MdObject): JSX.Element => (
     <TCTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
       {nodes.children.map((node) => renderTree(node))}
     </TCTreeItem>
@@ -44,10 +45,10 @@ export default function FolderTree(props: {
         });
         // console.log(event)
         // console.log(currentNode)
-        if (currentNode != null && currentNode.routePath != null) {
-          router.push(currentNode.routePath);
+        if (currentNode?.routePath != null) {
+          void router.push(currentNode.routePath);
           // router.reload()
-          if (props.onNodeSelect) {
+          if (props.onNodeSelect !== undefined) {
             props.onNodeSelect();
           }
         }
