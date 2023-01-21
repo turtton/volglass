@@ -36,13 +36,11 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 export interface MDContentData {
   content: string[];
   backLinks: CustomNode[];
-  handleOpenNewContent?: (content: string[]) => void;
 }
 
 function MDContent({
   content,
   backLinks,
-  handleOpenNewContent,
 }: MDContentData): JSX.Element {
   // function handleInternalLinkClick() {
   //     //Processing fetching

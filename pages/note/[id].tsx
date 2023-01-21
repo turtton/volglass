@@ -3,36 +3,46 @@ import Layout from "../../components/Layout";
 import {
   getAllSlugs,
   getSinglePost,
-  convertObject,
   getDirectoryData,
   constructGraphData,
   getLocalGraphData
-  , getFlattenArray
+  , getFlattenArray, Content, CustomNode
 } from "../../lib/utils";
 import FolderTree from "../../components/FolderTree";
 import MDContent from "../../components/MDContentData";
 import dynamic from "next/dynamic";
+import { Prop } from "../index";
 
-const DynamicGraph = dynamic(() => import("../../components/Graph"), {
+const DynamicGraph = dynamic(async () => await import("../../components/Graph"), {
   loading: () => <p>Loading ...</p>,
   ssr: false
 });
 
-export default function Home ({
+interface InternalProp extends Prop {
+  note: Content
+}
+
+interface HomeElement extends HTMLElement {
+  checked: boolean
+}
+
+export default function Home({
   note,
   backLinks,
-  fileNames,
   tree,
   flattenNodes,
   graphData
-}) {
+}: InternalProp): JSX.Element {
   const burgerId = "hamburger-input";
-  const closeBurger = () => {
-    document.getElementById(burgerId).checked = false;
+  const closeBurger = (): void => {
+    const element = document.getElementById(burgerId) as HomeElement | null
+    if (element !== null) {
+      element.checked = false;
+    }
   };
   return (
     <Layout>
-      <Head>{note.title && <meta name="title" content={note.title} />}</Head>
+      <Head>{<meta name="title" content={note.title} />}</Head>
 
       <div className="container">
         <div className="burger-menu">
@@ -57,8 +67,6 @@ export default function Home ({
         </nav>
         <MDContent
           content={note.data}
-          fileNames={fileNames}
-          handleOpenNewContent={null}
           backLinks={backLinks}
         />
         <DynamicGraph graph={graphData} />
@@ -67,7 +75,7 @@ export default function Home ({
   );
 }
 
-export async function getStaticPaths () {
+export async function getStaticPaths (): Promise<{ paths: Array<{ params: { id: string } }>; fallback: false }> {
   const allPostsData = getAllSlugs();
   const paths = allPostsData.map((p) => ({ params: { id: p } }));
 
@@ -79,19 +87,20 @@ export async function getStaticPaths () {
 
 const { nodes, edges } = constructGraphData();
 
-export function getStaticProps ({ params }) {
+export function getStaticProps ({ params }): { props: InternalProp } {
   const note = getSinglePost(params.id);
-  const tree = convertObject(getDirectoryData());
+  const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
 
   const listOfEdges = edges.filter((anEdge) => anEdge.target === params.id);
   const internalLinks = listOfEdges
-    .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source))
-    .filter((element) => element !== undefined);
+    .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source) ?? null)
+    .filter((element): element is CustomNode => element !== null);
   const backLinks = [...new Set(internalLinks)];
   const graphData = getLocalGraphData(params.id);
   return {
     props: {
+      content: [],
       note,
       tree,
       flattenNodes,

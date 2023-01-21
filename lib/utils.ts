@@ -28,8 +28,9 @@ export function getAllMarkdownFiles(): string[] {
   return Node.getFiles(Node.getMarkdownFolder());
 }
 
-interface Content {
+export interface Content {
   id: string
+  title: string
   data: string[]
 }
 
@@ -38,6 +39,11 @@ export function getSinglePost(slug): Content {
   const currentFilePath = toFilePath(slug);
   // console.log("currentFilePath: ", currentFilePath)
 
+  const splitPath = currentFilePath.split("/") ?? []
+  const fileNameWithExtension = (splitPath.length !== 0) ? splitPath[splitPath.length-1] : ""
+  const splitedFileName = fileNameWithExtension.split(".")
+  splitedFileName.pop()
+  const fileName = splitedFileName.join()
   const fileContent = Node.readFileSync(currentFilePath);
 
   // console.log("===============\n\nFile is scanning: ", slug)
@@ -46,6 +52,7 @@ export function getSinglePost(slug): Content {
   // console.log("hrmlcontents and backlinks")
   return {
     id: slug,
+    title: fileName,
     // ...currentFileFrontMatter,
     data: htmlContent,
   };
