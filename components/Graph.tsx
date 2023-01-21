@@ -98,7 +98,6 @@ function Graph({ graph }): JSX.Element {
               cy.on("tap", "node", (evt) => {
                 const node: Core = evt.target;
                 const {id}: { id: any } = node.data();
-                console.log("id", id)
                 if (typeof id === "string") {
                   const path = "/note/" + id;
                   void router.push(path);
