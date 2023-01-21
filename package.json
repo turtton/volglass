@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "pnpm build && git add . && git commit -m '...' && git push"
+    "deploy": "pnpm build && git add . && git commit -m '...' && git push",
+    "format": "prettier --write \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -64,6 +65,7 @@
     "cytoscape": "^3.17.0",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
+    "prettier": "^2.8.3",
     "remark-frontmatter": "^3.0.0",
     "remark-react": "^8.0.0",
     "remark-stringify": "^9.0.0",
