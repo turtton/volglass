@@ -274,19 +274,22 @@ export interface MdObject {
 export function convertObject(thisObject: DirectoryTree): MdObject {
   const children: MdObject[] = [];
 
+  const objectName = thisObject.name;
   let routerPath: string | null =
     getAllSlugs().find((slug) => {
       const fileName = Transformer.parseFileNameFromPath(toFilePath(slug));
       return (
         Transformer.normalizeFileName(fileName) ===
-        Transformer.normalizeFileName(thisObject.name)
+        Transformer.normalizeFileName(objectName)
       );
     }) ?? "";
-  routerPath = (routerPath !== "") ? "/note/" + routerPath : null;
+
+  const nameAndExtension = objectName.split(".")
+  routerPath = (nameAndExtension.length > 1 && routerPath !== "") ? "/note/" + routerPath : null;
   const newObject: MdObject = {
-    name: thisObject.name,
+    name: objectName,
     children,
-    id: thisObject.name + thisObject.type,
+    id: objectName,
     routePath: routerPath,
   };
 
