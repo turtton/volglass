@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import unified, {Settings} from "unified";
+import unified, { Settings } from "unified";
 import markdown from "remark-parse";
 import { wikiLinkPlugin } from "remark-wiki-link";
 import html from "remark-html";
@@ -60,7 +60,7 @@ export const Transformer = {
     const htmlContent: string[] = [];
     const sanitizedContent = Transformer.preprocessThreeDashes(content);
 
-    const settings: Settings = { gfm: true }
+    const settings: Settings = { gfm: true };
     unified()
       .use(markdown, settings)
       .use(obsidianImage)
@@ -124,9 +124,7 @@ export const Transformer = {
       ["Ğ", "G"],
     ];
     conversionLetters.forEach((letterPair) => {
-      processedFileName = processedFileName
-        .split(letterPair[0])
-        .join(letterPair[1]);
+      processedFileName = processedFileName.split(letterPair[0]).join(letterPair[1]);
       // processedFileName = processedFileName.replace(letterPair[0], letterPair[1])
     });
     // console.log("filename", processedFileName)
@@ -135,8 +133,7 @@ export const Transformer = {
   /* Parse file name from path then sanitize it */
   parseFileNameFromPath: function (filepath: string): string | null {
     if (filepath.includes("/")) {
-      const parsedFileFromPath =
-        filepath.split("/")[filepath.split("/").length - 1];
+      const parsedFileFromPath = filepath.split("/")[filepath.split("/").length - 1];
       return parsedFileFromPath.replace(".md", "");
     } else {
       console.log(`Failed: CANNOT Parse ${filepath}`);
@@ -148,7 +145,7 @@ export const Transformer = {
     const fileContent = Node.readFileSync(aFilePath);
     const internalLinks: CustomNode[] = [];
     const sanitizedContent = Transformer.preprocessThreeDashes(fileContent);
-    const settings: Settings = { gfm: true }
+    const settings: Settings = { gfm: true };
     unified()
       .use(markdown, settings)
       .use(wikiLinkPlugin, {
@@ -163,8 +160,7 @@ export const Transformer = {
               // Meaning it in form of #Heading1 --> slug will be this file slug
               canonicalSlug = toSlug(aFilePath);
             } else {
-              canonicalSlug =
-                Transformer.pageResolver(tempSlug)[0].split("#")[0];
+              canonicalSlug = Transformer.pageResolver(tempSlug)[0].split("#")[0];
             }
           } else {
             canonicalSlug = Transformer.pageResolver(pageName)[0].split("#")[0];

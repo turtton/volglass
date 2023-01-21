@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import CytoscapeComponent from "react-cytoscapejs";
-import {Core} from "cytoscape";
+import { Core } from "cytoscape";
 
 const layout = {
   name: "circle",
@@ -97,7 +97,7 @@ function Graph({ graph }): JSX.Element {
 
               cy.on("tap", "node", (evt) => {
                 const node: Core = evt.target;
-                const {id}: { id: any } = node.data();
+                const { id }: { id: any } = node.data();
                 if (typeof id === "string") {
                   const path = "/note/" + id;
                   void router.push(path);

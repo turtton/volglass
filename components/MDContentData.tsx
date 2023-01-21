@@ -38,10 +38,7 @@ export interface MDContentData {
   backLinks: CustomNode[];
 }
 
-function MDContent({
-  content,
-  backLinks,
-}: MDContentData): JSX.Element {
+function MDContent({ content, backLinks }: MDContentData): JSX.Element {
   // function handleInternalLinkClick() {
   //     //Processing fetching
   //     //pass result up to parent container
@@ -66,8 +63,7 @@ function MDContent({
       <hr />
       <footer>
         <p>
-          Powered by <a href="https://github.com/turtton/volglass">Volglass</a>,
-          © 2023
+          Powered by <a href="https://github.com/turtton/volglass">Volglass</a>, © 2023
         </p>
       </footer>
     </div>

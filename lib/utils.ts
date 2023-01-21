@@ -29,9 +29,9 @@ export function getAllMarkdownFiles(): string[] {
 }
 
 export interface Content {
-  id: string
-  title: string
-  data: string[]
+  id: string;
+  title: string;
+  data: string[];
 }
 
 export function getSinglePost(slug): Content {
@@ -39,11 +39,11 @@ export function getSinglePost(slug): Content {
   const currentFilePath = toFilePath(slug);
   // console.log("currentFilePath: ", currentFilePath)
 
-  const splitPath = currentFilePath.split("/") ?? []
-  const fileNameWithExtension = (splitPath.length !== 0) ? splitPath[splitPath.length-1] : ""
-  const splitedFileName = fileNameWithExtension.split(".")
-  splitedFileName.pop()
-  const fileName = splitedFileName.join()
+  const splitPath = currentFilePath.split("/") ?? [];
+  const fileNameWithExtension = splitPath.length !== 0 ? splitPath[splitPath.length - 1] : "";
+  const splitedFileName = fileNameWithExtension.split(".");
+  splitedFileName.pop();
+  const fileName = splitedFileName.join();
   const fileContent = Node.readFileSync(currentFilePath);
 
   // console.log("===============\n\nFile is scanning: ", slug)
@@ -65,7 +65,7 @@ export function toFilePath(slug): string {
 }
 
 interface SlugMap extends Map<string, string> {
-  index: string
+  index: string;
 }
 
 export function getSlugHashMap(): Map<string, string> {
@@ -212,23 +212,19 @@ export function getLocalGraphData(currentNodeId): LocalGraphData {
     outGoingNodeIds.push(currentNodeId);
 
     const localNodeIds = incomingNodeIds.concat(
-      outGoingNodeIds.filter((item) => !incomingNodeIds.includes(item))
+      outGoingNodeIds.filter((item) => !incomingNodeIds.includes(item)),
     );
     if (!localNodeIds.includes(currentNodeId)) {
       localNodeIds.push(currentNodeId);
     }
 
-    const localNodes = newNodes.filter((aNode) =>
-      localNodeIds.includes(aNode.data.id)
-    );
+    const localNodes = newNodes.filter((aNode) => localNodeIds.includes(aNode.data.id));
     let localEdges = newEdges
       .filter((edge) => localNodeIds.includes(edge.data.source))
       .filter((edge) => localNodeIds.includes(edge.data.target));
 
     // Filter self-reference edges
-    localEdges = localEdges.filter(
-      (edge) => edge.data.source !== edge.data.target
-    );
+    localEdges = localEdges.filter((edge) => edge.data.source !== edge.data.target);
 
     // TODO: Find out why target ==='/' in some case
     localEdges = localEdges.filter((edge) => edge.data.target !== "/");
@@ -248,11 +244,11 @@ export function getLocalGraphData(currentNodeId): LocalGraphData {
   }
 }
 
-export function getAllSlugs(): string[]  {
+export function getAllSlugs(): string[] {
   // console.log("\n\nAll Posts are scanning")
   // Get file names under /posts
   const filePaths = Node.getFiles(Node.getMarkdownFolder()).filter(
-    (f) => !(f.endsWith("index") || f.endsWith("sidebar"))
+    (f) => !(f.endsWith("index") || f.endsWith("sidebar")),
   );
   return filePaths.map((f) => toSlug(f));
 }
@@ -278,14 +274,11 @@ export function convertObject(thisObject: DirectoryTree): MdObject {
   let routerPath: string | null =
     getAllSlugs().find((slug) => {
       const fileName = Transformer.parseFileNameFromPath(toFilePath(slug));
-      return (
-        Transformer.normalizeFileName(fileName) ===
-        Transformer.normalizeFileName(objectName)
-      );
+      return Transformer.normalizeFileName(fileName) === Transformer.normalizeFileName(objectName);
     }) ?? "";
 
-  const nameAndExtension = objectName.split(".")
-  routerPath = (nameAndExtension.length > 1 && routerPath !== "") ? "/note/" + routerPath : null;
+  const nameAndExtension = objectName.split(".");
+  routerPath = nameAndExtension.length > 1 && routerPath !== "" ? "/note/" + routerPath : null;
   const newObject: MdObject = {
     name: objectName,
     children,

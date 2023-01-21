@@ -89,7 +89,7 @@ function convertTextNode(node): CustomNode {
 }
 
 export default function attacher(
-  options?: Settings
+  options?: Settings,
 ): (tree: CustomNode, vfile: VFile) => CustomNode {
   return function transformer(tree: CustomNode, vfile: VFile) {
     visit(tree, "text", (node: TextNode) => {

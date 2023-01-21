@@ -30,11 +30,7 @@ export default function Home({
     <Layout>
       <div className="container">
         <div className="burger-menu">
-          <input
-            type="checkbox"
-            id="hamburger-input"
-            className="burger-shower"
-          />
+          <input type="checkbox" id="hamburger-input" className="burger-shower" />
           <label id="hamburger-menu" htmlFor="hamburger-input">
             <span className="menu">
               {" "}
@@ -49,11 +45,7 @@ export default function Home({
         <nav className="nav-bar">
           <FolderTree tree={tree} flattenNodes={flattenNodes} />
         </nav>
-        <MDContent
-          content={content}
-          handleOpenNewContent={null}
-          backLinks={backLinks}
-        />
+        <MDContent content={content} handleOpenNewContent={null} backLinks={backLinks} />
         <DynamicGraph graph={graphData} />
       </div>
     </Layout>
@@ -77,9 +69,7 @@ export function getStaticProps(): { props: Prop } {
   const internalLinks = listOfEdges
     .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source))
     .filter((element) => element !== undefined);
-  const backLinks = internalLinks.filter(
-    (value, index, array) => array.indexOf(value) === index
-  );
+  const backLinks = internalLinks.filter((value, index, array) => array.indexOf(value) === index);
 
   const graphData = getLocalGraphData("index");
   return {
