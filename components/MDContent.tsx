@@ -2,11 +2,12 @@ import React from 'react';
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
 import {useRouter} from 'next/router'
+import {CustomNode} from "../lib/utils";
 
-function BackLinks({linkList}) {
+function BackLinks({linkList}: { linkList: CustomNode[] }): JSX.Element {
 
     return (<div className="note-footer">
-            <h3 className="backlink-heading">Link to this note</h3>
+        <h3 className="backlink-heading">Link to this note</h3>
         {(linkList != null && linkList.length > 0)
             ?
             <>
@@ -28,14 +29,20 @@ function BackLinks({linkList}) {
     </div>);
 }
 
-function MDContent({content, backLinks, handleOpenNewContent}) {
+export type MDContent = {
+    content: string[]
+    backLinks: CustomNode[],
+    handleOpenNewContent?: (content: string[]) => void
+}
 
-    function handleInternalLinkClick() {
-        //Processing fetching
-        //pass result up to parent container
-        //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
-        handleOpenNewContent(content)
-    }
+function MDContent({content, backLinks, handleOpenNewContent}: MDContent): JSX.Element {
+
+    // function handleInternalLinkClick() {
+    //     //Processing fetching
+    //     //pass result up to parent container
+    //     //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
+    //     handleOpenNewContent(content)
+    // }
 
     useRouter();
     return (
@@ -46,7 +53,7 @@ function MDContent({content, backLinks, handleOpenNewContent}) {
             {/*    🌱 <strong>Follow</strong> or <strong>DM</strong> me on Twitter at <span><a*/}
             {/*    href="https://twitter.com/tuancm">@tuancm</a></span>*/}
             {/*</Alert>*/}
-            <div dangerouslySetInnerHTML={{__html: content}}/>
+            <div dangerouslySetInnerHTML={{__html: content.join()}}/>
             {/*<button onClick={handleInternalLinkClick}>Click me</button>*/}
             {/*<hr/>*/}
             <div>
@@ -54,7 +61,7 @@ function MDContent({content, backLinks, handleOpenNewContent}) {
             </div>
             <hr/>
             <footer>
-                <p>Powered by  <a href="https://github.com/turtton/volglass">Volglass</a>, © 2023</p>
+                <p>Powered by <a href="https://github.com/turtton/volglass">Volglass</a>, © 2023</p>
             </footer>
         </div>
     );

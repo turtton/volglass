@@ -9,7 +9,7 @@ import {Node} from "./node";
 import rehypePrism from 'rehype-prism-plus'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
-import obsidianImage from './obsidian-image.js'
+import obsidianImage from './obsidian-image'
 import {CustomNode, getAllMarkdownFiles, toFilePath, toSlug} from "./utils";
 
 export const Transformer = {
@@ -56,7 +56,7 @@ export const Transformer = {
         permalink = permalink.replace("ç", "c").replace("ı", "i").replace("ş", "s")
         return `/note/${permalink}`;
     },
-    getHtmlContent: function (content): string[] {
+    getHtmlContent: function (content: string): string[] {
         let htmlContent: Array<string> = []
         const sanitizedContent = Transformer.preprocessThreeDashes(content)
 
@@ -94,7 +94,7 @@ export const Transformer = {
     },
 
     /* SANITIZE MARKDOWN FOR --- */
-    preprocessThreeDashes: function (content) {
+    preprocessThreeDashes: function (content: string): string {
         const indexOfFirst = content.indexOf("---");
         if (indexOfFirst === -1) {
             return content
@@ -155,7 +155,7 @@ export const Transformer = {
                             // Meaning it in form of #Heading1 --> slug will be this file slug
                             canonicalSlug = toSlug(aFilePath)
                         } else {
-                            canonicalSlug =Transformer.pageResolver(tempSlug)[0].split('#')[0]
+                            canonicalSlug = Transformer.pageResolver(tempSlug)[0].split('#')[0]
                         }
                     } else {
                         canonicalSlug = Transformer.pageResolver(pageName)[0].split('#')[0]

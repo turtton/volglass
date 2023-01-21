@@ -55,7 +55,7 @@ const styleSheet = [{
         }
     }];
 
-function Graph({graph}) {
+function Graph({graph}): JSX.Element {
 
     const [width, setWidth] = useState("300px");
     const [height, setHeight] = useState("300px");
