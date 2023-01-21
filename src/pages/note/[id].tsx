@@ -5,8 +5,10 @@ import {
   getSinglePost,
   getDirectoryData,
   constructGraphData,
-  getLocalGraphData
-  , getFlattenArray, Content, CustomNode
+  getLocalGraphData,
+  getFlattenArray,
+  Content,
+  CustomNode,
 } from "../../lib/utils";
 import FolderTree from "../../components/FolderTree";
 import MDContent from "../../components/MDContentData";
@@ -15,15 +17,15 @@ import { Prop } from "../index";
 
 const DynamicGraph = dynamic(async () => await import("../../components/Graph"), {
   loading: () => <p>Loading ...</p>,
-  ssr: false
+  ssr: false,
 });
 
 interface InternalProp extends Prop {
-  note: Content
+  note: Content;
 }
 
 interface HomeElement extends HTMLElement {
-  checked: boolean
+  checked: boolean;
 }
 
 export default function Home({
@@ -31,11 +33,11 @@ export default function Home({
   backLinks,
   tree,
   flattenNodes,
-  graphData
+  graphData,
 }: InternalProp): JSX.Element {
   const burgerId = "hamburger-input";
   const closeBurger = (): void => {
-    const element = document.getElementById(burgerId) as HomeElement | null
+    const element = document.getElementById(burgerId) as HomeElement | null;
     if (element !== null) {
       element.checked = false;
     }
@@ -54,40 +56,36 @@ export default function Home({
             </span>
           </label>
           <nav>
-            <FolderTree
-              tree={tree}
-              flattenNodes={flattenNodes}
-              onNodeSelect={closeBurger}
-            />
+            <FolderTree tree={tree} flattenNodes={flattenNodes} onNodeSelect={closeBurger} />
             <DynamicGraph graph={graphData} />
           </nav>
         </div>
         <nav className="nav-bar">
           <FolderTree tree={tree} flattenNodes={flattenNodes} />
         </nav>
-        <MDContent
-          content={note.data}
-          backLinks={backLinks}
-        />
+        <MDContent content={note.data} backLinks={backLinks} />
         <DynamicGraph graph={graphData} />
       </div>
     </Layout>
   );
 }
 
-export async function getStaticPaths (): Promise<{ paths: Array<{ params: { id: string } }>; fallback: false }> {
+export async function getStaticPaths(): Promise<{
+  paths: Array<{ params: { id: string } }>;
+  fallback: false;
+}> {
   const allPostsData = getAllSlugs();
   const paths = allPostsData.map((p) => ({ params: { id: p } }));
 
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 }
 
 const { nodes, edges } = constructGraphData();
 
-export function getStaticProps ({ params }): { props: InternalProp } {
+export function getStaticProps({ params }): { props: InternalProp } {
   const note = getSinglePost(params.id);
   const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
@@ -105,7 +103,7 @@ export function getStaticProps ({ params }): { props: InternalProp } {
       tree,
       flattenNodes,
       backLinks: backLinks.filter((link) => link.slug !== params.id),
-      graphData
-    }
+      graphData,
+    },
   };
 }
