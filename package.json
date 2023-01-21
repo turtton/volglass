@@ -5,7 +5,6 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev",
-    "windev": "next dev",
     "build": "next build",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push"
