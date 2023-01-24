@@ -37,7 +37,7 @@ export const Transformer = {
     const result = allFileNames.find((aFile) => {
       const parseFileNameFromPath = Transformer.parseFileNameFromPath(aFile);
       return (
-        Transformer.normalizeFileName(parseFileNameFromPath) ===
+        Transformer.normalizeFileName(parseFileNameFromPath ?? "") ===
         Transformer.normalizeFileName(pageName)
       );
     });
@@ -108,7 +108,7 @@ export const Transformer = {
   },
 
   /* Normalize File Names */
-  normalizeFileName: function (filename) {
+  normalizeFileName: function (filename: string) {
     let processedFileName = filename.replace(".md", "");
     processedFileName = processedFileName.replace("(", "").replace(")", "");
     processedFileName = processedFileName.split(" ").join("-");
@@ -140,7 +140,7 @@ export const Transformer = {
       const parsedFileFromPath = filepath.split("/")[filepath.split("/").length - 1];
       return parsedFileFromPath.replace(".md", "");
     } else {
-      console.log(`Failed: CANNOT Parse ${filepath}`);
+      // console.log(`Failed: CANNOT Parse ${filepath}`);
       return null;
     }
   },

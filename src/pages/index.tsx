@@ -61,11 +61,15 @@ export interface Prop {
   backLinks: CustomNode[];
 }
 
+// TODO make customizable
+// FIXME This should be a string field, but I don't know to avoid init error
+export function FIRST_PAGE(): string { return "README" }
+
 export function getStaticProps(): { props: Prop } {
   const tree = getDirectoryData();
-  const contentData = getSinglePost("index");
+  const contentData = getSinglePost(FIRST_PAGE());
   const flattenNodes = getFlattenArray(tree);
-  const listOfEdges = edges.filter((anEdge) => anEdge.target === "index");
+  const listOfEdges = edges.filter((anEdge) => anEdge.target === FIRST_PAGE());
   const internalLinks = listOfEdges
     .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source))
     .filter((element) => element !== undefined);
@@ -73,7 +77,7 @@ export function getStaticProps(): { props: Prop } {
     .filter((value, index, array) => array.indexOf(value) === index)
     .filter((v): v is CustomNode => v !== undefined);
 
-  const graphData = getLocalGraphData("index");
+  const graphData = getLocalGraphData(FIRST_PAGE());
   return {
     props: {
       content: contentData.data,
