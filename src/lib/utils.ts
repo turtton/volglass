@@ -7,6 +7,7 @@ import path from "path";
 import fs from "fs";
 import directoryTree, { DirectoryTree } from "directory-tree";
 import { FIRST_PAGE } from "../pages";
+import { ElementDefinition } from "cytoscape";
 
 export function getContent(slug): string | null {
   const currentFilePath = toFilePath(slug);
@@ -168,8 +169,8 @@ export function constructGraphData(): GraphData {
 }
 
 export interface LocalGraphData {
-  nodes: NodeData[];
-  edges: EdgeData[];
+  nodes: ElementDefinition[];
+  edges: ElementDefinition[];
 }
 
 export interface NodeData {
@@ -188,15 +189,14 @@ export interface EdgeData {
 
 export function getLocalGraphData(currentNodeId: string): LocalGraphData {
   const { nodes, edges } = constructGraphData();
-
-  const newNodes: NodeData[] = nodes.map((aNode) => ({
+  const newNodes: ElementDefinition[] = nodes.map((aNode) => ({
     data: {
       id: aNode.slug.toString(),
       label: Transformer.parseFileNameFromPath(toFilePath(aNode.slug)),
     },
   }));
 
-  const newEdges: EdgeData[] = edges.map((anEdge) => ({
+  const newEdges: ElementDefinition[] = edges.map((anEdge) => ({
     data: {
       source: anEdge.source,
       target: anEdge.target,

@@ -140,7 +140,7 @@ export const Transformer = {
       const parsedFileFromPath = filepath.split("/")[filepath.split("/").length - 1];
       return parsedFileFromPath.replace(".md", "");
     } else {
-      // console.log(`Failed: CANNOT Parse ${filepath}`);
+      console.log(`Failed: CANNOT Parse ${filepath}`);
       return null;
     }
   },
