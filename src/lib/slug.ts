@@ -1,11 +1,11 @@
 import { FIRST_PAGE } from "../pages";
 import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile, readFileSync } from "./io";
 import directoryTree from "directory-tree";
-import unified from "unified/types/ts3.4/index";
 import markdown from "remark-parse";
 import { toString } from "mdast-util-to-string";
 import { convertObject, MdObject } from "./markdown";
 import { Transformer } from "./transformer";
+import unified from "unified";
 
 interface SlugMap extends Map<string, string> {
   index: string;
