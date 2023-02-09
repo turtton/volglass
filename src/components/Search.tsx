@@ -54,6 +54,9 @@ export function SearchBar(prop: SearchProp): JSX.Element {
             text = toRomaji(text);
           }
           let result = fuse.search(text).map((r) => r.item);
+          if (result.length > 5) {
+            result.length = 5;
+          }
           const titles = result.map((r) => r.title);
           result = result.filter((value, index) => index === titles.indexOf(value.title));
           setHitData(result);
