@@ -2,16 +2,22 @@ import { getAllMarkdownFiles, isFile } from "./io";
 import path from "path";
 import fs from "fs";
 import { Transformer } from "./transformer";
-import { isJapanese, toRomaji } from "wanakana";
+import { isJapanese, toKana, tokenize, toRomaji } from "wanakana";
 import { getRouterPath } from "./slug";
 
 export interface SearchData {
   title: string;
-  rawTitle: string;
+  rawTitle: string | null;
   singleLineContent: string;
-  rawContent: string;
+  rawContent: RawContent | null;
   lineAt: number;
   path: string;
+}
+
+export interface RawContent {
+  raw: string;
+  separatedOriginal: string[];
+  separatedRaw: string[];
 }
 
 export function getSearchIndex(): SearchData[] {
@@ -44,14 +50,24 @@ export function getSearchIndex(): SearchData[] {
         .split("\n")
         .forEach((line, index) => {
           if (line.match("```") !== null || line.match("---") !== null) return;
-          const rawContent = isJapanese(line) ? toRomaji(line) : line;
+          let rawContent: RawContent | null = null;
+          if (isJapanese(line)) {
+            const raw = toRomaji(line);
+            const kenized = tokenize(line);
+            const kanaizedRomaji = kenized.map((k) => toRomaji(toKana(k)));
+            rawContent = {
+              raw,
+              separatedOriginal: kenized,
+              separatedRaw: kanaizedRomaji,
+            };
+          }
           result.push({
             title,
             rawTitle,
             singleLineContent: line,
-            rawContent,
             lineAt: index,
             path,
+            rawContent,
           });
         });
     });
