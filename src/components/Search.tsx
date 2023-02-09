@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import Fuse from "fuse.js";
 import IFuseOptions = Fuse.IFuseOptions;
 import { SearchData } from "../lib/search";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
 import { isJapanese, toRomaji } from "wanakana";
 
@@ -13,6 +13,8 @@ interface SearchProp {
 interface ResultProp {
   contents: DataResult;
   hidden: boolean;
+  setHidden: Dispatch<SetStateAction<boolean>>
+  setMouseOvering: Dispatch<SetStateAction<boolean>>
 }
 
 type DataResult = readonly SearchData[] | "Empty";
@@ -25,15 +27,18 @@ export function SearchBar(prop: SearchProp): JSX.Element {
   const fuse = new Fuse(prop.index, fuseConfig);
   const [hitData, setHitData] = useState("Empty" as DataResult);
   const [isResultHidden, setResultHidden] = useState(false);
+  const [isMouseOveringResult, setMouseOveringResult] = useState(false);
   return (
-    <div className="mb-4 px-2.5">
+    <div className="mb-4 px-2.5" onBlur={() => {
+      if (!isMouseOveringResult) {
+        setResultHidden(true)
+      }
+    }
+    }>
       <TextField
         className="bg-white"
         fullWidth
         label="Search"
-        onBlur={() => {
-          setResultHidden(true);
-        }}
         onFocus={() => {
           setResultHidden(false);
         }}
@@ -52,12 +57,12 @@ export function SearchBar(prop: SearchProp): JSX.Element {
           setHitData(result);
         }}
       />
-      <ResultList contents={hitData} hidden={isResultHidden} />
+      <ResultList contents={hitData} hidden={isResultHidden} setHidden={setResultHidden} setMouseOvering={setMouseOveringResult}/>
     </div>
   );
 }
 
-function ResultList({ contents, hidden }: ResultProp): JSX.Element {
+function ResultList({ contents, hidden, setHidden, setMouseOvering}: ResultProp): JSX.Element {
   const router = useRouter();
   if (contents === "Empty") {
     return <div hidden={true} />;
@@ -79,6 +84,13 @@ function ResultList({ contents, hidden }: ResultProp): JSX.Element {
               className="inline-flex w-full px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white"
               onClick={(): void => {
                 void router.push(data.path);
+                setHidden(true)
+              }}
+              onMouseOver={() => {
+                setMouseOvering(true)
+              }}
+              onMouseLeave={() => {
+                setMouseOvering(false)
               }}
             >
               <button
