@@ -20,6 +20,7 @@
     "@mui/icons-material": "latest",
     "@mui/lab": "latest",
     "@mui/material": "latest",
+    "@types/wanakana": "^4.0.3",
     "cytoscape-d3-force": "^1.1.4",
     "cytoscape-node-html-label": "^1.2.1",
     "d3": "^6.2.0",
@@ -50,7 +51,8 @@
     "to-vfile": "^6.1.0",
     "unified": "^9.2.0",
     "unist-util-visit": "^4.1.0",
-    "vfile-reporter": "^6.0.1"
+    "vfile-reporter": "^6.0.1",
+    "wanakana": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
