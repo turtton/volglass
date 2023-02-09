@@ -28,7 +28,7 @@ export default function RootContainer({
     }
   };
   return (
-    <div className="container">
+    <div className="fixed flex h-full w-full flex-row overflow-hidden">
       <div className="burger-menu">
         <input type="checkbox" id={burgerId} />
         <label id="hamburger-menu" htmlFor="hamburger-input">
