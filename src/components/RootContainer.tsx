@@ -13,7 +13,13 @@ const DynamicGraph = dynamic(async () => await import("./Graph"), {
   ssr: false,
 });
 
-export default function RootContainer({graphData, content, tree, flattenNodes, backLinks}: Prop): JSX.Element {
+export default function RootContainer({
+  graphData,
+  content,
+  tree,
+  flattenNodes,
+  backLinks,
+}: Prop): JSX.Element {
   const burgerId = "hamburger-input";
   const closeBurger = (): void => {
     const element = document.getElementById(burgerId) as HomeElement | null;
@@ -24,12 +30,12 @@ export default function RootContainer({graphData, content, tree, flattenNodes, b
   return (
     <div className="container">
       <div className="burger-menu">
-        <input type="checkbox" id={burgerId}/>
+        <input type="checkbox" id={burgerId} />
         <label id="hamburger-menu" htmlFor="hamburger-input">
-            <span className="menu">
-              {" "}
-              <span className="hamburger"></span>{" "}
-            </span>
+          <span className="menu">
+            {" "}
+            <span className="hamburger"></span>{" "}
+          </span>
         </label>
         <nav>
           <FolderTree tree={tree} flattenNodes={flattenNodes} onNodeSelect={closeBurger} />
@@ -42,5 +48,5 @@ export default function RootContainer({graphData, content, tree, flattenNodes, b
       <MDContent content={content} backLinks={backLinks} />
       <DynamicGraph graph={graphData} />
     </div>
-  )
+  );
 }

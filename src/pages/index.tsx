@@ -13,7 +13,13 @@ export default function Home({
 }: Prop): JSX.Element {
   return (
     <Layout>
-      <RootContainer content={content} tree={tree} flattenNodes={flattenNodes} graphData={graphData} backLinks={backLinks}/>
+      <RootContainer
+        content={content}
+        tree={tree}
+        flattenNodes={flattenNodes}
+        graphData={graphData}
+        backLinks={backLinks}
+      />
     </Layout>
   );
 }

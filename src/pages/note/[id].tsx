@@ -20,7 +20,13 @@ export default function Home({
   return (
     <Layout>
       <Head>{<meta name="title" content={note.title} />}</Head>
-      <RootContainer content={note.data} tree={tree} flattenNodes={flattenNodes} graphData={graphData} backLinks={backLinks}/>
+      <RootContainer
+        content={note.data}
+        tree={tree}
+        flattenNodes={flattenNodes}
+        graphData={graphData}
+        backLinks={backLinks}
+      />
     </Layout>
   );
 }
