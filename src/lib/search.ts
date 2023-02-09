@@ -20,11 +20,10 @@ export function getSearchIndex(): SearchData[] {
     const rawData = fs.readFileSync(filePath);
     return JSON.parse(rawData.toString());
   } else {
-    const result: SearchData[] = []
+    const result: SearchData[] = [];
     try {
       fs.rmSync(filePath);
-    } catch (ignore) {
-    }
+    } catch (ignore) {}
     const filePaths = getAllMarkdownFiles();
     filePaths.forEach((markdownFile) => {
       const title = Transformer.parseFileNameFromPath(markdownFile);
@@ -32,28 +31,31 @@ export function getSearchIndex(): SearchData[] {
         return;
       }
       const rawTitle = isJapanese(title) ? toRomaji(title) : title;
-      const content = fs.readFileSync(markdownFile)
+      const content = fs.readFileSync(markdownFile);
       if (content === null || content === undefined) {
         return;
       }
-      const path = getRouterPath(`${title}.md`)
-      if (path === null) { return; }
-      content.toString()
-        .split('\n')
+      const path = getRouterPath(`${title}.md`);
+      if (path === null) {
+        return;
+      }
+      content
+        .toString()
+        .split("\n")
         .forEach((line, index) => {
           if (line.match("```") !== null || line.match("---") !== null) return;
-          const rawContent = isJapanese(line) ? toRomaji(line) : line
+          const rawContent = isJapanese(line) ? toRomaji(line) : line;
           result.push({
             title,
             rawTitle,
             singleLineContent: line,
             rawContent,
             lineAt: index,
-            path
-          })
-        })
+            path,
+          });
+        });
     });
     fs.writeFileSync(filePath, JSON.stringify(result), "utf-8");
-    return result
+    return result;
   }
 }

@@ -20,7 +20,7 @@ export default function RootContainer({
   tree,
   flattenNodes,
   backLinks,
-  searchIndex
+  searchIndex,
 }: Prop): JSX.Element {
   const burgerId = "hamburger-input";
   const closeBurger = (): void => {

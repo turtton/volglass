@@ -17,7 +17,7 @@ export default function Home({
   tree,
   flattenNodes,
   graphData,
-  searchIndex
+  searchIndex,
 }: InternalProp): JSX.Element {
   return (
     <Layout>
@@ -60,7 +60,7 @@ export function getStaticProps({ params }): { props: InternalProp } {
     .filter((element): element is CustomNode => element !== null);
   const backLinks = [...new Set(internalLinks)];
   const graphData = getLocalGraphData(params.id);
-  const searchIndex = getSearchIndex()
+  const searchIndex = getSearchIndex();
   return {
     props: {
       content: [],
@@ -69,7 +69,7 @@ export function getStaticProps({ params }): { props: InternalProp } {
       flattenNodes,
       backLinks: backLinks.filter((link) => link.slug !== params.id),
       graphData,
-      searchIndex
+      searchIndex,
     },
   };
 }

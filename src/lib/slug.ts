@@ -123,12 +123,14 @@ export function getShortSummary(slug: string): string {
 }
 
 export function getRouterPath(fileName: string): string | null {
-  const routerPath = getAllSlugs().find((slug) => {
-    const slugFileName = Transformer.parseFileNameFromPath(toFilePath(slug));
-    return (
-      Transformer.normalizeFileName(slugFileName ?? "") === Transformer.normalizeFileName(fileName)
-    );
-  }) ?? "";
+  const routerPath =
+    getAllSlugs().find((slug) => {
+      const slugFileName = Transformer.parseFileNameFromPath(toFilePath(slug));
+      return (
+        Transformer.normalizeFileName(slugFileName ?? "") ===
+        Transformer.normalizeFileName(fileName)
+      );
+    }) ?? "";
   const nameAndExtension = fileName.split(".");
-  return nameAndExtension.length > 1 && routerPath !== "" ? `/note/${routerPath}` : null
+  return nameAndExtension.length > 1 && routerPath !== "" ? `/note/${routerPath}` : null;
 }

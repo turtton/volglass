@@ -12,7 +12,7 @@ export function convertObject(thisObject: DirectoryTree): MdObject {
   const children: MdObject[] = [];
 
   const objectName = thisObject.name;
-  const routerPath = getRouterPath(objectName)
+  const routerPath = getRouterPath(objectName);
   const newObject: MdObject = {
     name: objectName,
     children,

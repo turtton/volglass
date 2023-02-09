@@ -11,7 +11,7 @@ export default function Home({
   tree,
   flattenNodes,
   backLinks,
-  searchIndex
+  searchIndex,
 }: Prop): JSX.Element {
   return (
     <Layout>
@@ -65,7 +65,7 @@ export function getStaticProps(): { props: Prop } {
       flattenNodes,
       graphData,
       backLinks,
-      searchIndex
+      searchIndex,
     },
   };
 }

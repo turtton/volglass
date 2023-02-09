@@ -13,8 +13,8 @@ interface SearchProp {
 interface ResultProp {
   contents: DataResult;
   hidden: boolean;
-  setHidden: Dispatch<SetStateAction<boolean>>
-  setMouseOvering: Dispatch<SetStateAction<boolean>>
+  setHidden: Dispatch<SetStateAction<boolean>>;
+  setMouseOvering: Dispatch<SetStateAction<boolean>>;
 }
 
 type DataResult = readonly SearchData[] | "Empty";
@@ -29,12 +29,14 @@ export function SearchBar(prop: SearchProp): JSX.Element {
   const [isResultHidden, setResultHidden] = useState(false);
   const [isMouseOveringResult, setMouseOveringResult] = useState(false);
   return (
-    <div className="mb-4 px-2.5" onBlur={() => {
-      if (!isMouseOveringResult) {
-        setResultHidden(true)
-      }
-    }
-    }>
+    <div
+      className="mb-4 px-2.5"
+      onBlur={() => {
+        if (!isMouseOveringResult) {
+          setResultHidden(true);
+        }
+      }}
+    >
       <TextField
         className="bg-white"
         fullWidth
@@ -57,12 +59,17 @@ export function SearchBar(prop: SearchProp): JSX.Element {
           setHitData(result);
         }}
       />
-      <ResultList contents={hitData} hidden={isResultHidden} setHidden={setResultHidden} setMouseOvering={setMouseOveringResult}/>
+      <ResultList
+        contents={hitData}
+        hidden={isResultHidden}
+        setHidden={setResultHidden}
+        setMouseOvering={setMouseOveringResult}
+      />
     </div>
   );
 }
 
-function ResultList({ contents, hidden, setHidden, setMouseOvering}: ResultProp): JSX.Element {
+function ResultList({ contents, hidden, setHidden, setMouseOvering }: ResultProp): JSX.Element {
   const router = useRouter();
   if (contents === "Empty") {
     return <div hidden={true} />;
@@ -74,29 +81,26 @@ function ResultList({ contents, hidden, setHidden, setMouseOvering}: ResultProp)
     >
       <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
         {contents.length === 0 ? (
-            <li className="inline-flex w-full px-4 py-2">
-              <p>Not Found</p>
-            </li>
-          ) :
+          <li className="inline-flex w-full px-4 py-2">
+            <p>Not Found</p>
+          </li>
+        ) : (
           contents.map((data) => (
             <li
               key={data.rawTitle}
               className="inline-flex w-full px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white"
               onClick={(): void => {
                 void router.push(data.path);
-                setHidden(true)
+                setHidden(true);
               }}
               onMouseOver={() => {
-                setMouseOvering(true)
+                setMouseOvering(true);
               }}
               onMouseLeave={() => {
-                setMouseOvering(false)
+                setMouseOvering(false);
               }}
             >
-              <button
-                className="w-full truncate"
-                key={data.title}
-              >
+              <button className="w-full truncate" key={data.title}>
                 <p className="w-full truncate text-left underline">{data.title}</p>
                 <p className="truncate text-left text-xs text-gray-500">
                   {data.lineAt}: {data.singleLineContent}
@@ -104,7 +108,7 @@ function ResultList({ contents, hidden, setHidden, setMouseOvering}: ResultProp)
               </button>
             </li>
           ))
-        }
+        )}
       </ul>
     </div>
   );
