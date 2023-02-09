@@ -43,7 +43,6 @@ specifiers:
   jsnetworkx: ^0.3.4
   mdast-util-to-string: ^3.1.0
   next: ^12.1.0
-  next-plausible: ^3.1.9
   path: ^0.12.7
   postcss: ^8.4.21
   prettier: ^2.8.3
@@ -94,7 +93,6 @@ dependencies:
   jsnetworkx: 0.3.4
   mdast-util-to-string: 3.1.0
   next: 12.3.4_jiuppbrrdpqsioctsbaxdlfu4e
-  next-plausible: 3.7.0_dwjfwrt6uv2f53xn6wotzcxyoa
   path: 0.12.7
   react: 17.0.2
   react-cytoscapejs: 1.2.1_sfoxds7t5ydpegc3knd667wn6m
@@ -4039,18 +4037,6 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
-
-  /next-plausible/3.7.0_dwjfwrt6uv2f53xn6wotzcxyoa:
-    resolution: {integrity: sha512-YQ/b+BcPIZHOsQPB+YkAAzP4l9oELt3qKazPYvuNr5WRHRDknpyIkge4hf6aeuM+Wg4sdxaY7DfbbAUZlgREuw==}
-    peerDependencies:
-      next: ^11.1.0 || ^12.0.0 || ^13.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      next: 12.3.4_jiuppbrrdpqsioctsbaxdlfu4e
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    dev: false
 
   /next/12.3.4_jiuppbrrdpqsioctsbaxdlfu4e:
     resolution: {integrity: sha512-VcyMJUtLZBGzLKo3oMxrEF0stxh8HwuW976pAzlHhI3t8qJ4SROjCrSh1T24bhrbjw55wfZXAbXPGwPt5FLRfQ==}
