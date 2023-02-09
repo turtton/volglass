@@ -23,7 +23,7 @@ export default function Home({
     <Layout>
       <div className="container">
         <div className="burger-menu">
-          <input type="checkbox" id="hamburger-input" className="burger-shower" />
+          <input type="checkbox" id="hamburger-input"/>
           <label id="hamburger-menu" htmlFor="hamburger-input">
             <span className="menu">
               {" "}

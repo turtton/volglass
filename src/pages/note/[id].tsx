@@ -41,7 +41,7 @@ export default function Home({
 
       <div className="container">
         <div className="burger-menu">
-          <input type="checkbox" id={burgerId} className="burger-shower" />
+          <input type="checkbox" id={burgerId}/>
           <label id="hamburger-menu" htmlFor="hamburger-input">
             <span className="menu">
               {" "}
