@@ -78,7 +78,7 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
 const themeKey = "theme";
 const darkModeMediaQuery = "(prefers-color-scheme: dark)";
 
-export function changeTheme(theme: PaletteMode): void {
+function changeTheme(theme: PaletteMode): void {
   localStorage.setItem(themeKey, theme);
   updateTheme();
 }
@@ -91,13 +91,13 @@ function updateTheme(): void {
   }
 }
 
-export function isDarkMode(): boolean {
+function isDarkMode(): boolean {
   return (
     localStorage.getItem(themeKey) === "dark" ||
     (!(themeKey in localStorage) && window.matchMedia(darkModeMediaQuery).matches)
   );
 }
 
-export function getCurrentMode(): PaletteMode {
+function getCurrentMode(): PaletteMode {
   return isDarkMode() ? "dark" : "light";
 }
