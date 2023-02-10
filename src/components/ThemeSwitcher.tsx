@@ -1,10 +1,10 @@
 import { styled } from "@mui/material/styles";
 import { FormControlLabel, PaletteMode, Switch } from "@mui/material";
-import { useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { createTheme } from "@mui/system";
 
 export default function ThemeSwitcher(): JSX.Element {
-  const [currentMode, currentModeSetter] = useState(getCurrentMode);
+  const [currentMode, currentModeSetter] = useThemeState();
   const currentTheme = useMemo(
     () => createTheme({ palette: { mode: currentMode } }),
     [currentMode],
@@ -15,11 +15,10 @@ export default function ThemeSwitcher(): JSX.Element {
       control={
         <ThemeSwitch
           sx={{ m: 1 }}
-          defaultChecked={isDarkMode()}
+          defaultChecked={currentTheme === "dark"}
           onChange={(e) => {
             const newMode = e.target.checked ? "dark" : "light";
             currentModeSetter(newMode);
-            changeTheme(newMode);
           }}
           theme={currentTheme}
         />
@@ -78,18 +77,18 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
 const themeKey = "theme";
 const darkModeMediaQuery = "(prefers-color-scheme: dark)";
 
-function changeTheme(theme: PaletteMode): void {
-  localStorage.setItem(themeKey, theme);
-  updateTheme();
-}
-
-function updateTheme(): void {
-  if (isDarkMode()) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-}
+const useThemeState = (): [PaletteMode, Dispatch<SetStateAction<PaletteMode>>] => {
+  const [currentTheme, setTheme] = useState(getCurrentMode);
+  useEffect(() => {
+    localStorage.setItem(themeKey, currentTheme);
+    if (currentTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [currentTheme]);
+  return [currentTheme, setTheme];
+};
 
 function isDarkMode(): boolean {
   return (
