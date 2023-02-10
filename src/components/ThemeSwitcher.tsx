@@ -1,10 +1,13 @@
 import { styled } from "@mui/material/styles";
 import { FormControlLabel, PaletteMode, Switch } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { createTheme } from "@mui/system";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 export default function ThemeSwitcher(): JSX.Element {
-  const [currentMode, currentModeSetter] = useThemeState();
+  const currentMode = useCurrentTheme();
+  const setCurrentTheme = useSetAtom(themeAtom);
   const currentTheme = useMemo(
     () => createTheme({ palette: { mode: currentMode } }),
     [currentMode],
@@ -15,10 +18,10 @@ export default function ThemeSwitcher(): JSX.Element {
       control={
         <ThemeSwitch
           sx={{ m: 1 }}
-          defaultChecked={currentTheme === "dark"}
+          checked={currentMode === "dark"}
           onChange={(e) => {
             const newMode = e.target.checked ? "dark" : "light";
-            currentModeSetter(newMode);
+            setCurrentTheme(newMode);
           }}
           theme={currentTheme}
         />
@@ -75,28 +78,14 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const themeKey = "theme";
-const darkModeMediaQuery = "(prefers-color-scheme: dark)";
+const themeAtom = atomWithStorage<PaletteMode | null>(themeKey, null);
 
-const useThemeState = (): [PaletteMode, Dispatch<SetStateAction<PaletteMode>>] => {
-  const [currentTheme, setTheme] = useState(getCurrentMode);
-  useEffect(() => {
-    localStorage.setItem(themeKey, currentTheme);
-    if (currentTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [currentTheme]);
-  return [currentTheme, setTheme];
-};
+const currentThemeAtom = atom((get) => {
+  const currentTheme = get(themeAtom);
+  if (currentTheme !== null) {
+    return currentTheme;
+  }
+  return "light";
+});
 
-function isDarkMode(): boolean {
-  return (
-    localStorage.getItem(themeKey) === "dark" ||
-    (!(themeKey in localStorage) && window.matchMedia(darkModeMediaQuery).matches)
-  );
-}
-
-function getCurrentMode(): PaletteMode {
-  return isDarkMode() ? "dark" : "light";
-}
+export const useCurrentTheme = (): PaletteMode => useAtomValue(currentThemeAtom);
