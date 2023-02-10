@@ -9,6 +9,7 @@ specifiers:
   '@mui/icons-material': latest
   '@mui/lab': latest
   '@mui/material': latest
+  '@mui/system': ^5.11.8
   '@types/babel__core': ^7.20.0
   '@types/cytoscape': ^3.19.9
   '@types/d3': ^6.7.5
@@ -86,6 +87,7 @@ dependencies:
   '@mui/icons-material': 5.11.0_fk5bccl2hinvnbyz2t4hxr3tei
   '@mui/lab': 5.0.0-alpha.119_26x4sipaaju26faxwnvcnf22vm
   '@mui/material': 5.11.8_qtidw54xdy2lrxqgglvfql7n3e
+  '@mui/system': 5.11.8_4f3ngokrixlnstypmfsxocpf3m
   '@types/wanakana': 4.0.3
   cytoscape-d3-force: 1.1.4_cytoscape@3.23.0
   cytoscape-node-html-label: 1.2.2_nj5d75okz36274i5jrvj2kttty

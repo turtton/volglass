@@ -20,6 +20,7 @@
     "@mui/icons-material": "latest",
     "@mui/lab": "latest",
     "@mui/material": "latest",
+    "@mui/system": "^5.11.8",
     "@types/wanakana": "^4.0.3",
     "cytoscape-d3-force": "^1.1.4",
     "cytoscape-node-html-label": "^1.2.1",
