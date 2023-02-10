@@ -39,7 +39,7 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
     },
     "& + .MuiSwitch-track": {
       opacity: 1,
-      backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#e3e3e3",
+      backgroundColor: theme.palette.mode === "dark" ? "#2a2b2b" : "#dedfe1",
     },
   },
   "& .MuiSwitch-track": {
