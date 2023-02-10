@@ -1,17 +1,19 @@
 import { styled } from "@mui/material/styles";
 import { FormControlLabel, PaletteMode, Switch } from "@mui/material";
-import { useMemo } from "react";
-import { createTheme } from "@mui/system";
+import { useEffect } from "react";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export default function ThemeSwitcher(): JSX.Element {
   const currentMode = useCurrentTheme();
   const setCurrentTheme = useSetAtom(themeAtom);
-  const currentTheme = useMemo(
-    () => createTheme({ palette: { mode: currentMode } }),
-    [currentMode],
-  );
+  useEffect(() => {
+    if (currentMode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [currentMode]);
   return (
     <FormControlLabel
       className="w-fit px-2"
@@ -23,7 +25,6 @@ export default function ThemeSwitcher(): JSX.Element {
             const newMode = e.target.checked ? "dark" : "light";
             setCurrentTheme(newMode);
           }}
-          theme={currentTheme}
         />
       }
       label=""
