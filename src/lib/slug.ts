@@ -7,6 +7,8 @@ import { Transformer } from "./transformer";
 import unified from "unified";
 import { FIRST_PAGE } from "../pages/[...id]";
 
+type StringArrayConverter = (line: string, index: number, array: string[]) => string
+
 interface SlugMap extends Map<string, string> {
   index: string;
 }
@@ -30,24 +32,10 @@ export function getSinglePost(slug: string): Content {
   splitedFileName.pop();
   const fileName = splitedFileName.join();
 
-  let shouldBreakLine = true;
   const fileContent = readFileSync(currentFilePath)
     .split("\n")
     // Fix Line breaks
-    .map((line, index, array) => {
-      if (line.startsWith("---") || line.startsWith("```")) {
-        shouldBreakLine = !shouldBreakLine;
-        return line;
-      } else if (shouldBreakLine && !(line.startsWith("#") && line.includes(" ")) && line !== "") {
-        const next = array[index + 1];
-        if (next === undefined || next === "") {
-          return line;
-        }
-        return `${line}  `;
-      } else {
-        return line;
-      }
-    })
+    .map(convertObsidianLineBreak())
     .join("\n");
 
   // console.log("===============\n\nFile is scanning: ", slug)
@@ -60,6 +48,26 @@ export function getSinglePost(slug: string): Content {
     title: fileName,
     // ...currentFileFrontMatter,
     data: htmlContent,
+  };
+}
+
+function convertObsidianLineBreak(): StringArrayConverter {
+  let shouldBreakLine = true;
+  return (line, index, array) => {
+    const isCodeBlockInterval = line.startsWith("---") || line.startsWith("```")
+    const isHeading = !(line.startsWith("#") && line.includes(" ")) && line !== ""
+    if (isCodeBlockInterval) {
+      shouldBreakLine = !shouldBreakLine;
+      return line;
+    } else if (shouldBreakLine && isHeading) {
+      const next = array[index + 1];
+      if (next === undefined || next === "") {
+        return line;
+      }
+      return `${line}  `;
+    } else {
+      return line;
+    }
   };
 }
 
