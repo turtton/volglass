@@ -24,7 +24,7 @@ jobs:
             ./kotlin/**/**.kt
             !./kotlin/**/generated/**
 
-  cache-and-install:
+  lint-and-build:
     needs: check-kotlin
     runs-on: ubuntu-latest
 
