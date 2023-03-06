@@ -10,7 +10,22 @@ on:
     branches: [ "main" ]
 
 jobs:
+  check-kotlin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Validate gradle-wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Lint
+        uses: musichin/ktlint-check@v2
+        with:
+          patterns: |
+            ./kotlin/**/**.kt
+            !./kotlin/**/generated/**
+
   cache-and-install:
+    needs: check-kotlin
     runs-on: ubuntu-latest
 
     steps:
