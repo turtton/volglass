@@ -72,7 +72,7 @@ function convertObsidianLineBreak(): StringArrayProcessor {
   };
 }
 
-const fixMarkdownLink: StringArrayProcessor = (line, index, array) => {
+const fixMarkdownLink: StringArrayProcessor = line => {
   const links = line.match(/]\(.*\.md\)/gi);
   if (links === null || links.index === 0) return line;
   links.forEach((target) => {
