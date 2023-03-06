@@ -7,7 +7,7 @@ import { Transformer } from "./transformer";
 import unified from "unified";
 import { FIRST_PAGE } from "../pages/[...id]";
 
-type StringArrayConverter = (line: string, index: number, array: string[]) => string
+type StringArrayProcessor = (line: string, index: number, array: string[]) => string
 
 interface SlugMap extends Map<string, string> {
   index: string;
@@ -51,7 +51,7 @@ export function getSinglePost(slug: string): Content {
   };
 }
 
-function convertObsidianLineBreak(): StringArrayConverter {
+function convertObsidianLineBreak(): StringArrayProcessor {
   let shouldBreakLine = true;
   return (line, index, array) => {
     const isCodeBlockInterval = line.startsWith("---") || line.startsWith("```")
