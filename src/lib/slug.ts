@@ -104,7 +104,9 @@ export function getSlugHashMap(): Map<string, string> {
 
 export function toSlug(filePath: string): string {
   if (isFile(filePath) && filePath.includes(getMarkdownFolder())) {
-    return filePath.replace(getMarkdownFolder(), "").replace(".md", "");
+    return filePath.replace(getMarkdownFolder(), "")
+      .replace(" ", "+")
+      .replace(".md", "");
   } else {
     // TODO handle this properly
     return "/";
