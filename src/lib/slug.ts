@@ -36,6 +36,7 @@ export function getSinglePost(slug: string): Content {
     .split("\n")
     // Fix Line breaks
     .map(convertObsidianLineBreak())
+    .map(fixMarkdownLink)
     .join("\n");
 
   // console.log("===============\n\nFile is scanning: ", slug)
@@ -70,6 +71,21 @@ function convertObsidianLineBreak(): StringArrayProcessor {
     }
   };
 }
+
+const fixMarkdownLink: StringArrayProcessor = (line, index, array) => {
+  const links = line.match(/]\(.*\.md\)/gi);
+  if (links === null || links.index === 0) return line;
+  links.forEach((target) => {
+    const title = target.replace("](", "").replace(")", "").split("/").pop()?.replace(".md", "");
+    if (!target.startsWith("](http") && title !== undefined) {
+      const file = toFilePath(title);
+      if (file !== "") {
+        line = line.replace(target, target.replace(".md", ""));
+      }
+    }
+  });
+  return line;
+};
 
 export function toFilePath(slug: string): string {
   const result = cachedSlugMap.get(slug);
