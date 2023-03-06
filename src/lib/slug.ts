@@ -7,7 +7,7 @@ import { Transformer } from "./transformer";
 import unified from "unified";
 import { FIRST_PAGE } from "../pages/[...id]";
 
-type StringArrayProcessor = (line: string, index: number, array: string[]) => string
+type StringArrayProcessor = (line: string, index: number, array: string[]) => string;
 
 interface SlugMap extends Map<string, string> {
   index: string;
@@ -55,8 +55,8 @@ export function getSinglePost(slug: string): Content {
 function convertObsidianLineBreak(): StringArrayProcessor {
   let shouldBreakLine = true;
   return (line, index, array) => {
-    const isCodeBlockInterval = line.startsWith("---") || line.startsWith("```")
-    const isHeading = !(line.startsWith("#") && line.includes(" ")) && line !== ""
+    const isCodeBlockInterval = line.startsWith("---") || line.startsWith("```");
+    const isHeading = !(line.startsWith("#") && line.includes(" ")) && line !== "";
     if (isCodeBlockInterval) {
       shouldBreakLine = !shouldBreakLine;
       return line;
@@ -120,9 +120,7 @@ export function getSlugHashMap(): Map<string, string> {
 
 export function toSlug(filePath: string): string {
   if (isFile(filePath) && filePath.includes(getMarkdownFolder())) {
-    return filePath.replace(getMarkdownFolder(), "")
-      .replace(" ", "+")
-      .replace(".md", "");
+    return filePath.replace(getMarkdownFolder(), "").replace(" ", "+").replace(".md", "");
   } else {
     // TODO handle this properly
     return "/";
