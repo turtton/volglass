@@ -1,5 +1,6 @@
 plugins {
     kotlin("js") version "1.8.0"
+    id("org.jmailen.kotlinter") version "3.13.0"
 }
 
 group = "net.turtton"
