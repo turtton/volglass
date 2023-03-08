@@ -19,7 +19,7 @@ class ReactElementGenerator<Parent>(
     private val rootNode: ASTNode,
     private val providers: Map<IElementType, NodeProcessor<ElementType<HTMLAttributes<HTMLElement>>, Parent>>,
 ) where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
-    fun generateHtml(): FC<Props> {
+    fun generateElement(): FC<Props> {
         return ReactElementGeneratingVisitor(providers, markdownText).let {
             it.visitNode(rootNode)
             it.result
