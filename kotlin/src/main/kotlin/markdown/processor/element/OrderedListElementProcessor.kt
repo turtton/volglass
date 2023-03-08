@@ -1,4 +1,4 @@
-package markdown.processor
+package markdown.processor.element
 
 import markdown.TagConsumer
 import org.intellij.markdown.MarkdownElementTypes

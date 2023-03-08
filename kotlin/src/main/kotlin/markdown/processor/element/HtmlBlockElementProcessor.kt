@@ -1,6 +1,7 @@
-package markdown.processor
+package markdown.processor.element
 
 import markdown.TagConsumer
+import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode

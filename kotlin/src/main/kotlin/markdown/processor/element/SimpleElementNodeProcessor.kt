@@ -1,6 +1,7 @@
-package markdown.processor
+package markdown.processor.element
 
 import markdown.TagConsumer
+import markdown.processor.SandwichNodeProcessor
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.html.SimpleTagProvider
 import org.w3c.dom.HTMLElement

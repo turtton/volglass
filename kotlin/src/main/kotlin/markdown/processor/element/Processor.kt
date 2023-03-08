@@ -1,5 +1,6 @@
-package markdown.processor
+package markdown.processor.element
 
+import markdown.processor.NodeProcessor
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
