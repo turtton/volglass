@@ -21,7 +21,7 @@ dependencies {
 }
 
 kotlin {
-    js  {
+    js {
         nodejs {
             testTask {
                 useMocha()

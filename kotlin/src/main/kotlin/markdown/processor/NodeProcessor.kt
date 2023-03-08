@@ -5,9 +5,7 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.acceptChildren
 
 interface NodeProcessor<out Tag, in Parent> {
-    fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode)
-        where Visitor : TagConsumer<Tag, Parent>,
-              Visitor : org.intellij.markdown.ast.visitors.Visitor
+    fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<Tag, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor
 }
 
 interface SandwichNodeProcessor<out Tag, in Parent> : NodeProcessor<Tag, Parent> {
