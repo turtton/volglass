@@ -6,14 +6,14 @@ import react.Props
 import react.dom.html.InputType
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.input
-import react.useState
+import react.useMemo
 
 external interface WelcomeProps : Props {
     var name: String
 }
 
 val Welcome = FC<WelcomeProps> { props ->
-    var name by useState(props.name)
+    var name = useMemo(props.name) { props.name }
     div {
         css {
             padding = 5.px
