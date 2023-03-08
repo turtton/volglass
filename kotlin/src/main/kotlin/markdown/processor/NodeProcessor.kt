@@ -4,11 +4,13 @@ import markdown.TagConsumer
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.acceptChildren
 
-interface NodeProcessor<Tag, Parent> {
-    fun<Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<Tag, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor
+interface NodeProcessor<out Tag, in Parent> {
+    fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode)
+        where Visitor : TagConsumer<Tag, Parent>,
+              Visitor : org.intellij.markdown.ast.visitors.Visitor
 }
 
-interface SandwichNodeProcessor<Tag, Parent> : NodeProcessor<Tag, Parent> {
+interface SandwichNodeProcessor<out Tag, in Parent> : NodeProcessor<Tag, Parent> {
     fun openTag(visitor: TagConsumer<Tag, Parent>, markdownText: String, node: ASTNode)
     fun closeTag(visitor: TagConsumer<Tag, Parent>, markdownText: String, node: ASTNode)
 

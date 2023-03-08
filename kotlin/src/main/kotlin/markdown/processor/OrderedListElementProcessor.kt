@@ -15,9 +15,14 @@ import react.dom.html.OlHTMLAttributes
 import react.dom.html.ReactHTML.ol
 
 /**
- * [CommonMarkFlavourDescriptor]:L63-76(MarkdownElementTypes.ORDERED_LIST)
+ * Related [CommonMarkFlavourDescriptor]:L63-76(MarkdownElementTypes.ORDERED_LIST)
  */
-class OrderedListElementProcessor<Parent : HTMLAttributes<HTMLElement>> : SimpleElementNodeProcessor<Parent, HTMLOListElement, OlHTMLAttributes<HTMLOListElement>, IntrinsicType<OlHTMLAttributes<HTMLOListElement>>>(ol) {
+class OrderedListElementProcessor<Parent : HTMLAttributes<HTMLElement>> :
+    SimpleElementNodeProcessor<
+        Parent, HTMLOListElement,
+        OlHTMLAttributes<HTMLOListElement>,
+        IntrinsicType<OlHTMLAttributes<HTMLOListElement>>,
+        >(ol) {
     override fun openTag(visitor: TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, markdownText: String, node: ASTNode) {
         val attribute: (OlHTMLAttributes<HTMLOListElement>.() -> Unit)? = node.findChildOfType(MarkdownElementTypes.LIST_ITEM)
             ?.findChildOfType(MarkdownTokenTypes.LIST_NUMBER)

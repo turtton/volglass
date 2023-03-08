@@ -10,7 +10,7 @@ import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 
 /**
- * [CommonMarkFlavourDescriptor]:L55-59(MarkdownTokenTypes.HTML_TAG)
+ * Related [CommonMarkFlavourDescriptor]:L55-59(MarkdownTokenTypes.HTML_TAG)
  */
 class HtmlElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {

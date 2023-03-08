@@ -9,7 +9,16 @@ import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.blockquote
 import react.dom.html.ReactHTML.body
+import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.ul
+
+fun t() {
+    val a: NodeProcessor<IntrinsicType<HTMLAttributes<in HTMLElement>>, HTMLAttributes<HTMLElement>> =
+        SimpleElementNodeProcessor(body)
+    val b = SimpleElementNodeProcessor(body)
+    val t: List<NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, HTMLAttributes<HTMLElement>>> =
+        listOf(SimpleElementNodeProcessor(body), SimpleElementNodeProcessor(br))
+}
 
 fun <Parent> createReactElementGeneratingProcessors(): Map<IElementType, NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =

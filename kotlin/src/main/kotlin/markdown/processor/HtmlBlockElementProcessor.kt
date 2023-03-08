@@ -11,7 +11,7 @@ import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 
 /**
- * [CommonMarkFlavourDescriptor]:L54(MarkdownElementTypes.HTML_BLOCK)
+ * Related [CommonMarkFlavourDescriptor]:L54(MarkdownElementTypes.HTML_BLOCK)
  */
 class HtmlBlockElementProcessor<Parent> :
     NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
