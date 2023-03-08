@@ -9,7 +9,6 @@ import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.blockquote
 import react.dom.html.ReactHTML.body
-import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.ul
 
 fun <Parent> createReactElementGeneratingProcessors(): Map<IElementType, NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>>
