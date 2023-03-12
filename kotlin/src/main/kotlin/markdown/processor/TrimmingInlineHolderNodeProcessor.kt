@@ -10,7 +10,10 @@ import org.intellij.markdown.html.TrimmingInlineHolderProvider
 open class TrimmingInlineHolderNodeProcessor<Tag, Parent> : SilentParagraphNodeProcessor<Tag, Parent>() {
     override fun childrenToRender(node: ASTNode): List<ASTNode> {
         val children = node.children
-        val from = children.filter { it.type == MarkdownTokenTypes.WHITE_SPACE }.size
+        var from = 0
+        while (from < children.size && children[from].type == MarkdownTokenTypes.WHITE_SPACE) {
+            from++
+        }
         var to = children.size
         while (to > from && children[to - 1].type == MarkdownTokenTypes.WHITE_SPACE) {
             to--
