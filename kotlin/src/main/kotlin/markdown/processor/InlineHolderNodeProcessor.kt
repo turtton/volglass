@@ -28,7 +28,11 @@ abstract class InlineHolderNodeProcessor<Type, Parent> : SandwichNodeProcessor<T
     }
 }
 
-open class SingleParagraphNodeProvider<Type, Parent> : InlineHolderNodeProcessor<Type, Parent>() {
+/**
+ * Related [org.intellij.markdown.html.ListItemGeneratingProvider.SilentParagraphGeneratingProvider]
+ */
+@Suppress("KDocUnresolvedReference")
+open class SilentParagraphNodeProcessor<Type, Parent> : InlineHolderNodeProcessor<Type, Parent>() {
     override fun openTag(visitor: TagConsumer<Type, Parent>, markdownText: String, node: ASTNode) {}
     override fun closeTag(visitor: TagConsumer<Type, Parent>, markdownText: String, node: ASTNode) {}
 }

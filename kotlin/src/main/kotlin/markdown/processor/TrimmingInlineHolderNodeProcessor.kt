@@ -7,7 +7,7 @@ import org.intellij.markdown.html.TrimmingInlineHolderProvider
 /**
  * Related [TrimmingInlineHolderProvider]
  */
-open class TrimmingInlineHolderNodeProcessor<Tag, Parent> : SingleParagraphNodeProvider<Tag, Parent>() {
+open class TrimmingInlineHolderNodeProcessor<Tag, Parent> : SilentParagraphNodeProcessor<Tag, Parent>() {
     override fun childrenToRender(node: ASTNode): List<ASTNode> {
         val children = node.children
         val from = children.filter { it.type == MarkdownTokenTypes.WHITE_SPACE }.size

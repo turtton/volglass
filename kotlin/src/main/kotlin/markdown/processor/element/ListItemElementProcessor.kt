@@ -2,7 +2,7 @@ package markdown.processor.element
 
 import markdown.LeafVisitor
 import markdown.TagConsumer
-import markdown.processor.SingleParagraphNodeProvider
+import markdown.processor.SilentParagraphNodeProcessor
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.accept
@@ -30,12 +30,12 @@ class ListItemElementProcessor<Parent : HTMLAttributes<HTMLElement>> :
         val listNode = node.parent
         if (listNode !is ListCompositeNode) error("Incorrect parent node type Expected: ListCompositeNode but: $listNode")
         val isLoose = listNode.loose
-        node.children.forEach {
-            if (it.type == MarkdownElementTypes.PARAGRAPH && !isLoose) {
-                SingleParagraphNodeProvider<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>()
-                    .processNode(visitor, markdownText, node)
+        node.children.forEach { child ->
+            if (child.type == MarkdownElementTypes.PARAGRAPH && !isLoose) {
+                SilentParagraphNodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>()
+                    .processNode(visitor, markdownText, child)
             } else {
-                it.accept(visitor)
+                child.accept(visitor)
             }
         }
 
