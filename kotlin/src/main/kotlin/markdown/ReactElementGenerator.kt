@@ -11,8 +11,6 @@ import react.ChildrenBuilder
 import react.ElementType
 import react.FC
 import react.Props
-import react.ReactElement
-import react.create
 import react.dom.html.HTMLAttributes
 
 class ReactElementGenerator<Parent>(
@@ -30,14 +28,14 @@ class ReactElementGenerator<Parent>(
     class ReactElementGeneratingVisitor<Parent>(
         private val providers: Map<IElementType, NodeProcessor<ElementType<HTMLAttributes<HTMLElement>>, Parent>>,
         private val markdownText: String,
-    ) : TagConsumer<ElementType<HTMLAttributes<HTMLElement>>, Parent>, Visitor where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
-        private val resultElements = mutableListOf<ReactElement<Props>>()
-        private val childElements = mutableListOf<ReactElement<Props>>()
+    ) : TagConsumer<ElementType<HTMLAttributes<HTMLElement>>, Parent>, Visitor, LeafVisitor where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
+        private val resultElements = mutableListOf<FC<Props>>()
+        private val childElements = mutableListOf<FC<Props>>()
         private val tagStacker = mutableListOf<ElementType<HTMLAttributes<HTMLElement>>>()
         private val elementProcessor = mutableListOf<Parent.() -> Unit>()
         val result: FC<Props> get() = FC {
             resultElements.forEach {
-                +it
+                it {}
             }
         }
         override fun visitNode(node: ASTNode) {
@@ -60,19 +58,19 @@ class ReactElementGenerator<Parent>(
         override fun consumeTagClose(tag: ElementType<HTMLAttributes<HTMLElement>>) {
             val target = tagStacker.removeLast()
             if (target != tag) error("Trying to close $tag but actual $target")
+            val child = childElements.toList()
+            childElements.clear()
+            val processor = elementProcessor.removeLast()
             val element = FC<Props> {
                 target {
-                    val processor = elementProcessor.removeLast()
-
                     @Suppress("UNCHECKED_CAST")
                     val parent = this as Parent
                     parent.processor()
-                    childElements.removeAll {
-                        +it
-                        true
+                    child.forEach {
+                        it {}
                     }
                 }
-            }.create()
+            }
             if (tagStacker.isEmpty()) {
                 resultElements += element
             } else {
