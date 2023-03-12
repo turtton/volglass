@@ -1,5 +1,6 @@
 package markdown.processor
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.LeafASTNode
@@ -12,14 +13,14 @@ import org.intellij.markdown.html.InlineHolderGeneratingProvider
 abstract class InlineHolderNodeProcessor<Type, Parent> : SandwichNodeProcessor<Type, Parent> {
     open fun childrenToRender(node: ASTNode): List<ASTNode> = node.children
 
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<Type, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<Type, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         openTag(visitor, markdownText, node)
 
-        childrenToRender(node).forEach {
-            if (it is LeafASTNode) {
-                println("WARN: visitLeaf not implemented")
+        childrenToRender(node).forEach { child ->
+            if (child is LeafASTNode) {
+                visitor.visitLeaf(child)
             } else {
-                it.accept(visitor)
+                child.accept(visitor)
             }
         }
 

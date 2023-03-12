@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.ast.ASTNode
@@ -17,7 +18,7 @@ import react.dom.html.ReactHTML.code
 class CodeSpanElementProvider<Parent> :
     NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val nodes = node.children.subList(1, node.children.size - 1)
         val output = nodes.joinToString(separator = " ") { HtmlGenerator.leafText(markdownText, it, false) }.trim()
         visitor.consumeTagOpen(node, code)

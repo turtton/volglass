@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
@@ -36,7 +37,7 @@ class ImageElementProcessor<Parent>(linkMap: LinkMap, baseURI: URI?) : LinkEleme
         }
     }
 
-    override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consumeTagOpen(node, img.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
         visitor.consume {
             this.unsafeCast<ImgHTMLAttributes<HTMLImageElement>>().apply {

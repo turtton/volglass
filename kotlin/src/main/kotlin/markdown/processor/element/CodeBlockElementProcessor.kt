@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
@@ -17,7 +18,7 @@ import react.dom.html.ReactHTML.pre
  * Related [CommonMarkFlavourDescriptor]:L132-149(MarkdownElementTypes.CODE_BLOCK)
  */
 class CodeBlockElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consumeTagOpen(node, pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
         visitor.consumeTagOpen(node, code)
 

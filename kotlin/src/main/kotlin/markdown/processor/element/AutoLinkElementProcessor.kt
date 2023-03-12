@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.ast.ASTNode
@@ -20,7 +21,7 @@ import react.dom.html.ReactHTML.a
  * Related [CommonMarkFlavourDescriptor]:L92-108(MarkdownElementTypes.AUTOLINK)
  */
 class AutoLinkElementProcessor<Parent>(private val useSafeLinks: Boolean = true) : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val linkText = node.getTextInNode(markdownText)
         val linkLabel = EntityConverter.replaceEntities(
             linkText.subSequence(1, linkText.length - 1),

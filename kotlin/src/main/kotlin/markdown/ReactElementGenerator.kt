@@ -5,6 +5,7 @@ import org.intellij.markdown.IElementType
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.acceptChildren
 import org.intellij.markdown.ast.visitors.Visitor
+import org.intellij.markdown.html.HtmlGenerator
 import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.ElementType
@@ -42,6 +43,13 @@ class ReactElementGenerator<Parent>(
         override fun visitNode(node: ASTNode) {
             providers[node.type]?.processNode(this, markdownText, node)
                 ?: node.acceptChildren(this)
+        }
+
+        override fun visitLeaf(node: ASTNode) {
+            providers[node.type]?.processNode(this, markdownText, node)
+                ?: consume {
+                    +HtmlGenerator.leafText(markdownText, node).toString()
+                }
         }
 
         override fun consumeTagOpen(node: ASTNode, tag: ElementType<HTMLAttributes<HTMLElement>>, autoClose: Boolean) {

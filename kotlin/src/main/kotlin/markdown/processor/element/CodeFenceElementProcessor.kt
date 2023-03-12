@@ -1,6 +1,7 @@
 package markdown.processor.element
 
 import csstype.ClassName
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
@@ -20,7 +21,7 @@ import react.dom.html.ReactHTML.pre
  */
 @Suppress("KDocUnresolvedReference")
 class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val indentBefore = node.getTextInNode(markdownText).commonPrefixWith(" ".repeat(10)).length
         visitor.consumeTagOpen(node, pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
 

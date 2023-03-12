@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
@@ -16,7 +17,7 @@ import react.dom.html.HTMLAttributes
  */
 class HtmlBlockElementProcessor<Parent> :
     NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consume {
             node.children.forEach {
                 if (it.type in listOf(MarkdownTokenTypes.EOL, MarkdownTokenTypes.HTML_BLOCK_CONTENT)) {

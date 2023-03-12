@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.SingleParagraphNodeProvider
 import org.intellij.markdown.MarkdownElementTypes
@@ -21,7 +22,7 @@ class ListItemElementProcessor<Parent : HTMLAttributes<HTMLElement>> :
         LiHTMLAttributes<HTMLLIElement>,
         IntrinsicType<LiHTMLAttributes<HTMLLIElement>>,
         >(li) {
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         if (node !is ListItemCompositeNode) error("Incorrect node type Expected: ListItemCompositeNode but: $node")
 
         openTag(visitor, markdownText, node)

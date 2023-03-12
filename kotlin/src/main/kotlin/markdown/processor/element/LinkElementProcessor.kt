@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import markdown.processor.TransparentInlineHolderNodeProcessor
@@ -27,7 +28,7 @@ abstract class LinkElementProcessor<Parent>(
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     abstract fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo?
 
-    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val info = getRenderInfo(markdownText, node)
             ?: return fallBackProvider.processNode(visitor, markdownText, node)
         renderLink(visitor, markdownText, node, info)
@@ -50,7 +51,7 @@ abstract class LinkElementProcessor<Parent>(
         return baseURI?.resolveToStringSafe(destination.toString()) ?: destination.toString()
     }
 
-    open fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+    open fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consumeTagOpen(node, a.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
         when (val destination = resolveUrl(info.destination)) {
             is Destination.Router -> visitor.consume {
@@ -77,7 +78,7 @@ abstract class LinkElementProcessor<Parent>(
 fun <Parent> LinkElementProcessor<Parent>.makeXssSafe(useSafeLinks: Boolean = true): LinkElementProcessor<Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     if (!useSafeLinks) return this
     return object : LinkElementProcessor<Parent>(baseURI, resolveAnchors) {
-        override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor {
+        override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
             this@makeXssSafe.renderLink(visitor, markdownText, node, info)
         }
 
