@@ -29,13 +29,16 @@ class ReactElementGenerator<Parent>(
         private val providers: Map<IElementType, NodeProcessor<ElementType<HTMLAttributes<HTMLElement>>, Parent>>,
         private val markdownText: String,
     ) : TagConsumer<ElementType<HTMLAttributes<HTMLElement>>, Parent>, Visitor, LeafVisitor where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
-        private val resultElements = mutableListOf<FC<Props>>()
-        private val childElements = mutableListOf<FC<Props>>()
+        private val elementLists = mutableListOf<MutableList<FC<Props>>>()
         private val tagStacker = mutableListOf<ElementType<HTMLAttributes<HTMLElement>>>()
         private val elementProcessor = mutableListOf<Parent.() -> Unit>()
-        val result: FC<Props> get() = FC {
-            resultElements.forEach {
-                it {}
+        val result: FC<Props> get() = elementLists.toList().let { results ->
+            FC {
+                results.forEach { elements ->
+                    elements.forEach {
+                        it()
+                    }
+                }
             }
         }
         override fun visitNode(node: ASTNode) {
@@ -53,13 +56,13 @@ class ReactElementGenerator<Parent>(
         override fun consumeTagOpen(node: ASTNode, tag: ElementType<HTMLAttributes<HTMLElement>>, autoClose: Boolean) {
             tagStacker += tag
             elementProcessor += {}
+            elementLists.add(mutableListOf())
         }
 
         override fun consumeTagClose(tag: ElementType<HTMLAttributes<HTMLElement>>) {
             val target = tagStacker.removeLast()
             if (target != tag) error("Trying to close $tag but actual $target")
-            val child = childElements.toList()
-            childElements.clear()
+            val child = elementLists.removeLast()
             val processor = elementProcessor.removeLast()
             val element = FC<Props> {
                 target {
@@ -71,10 +74,10 @@ class ReactElementGenerator<Parent>(
                     }
                 }
             }
-            if (tagStacker.isEmpty()) {
-                resultElements += element
+            if (elementLists.isEmpty()) {
+                elementLists.add(mutableListOf(element))
             } else {
-                childElements += element
+                elementLists.last() += element
             }
         }
 
