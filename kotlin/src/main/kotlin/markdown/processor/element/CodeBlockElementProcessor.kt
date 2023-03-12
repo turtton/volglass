@@ -25,8 +25,8 @@ class CodeBlockElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
         node.children.forEach { child ->
             if (child.type == MarkdownTokenTypes.CODE_LINE) {
                 visitor.consume {
-                    // TODO check behavior
-                    +HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4).toString()
+                    val codes = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4)
+                    +"$codes\n"
                 }
             }
         }
