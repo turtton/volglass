@@ -35,8 +35,9 @@ class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
         val configurations = arrayListOf<Parent.() -> Unit>()
         childrenToConsider.forEach { child ->
             if (isCodeTagOpened && child.type in listOf(MarkdownTokenTypes.CODE_FENCE_CONTENT, MarkdownTokenTypes.EOL)) {
+                val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore)
                 visitor.consume {
-                    +HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore).toString()
+                    +code.toString()
                 }
                 lastChildWasContent = child.type == MarkdownTokenTypes.CODE_FENCE_CONTENT
             }

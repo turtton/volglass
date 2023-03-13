@@ -39,11 +39,14 @@ class ImageElementProcessor<Parent>(linkMap: LinkMap, baseURI: URI?) : LinkEleme
 
     override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consumeTagOpen(node, img.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
+        val url = makeAbsoluteUrl(info.destination)
+        val label = getPlainTextFrom(info.label, markdownText)
+        val title = info.title?.toString()
         visitor.consume {
-            this.unsafeCast<ImgHTMLAttributes<HTMLImageElement>>().apply {
-                src = makeAbsoluteUrl(info.destination)
-                alt = getPlainTextFrom(info.label, markdownText)
-                title = info.title?.toString()
+            this.unsafeCast<ImgHTMLAttributes<HTMLImageElement>>().also {
+                it.src = url
+                it.alt = label
+                it.title = title
             }
         }
         visitor.consumeTagClose(img.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())

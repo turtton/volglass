@@ -48,8 +48,11 @@ class ReactElementGenerator<Parent>(
 
         override fun visitLeaf(node: ASTNode) {
             providers[node.type]?.processNode(this, markdownText, node)
-                ?: consume {
-                    +HtmlGenerator.leafText(markdownText, node).toString()
+                ?: run {
+                    val leafText = HtmlGenerator.leafText(markdownText, node)
+                    consume {
+                        +leafText.toString()
+                    }
                 }
         }
 

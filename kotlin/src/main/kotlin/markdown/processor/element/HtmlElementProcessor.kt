@@ -19,10 +19,11 @@ import react.dom.html.ReactHTML.div
 class HtmlElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
+        val html = node.getTextInNode(markdownText)
         visitor.consume {
             div {
                 dangerouslySetInnerHTML = jso {
-                    __html = node.getTextInNode(markdownText).toString()
+                    __html = html.toString()
                 }
             }
         }
