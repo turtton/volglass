@@ -29,9 +29,8 @@ class ReactElementGenerator<Parent>(
         private val providers: Map<IElementType, NodeProcessor<ElementType<HTMLAttributes<HTMLElement>>, Parent>>,
         private val markdownText: String,
     ) : TagConsumer<ElementType<HTMLAttributes<HTMLElement>>, Parent>, Visitor, LeafVisitor where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
-        private val elementLists = mutableListOf<MutableList<FC<Props>>>()
+        private val elementLists = mutableListOf<MutableList<ChildrenBuilder.() -> Unit>>()
         private val tagStacker = mutableListOf<ElementType<HTMLAttributes<HTMLElement>>>()
-        private val elementProcessor = mutableListOf<Parent.() -> Unit>()
         val result: FC<Props> get() = elementLists.toList().let { results ->
             FC {
                 results.forEach { elements ->
@@ -58,7 +57,6 @@ class ReactElementGenerator<Parent>(
 
         override fun consumeTagOpen(node: ASTNode, tag: ElementType<HTMLAttributes<HTMLElement>>, autoClose: Boolean) {
             tagStacker += tag
-            elementProcessor += {}
             elementLists.add(mutableListOf())
         }
 
@@ -66,14 +64,10 @@ class ReactElementGenerator<Parent>(
             val target = tagStacker.removeLast()
             if (target != tag) error("Trying to close $tag but actual $target")
             val child = elementLists.removeLast()
-            val processor = elementProcessor.removeLast()
-            val element = FC<Props> {
+            val element: ChildrenBuilder.() -> Unit = {
                 target {
-                    @Suppress("UNCHECKED_CAST")
-                    val parent = this as Parent
-                    parent.processor()
                     child.forEach {
-                        it {}
+                        it()
                     }
                 }
             }
@@ -85,10 +79,9 @@ class ReactElementGenerator<Parent>(
         }
 
         override fun consume(invoker: Parent.() -> Unit) {
-            val lastProcess = elementProcessor.removeLast()
-            elementProcessor += {
-                lastProcess()
-                invoker()
+            elementLists.last() += {
+                @Suppress("UNCHECKED_CAST")
+                (this as Parent).invoker()
             }
         }
     }
