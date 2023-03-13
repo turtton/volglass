@@ -62,7 +62,10 @@ abstract class LinkElementProcessor<Parent>(
                 this.unsafeCast<AnchorHTMLAttributes<HTMLAnchorElement>>().href = destination.link.toString()
             }
         }
-        labelProvider.processNode(visitor, markdownText, node)
+        visitor.consume {
+            title = info.title?.toString()
+        }
+        labelProvider.processNode(visitor, markdownText, info.label)
         visitor.consumeTagClose(a.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
     }
 
