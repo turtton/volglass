@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import kotlinx.js.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -10,6 +11,7 @@ import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
+import react.dom.html.ReactHTML.div
 
 /**
  * Related [CommonMarkFlavourDescriptor]:L55-59(MarkdownTokenTypes.HTML_TAG)
@@ -18,7 +20,11 @@ class HtmlElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consume {
-            +node.getTextInNode(markdownText).toString()
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = node.getTextInNode(markdownText).toString()
+                }
+            }
         }
     }
 }
