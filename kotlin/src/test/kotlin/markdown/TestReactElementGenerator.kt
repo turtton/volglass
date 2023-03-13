@@ -12,6 +12,11 @@ import react.dom.html.ReactHTML.code
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.em
 import react.dom.html.ReactHTML.h1
+import react.dom.html.ReactHTML.h2
+import react.dom.html.ReactHTML.h3
+import react.dom.html.ReactHTML.h4
+import react.dom.html.ReactHTML.h5
+import react.dom.html.ReactHTML.h6
 import react.dom.html.ReactHTML.hr
 import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.p
@@ -613,6 +618,643 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample50() = doTest(
         markdown = "_____________________________________\n",
     ) {
+        hr()
+    }
+
+    @Test
+    fun testThematicBreaksExample51() = doTest(
+        markdown = " - - -\n",
+    ) {
+        hr()
+    }
+
+    @Test
+    fun testThematicBreaksExample52() = doTest(
+        markdown = " **  * ** * ** * **\n",
+    ) {
+        hr()
+    }
+
+    @Test
+    fun testThematicBreaksExample53() = doTest(
+        markdown = "-     -      -      -\n",
+    ) {
+        hr()
+    }
+
+    @Test
+    fun testThematicBreaksExample54() = doTest(
+        markdown = "- - - -    \n",
+    ) {
+        hr()
+    }
+
+    @Test
+    fun testThematicBreaksExample55() = doTest(
+        markdown = "_ _ _ _ a\n\na------\n\n---a---\n",
+    ) {
+        p {
+            +"_"
+            +" _ "
+            +"_"
+            +" _ a"
+        }
+        p {
+            +"a------"
+        }
+        p {
+            +"---a---"
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample56() = doTest(
+        markdown = " *-*\n",
+    ) {
+        p {
+            em {
+                +"-"
+            }
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample57() = doTest(
+        markdown = "- foo\n***\n- bar\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+        }
+        hr()
+        ul {
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample58() = doTest(
+        markdown = "Foo\n***\nbar\n",
+    ) {
+        p {
+            +"Foo"
+        }
+        hr()
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample59() = doTest(
+        markdown = "Foo\n---\nbar\n",
+    ) {
+        h2 {
+            +"Foo"
+        }
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample60() = doTest(
+        markdown = "* Foo\n* * *\n* Bar\n",
+    ) {
+        ul {
+            li {
+                +"Foo"
+            }
+        }
+        hr()
+        ul {
+            li {
+                +"Bar"
+            }
+        }
+    }
+
+    @Test
+    fun testThematicBreaksExample61() = doTest(
+        markdown = "- Foo\n- * * *\n",
+    ) {
+        ul {
+            li {
+                +"Foo"
+            }
+            li {
+                hr()
+            }
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample62() = doTest(
+        markdown = "# foo\n## foo\n### foo\n#### foo\n##### foo\n###### foo\n",
+    ) {
+        h1 {
+            +"foo"
+        }
+        h2 {
+            +"foo"
+        }
+        h3 {
+            +"foo"
+        }
+        h4 {
+            +"foo"
+        }
+        h5 {
+            +"foo"
+        }
+        h6 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample63() = doTest(
+        markdown = "####### foo\n",
+    ) {
+        p {
+            +"#######"
+            +" "
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample64() = doTest(
+        markdown = "#5 bolt\n\n#hashtag\n",
+    ) {
+        p {
+            +"#5 bolt"
+        }
+        p {
+            +"#hashtag"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample65() = doTest(
+        markdown = "\\## foo\n",
+    ) {
+        p {
+            +"##"
+            +" "
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample66() = doTest(
+        markdown = "# foo *bar* \\*baz\\*\n",
+    ) {
+        h1 {
+            +"foo"
+            +" "
+            em {
+                +"bar"
+            }
+            +" "
+            +"*baz*"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample67() = doTest(
+        markdown = "#                  foo                     \n",
+    ) {
+        h1 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample68() = doTest(
+        markdown = " ### foo\n  ## foo\n   # foo\n",
+    ) {
+        h3 {
+            +"foo"
+        }
+        h2 {
+            +"foo"
+        }
+        h1 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample69() = doTest(
+        markdown = "    # foo\n",
+    ) {
+        pre {
+            code {
+                +"# foo"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testATXHeadingsExample70() = doTest(
+        markdown = "foo\n    # bar\n",
+    ) {
+        p {
+            +"foo\n# bar"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample71() = doTest(
+        markdown = "## foo ##\n  ###   bar    ###\n",
+    ) {
+        h2 {
+            +"foo"
+        }
+        h3 {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample72() = doTest(
+        markdown = "# foo ##################################\n##### foo ##\n",
+    ) {
+        h1 {
+            +"foo"
+        }
+        h5 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample73() = doTest(
+        markdown = "### foo ###     \n",
+    ) {
+        h3 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample74() = doTest(
+        markdown = "### foo ### b\n",
+    ) {
+        h3 {
+            +"foo"
+            +" "
+            +"###"
+            +" "
+            +"b"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample75() = doTest(
+        markdown = "# foo#\n",
+    ) {
+        h1 {
+            +"foo#"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample76() = doTest(
+        markdown = "### foo \\###\n## foo #\\##\n# foo \\#\n",
+    ) {
+        h3 {
+            +"foo"
+            +" "
+            +"###"
+        }
+        h2 {
+            +"foo"
+            +" "
+            +"###"
+        }
+        h1 {
+            +"foo"
+            +" "
+            +"#"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample77() = doTest(
+        markdown = "****\n## foo\n****\n",
+    ) {
+        hr()
+        h2 {
+            +"foo"
+        }
+        hr()
+    }
+
+    @Test
+    fun testATXHeadingsExample78() = doTest(
+        markdown = "Foo bar\n# baz\nBar foo\n",
+    ) {
+        p {
+            +"Foo bar"
+        }
+        h1 {
+            +"baz"
+        }
+        p {
+            +"Bar foo"
+        }
+    }
+
+    @Test
+    fun testATXHeadingsExample79() = doTest(
+        markdown = "## \n#\n### ###\n",
+    ) {
+        h2()
+        h1()
+        h3()
+    }
+
+    @Test
+    fun testSetextHeadingsExample80() = doTest(
+        markdown = "Foo *bar*\n=========\n\nFoo *bar*\n---------\n",
+    ) {
+        h1 {
+            +"Foo"
+            +" "
+            em {
+                +"bar"
+            }
+        }
+        h2 {
+            +"Foo"
+            +" "
+            em {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testSetextHeadingsExample81() = doTest(
+        markdown = "Foo *bar\nbaz*\n====\n",
+    ) {
+        h1 {
+            +"Foo "
+            em {
+                +"bar\nbaz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testSetextHeadingsExample82() = doTest(
+        markdown = "  Foo *bar\nbaz*\t\n====\n",
+    ) {
+        h1 {
+            +"Foo "
+            em {
+                +"bar\nbaz"
+            }
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample83() = doTest(
+        markdown = "Foo\n-------------------------\n\nFoo\n=\n",
+    ) {
+        h2 {
+            +"Foo"
+        }
+        h1 {
+            +"Foo"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample84() = doTest(
+        markdown = "   Foo\n---\n\n  Foo\n-----\n\n  Foo\n  ===\n",
+    ) {
+        h2 {
+            +"Foo"
+        }
+        h2 {
+            +"Foo"
+        }
+        h1 {
+            +"Foo"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample85() = doTest(
+        markdown = "    Foo\n    ---\n\n    Foo\n---\n",
+    ) {
+        pre {
+            code {
+                +"Foo"
+                +"\n"
+                +"---"
+                +"\n"
+                +"\n"
+                +"Foo"
+                +"\n"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample86() = doTest(
+        markdown = "Foo\n   ----      \n",
+    ) {
+        h2 {
+            +"Foo"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testSetextHeadingsExample87() = doTest(
+        markdown = "Foo\n    ---\n",
+    ) {
+        p {
+            +"Foo\n---"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample88() = doTest(
+        markdown = "Foo\n= =\n\nFoo\n--- -\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            +"="
+            +" "
+            +"="
+        }
+        p {
+            +"Foo"
+        }
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample89() = doTest(
+        markdown = "Foo  \n-----\n",
+    ) {
+        h2 {
+            +"Foo"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample90() = doTest(
+        markdown = "Foo\\\n----\n",
+    ) {
+        h2 {
+            +"Foo\\"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample91() = doTest(
+        markdown = "`Foo\n----\n`\n\n<a title=\"a lot\n---\nof dashes\"/>\n",
+    ) {
+        h2 {
+            +"`"
+            +"Foo"
+        }
+        p {
+            +"`"
+        }
+        h2 {
+            +"&lt;"
+            +"a title="
+            +"&quot;"
+            +"a lot"
+        }
+        p {
+            +"of dashes"
+            +"&quot;"
+            +"/"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample92() = doTest(
+        markdown = "> Foo\n---\n",
+    ) {
+        blockquote {
+            p {
+                +"Foo"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample93() = doTest(
+        markdown = "> foo\nbar\n===\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+                +"\n"
+                +"bar"
+                +"\n"
+                +"==="
+            }
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample94() = doTest(
+        markdown = "- Foo\n---\n",
+    ) {
+        ul {
+            li {
+                +"Foo"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    @Ignore
+    fun testSetextHeadingsExample95() = doTest(
+        markdown = "Foo\nBar\n---\n",
+    ) {
+        h2 {
+            +"Foo\nBar"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample96() = doTest(
+        markdown = "---\nFoo\n---\nBar\n---\nBaz\n",
+    ) {
+        hr()
+        h2 {
+            +"Foo"
+        }
+        h2 {
+            +"Bar"
+        }
+        p {
+            +"Baz"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample97() = doTest(
+        markdown = "\n====\n",
+    ) {
+        p {
+            +"===="
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample98() = doTest(
+        markdown = "---\n---\n",
+    ) {
+        hr()
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample99() = doTest(
+        markdown = "- foo\n-----\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample100() = doTest(
+        markdown = "    foo\n---\n",
+    ) {
+        pre {
+            code {
+                +"foo"
+                +"\n"
+            }
+        }
         hr()
     }
 }
