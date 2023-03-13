@@ -19,6 +19,7 @@ import react.dom.html.ReactHTML.h5
 import react.dom.html.ReactHTML.h6
 import react.dom.html.ReactHTML.hr
 import react.dom.html.ReactHTML.li
+import react.dom.html.ReactHTML.ol
 import react.dom.html.ReactHTML.p
 import react.dom.html.ReactHTML.pre
 import react.dom.html.ReactHTML.ul
@@ -1256,5 +1257,305 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
         hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample101() = doTest(
+        markdown = "> foo\n-----\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testSetextHeadingsExample102() = doTest(
+        markdown = "\\> foo\n------\n",
+    ) {
+        h2 {
+            +"&gt;"
+            +" "
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample103() = doTest(
+        markdown = "Foo\n\nbar\n---\nbaz\n",
+    ) {
+        p {
+            +"Foo"
+        }
+        h2 {
+            +"bar"
+        }
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample104() = doTest(
+        markdown = "Foo\nbar\n\n---\n\nbaz\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            +"bar"
+        }
+        hr()
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample105() = doTest(
+        markdown = "Foo\nbar\n* * *\nbaz\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            +"bar"
+        }
+        hr()
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testSetextHeadingsExample106() = doTest(
+        markdown = "Foo\nbar\n\\---\nbaz\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            +"bar"
+            +"\n"
+            +"---"
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample107() = doTest(
+        markdown = "    a simple\n      indented code block\n",
+    ) {
+        pre {
+            code {
+                +"a simple"
+                +"\n"
+                +"  indented code block"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample108() = doTest(
+        markdown = "  - foo\n\n    bar\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                p {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample109() = doTest(
+        markdown = "1.  foo\n\n    - bar\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"foo"
+                }
+                ul {
+                    li {
+                        +"bar"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample110() = doTest(
+        markdown = "    <a/>\n    *hi*\n\n    - one\n",
+    ) {
+        pre {
+            code {
+                +"&lt;a/&gt;"
+                +"\n"
+                +"*hi*"
+                +"\n"
+                +"\n"
+                +"- one"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample111() = doTest(
+        markdown = "    chunk1\n\n    chunk2\n  \n \n \n    chunk3\n",
+    ) {
+        pre {
+            code {
+                +"chunk1"
+                +"\n"
+                +"\n"
+                +"chunk2"
+                +"\n"
+                +"\n"
+                +"\n"
+                +"\n"
+                +"chunk3"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample112() = doTest(
+        markdown = "    chunk1\n      \n      chunk2\n",
+    ) {
+        pre {
+            code {
+                +"chunk1"
+                +"\n"
+                +"  "
+                +"\n"
+                +"  chunk2"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testIndentedCodeBlocksExample113() = doTest(
+        markdown = "Foo\n    bar\n\n",
+    ) {
+        p {
+            +"Foo\nbar"
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample114() = doTest(
+        markdown = "    foo\nbar\n",
+    ) {
+        pre {
+            code {
+                +"foo"
+                +"\n"
+            }
+        }
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample115() = doTest(
+        markdown = "# Heading\n    foo\nHeading\n------\n    foo\n----\n",
+    ) {
+        h1 {
+            +"Heading"
+        }
+        pre {
+            code {
+                +"foo"
+                +"\n"
+            }
+        }
+        h2 {
+            +"Heading"
+        }
+        pre {
+            code {
+                +"foo"
+                +"\n"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample116() = doTest(
+        markdown = "        foo\n    bar\n",
+    ) {
+        pre {
+            code {
+                +"    foo"
+                +"\n"
+                +"bar"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample117() = doTest(
+        markdown = "\n    \n    foo\n    \n\n",
+    ) {
+        pre {
+            code {
+                +"foo"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testIndentedCodeBlocksExample118() = doTest(
+        markdown = "    foo  \n",
+    ) {
+        pre {
+            code {
+                +"foo  "
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample119() = doTest(
+        markdown = "```\n<\n >\n```\n",
+    ) {
+        pre {
+            code {
+                +"&lt;"
+                +"\n"
+                +" &gt;"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample120() = doTest(
+        markdown = "~~~\n<\n >\n~~~\n",
+    ) {
+        pre {
+            code {
+                +"&lt;"
+                +"\n"
+                +" &gt;"
+                +"\n"
+            }
+        }
     }
 }
