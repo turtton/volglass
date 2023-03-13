@@ -25,12 +25,18 @@ class CodeBlockElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
         node.children.forEach { child ->
             if (child.type == MarkdownTokenTypes.CODE_LINE) {
                 visitor.consume {
-                    val codes = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4)
-                    +"$codes\n"
+                    +HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4).toString()
+                }
+            } else if (child.type == MarkdownTokenTypes.EOL) {
+                visitor.consume {
+                    +"\n"
                 }
             }
         }
 
+        visitor.consume {
+            +"\n"
+        }
         visitor.consumeTagClose(code)
         visitor.consumeTagClose(pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
     }

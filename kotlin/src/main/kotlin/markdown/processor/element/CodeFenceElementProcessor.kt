@@ -13,7 +13,6 @@ import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.code
-import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.pre
 
 /**
@@ -31,20 +30,19 @@ class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
         }
 
         var isCodeTagOpened = false
+        var lastChildWasContent = false
 
         val configurations = arrayListOf<Parent.() -> Unit>()
         childrenToConsider.forEach { child ->
             if (isCodeTagOpened && child.type in listOf(MarkdownTokenTypes.CODE_FENCE_CONTENT, MarkdownTokenTypes.EOL)) {
                 visitor.consume {
-                    div {
-                        // TODO check behavior
-                        +HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore).toString()
-                    }
+                    +HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore).toString()
                 }
+                lastChildWasContent = child.type == MarkdownTokenTypes.CODE_FENCE_CONTENT
             }
             if (!isCodeTagOpened && child.type == MarkdownTokenTypes.FENCE_LANG) {
                 configurations += {
-                    className = ClassName(HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0])
+                    className = ClassName("language-${HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0]}")
                 }
             }
             if (!isCodeTagOpened && child.type == MarkdownTokenTypes.EOL) {
@@ -59,6 +57,11 @@ class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
             visitor.consumeTagOpen(node, code)
             visitor.consume {
                 configurations.forEach { it() }
+            }
+        }
+        if (lastChildWasContent) {
+            visitor.consume {
+                +"\n"
             }
         }
         visitor.consumeTagClose(code)
