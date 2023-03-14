@@ -22,6 +22,9 @@ import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.ol
 import react.dom.html.ReactHTML.p
 import react.dom.html.ReactHTML.pre
+import react.dom.html.ReactHTML.table
+import react.dom.html.ReactHTML.td
+import react.dom.html.ReactHTML.tr
 import react.dom.html.ReactHTML.ul
 
 /**
@@ -410,8 +413,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
     @Test
-    // FIXME I cannot resolve this situation
     @Ignore
     fun testEntityAndNumericCharacterReferencesExample33() = doTest(
         markdown = "[foo]\n\n[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\"\n",
@@ -1555,6 +1560,1145 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
                 +" &gt;"
                 +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample121() = doTest(
+        markdown = "``\nfoo\n``\n",
+    ) {
+        p {
+            code {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample122() = doTest(
+        markdown = "```\naaa\n~~~\n```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"~~~"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample123() = doTest(
+        markdown = "~~~\naaa\n```\n~~~\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"```"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample124() = doTest(
+        markdown = "````\naaa\n```\n``````\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"```"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample125() = doTest(
+        markdown = "~~~~\naaa\n~~~\n~~~~\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"~~~"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample126() = doTest(
+        markdown = "```\n",
+    ) {
+        pre {
+            code()
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample127() = doTest(
+        markdown = "`````\n\n```\naaa\n",
+    ) {
+        pre {
+            code {
+                +"\n"
+                +"```"
+                +"\n"
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample128() = doTest(
+        markdown = "> ```\n> aaa\n\nbbb\n",
+    ) {
+        blockquote {
+            pre {
+                code {
+                    +"aaa"
+                    +"\n"
+                }
+            }
+        }
+        p {
+            +"bbb"
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample129() = doTest(
+        markdown = "```\n\n  \n```\n",
+    ) {
+        pre {
+            code {
+                +"\n"
+                +"  "
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample130() = doTest(
+        markdown = "```\n```\n",
+    ) {
+        pre {
+            code()
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample131() = doTest(
+        markdown = " ```\n aaa\naaa\n```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample132() = doTest(
+        markdown = "  ```\naaa\n  aaa\naaa\n  ```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"aaa"
+                +"\n"
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample133() = doTest(
+        markdown = "   ```\n   aaa\n    aaa\n  aaa\n   ```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +" aaa"
+                +"\n"
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample134() = doTest(
+        markdown = "    ```\n    aaa\n    ```\n",
+    ) {
+        pre {
+            code {
+                +"```"
+                +"\n"
+                +"aaa"
+                +"\n"
+                +"```"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample135() = doTest(
+        markdown = "```\naaa\n  ```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample136() = doTest(
+        markdown = "   ```\naaa\n  ```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample137() = doTest(
+        markdown = "```\naaa\n    ```\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"    ```"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testFencedCodeBlocksExample138() = doTest(
+        markdown = "``` ```\naaa\n",
+    ) {
+        p {
+            code()
+            +"\naaa"
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample139() = doTest(
+        markdown = "~~~~~~\naaa\n~~~ ~~\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+                +"~~~ ~~"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample140() = doTest(
+        markdown = "foo\n```\nbar\n```\nbaz\n",
+    ) {
+        p {
+            +"foo"
+        }
+        pre {
+            code {
+                +"bar"
+                +"\n"
+            }
+        }
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample141() = doTest(
+        markdown = "foo\n---\n~~~\nbar\n~~~\n# baz\n",
+    ) {
+        h2 {
+            +"foo"
+        }
+        pre {
+            code {
+                +"bar"
+                +"\n"
+            }
+        }
+        h1 {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample142() = doTest(
+        markdown = "```ruby\ndef foo(x)\n  return 3\nend\n```\n",
+    ) {
+        pre {
+            code {
+                className = ClassName("language-ruby")
+                +"def foo(x)"
+                +"\n"
+                +"  return 3"
+                +"\n"
+                +"end"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample143() = doTest(
+        markdown = "~~~~    ruby startline=3 \$%@#\$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n",
+    ) {
+        pre {
+            code {
+                className = ClassName("language-ruby")
+                +"def foo(x)"
+                +"\n"
+                +"  return 3"
+                +"\n"
+                +"end"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample144() = doTest(
+        markdown = "````;\n````\n",
+    ) {
+        pre {
+            code {
+                className = ClassName("language-;")
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample145() = doTest(
+        markdown = "``` aa ```\nfoo\n",
+    ) {
+        p {
+            code {
+                +"aa"
+            }
+            +"\n"
+            +"foo"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testFencedCodeBlocksExample146() = doTest(
+        markdown = "~~~ aa ``` ~~~\nfoo\n~~~\n",
+    ) {
+        pre {
+            code {
+                className = ClassName("language-aa")
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testFencedCodeBlocksExample147() = doTest(
+        markdown = "```\n``` aaa\n```\n",
+    ) {
+        pre {
+            code {
+                +"``` aaa"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample148() = doTest(
+        markdown = "<table><tr><td>\n<pre>\n**Hello**,\n\n_world_.\n</pre>\n</td></tr></table>\n",
+    ) {
+        table {
+            tr {
+                td {
+                    pre {
+                        +"**Hello**,"
+                    }
+                    p {
+                        em {
+                            +"world"
+                        }
+                        +"."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample149() = doTest(
+        markdown = "<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>\n\nokay.\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>"
+            }
+        }
+        p {
+            +"okay."
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample150() = doTest(
+        markdown = " <div>\n  *hello*\n         <foo><a>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = " <div>\n  *hello*\n         <foo><a>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample151() = doTest(
+        markdown = "</div>\n*foo*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "</div>\n*foo*\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME Cannot support this case.
+     *
+     * expected:
+     * ```html
+     *  <div class="foo">
+     *      <p>
+     *          <em>Markdown<em>
+     *      </p>
+     *  </div>
+     *  ```
+     *  actual:
+     *  ```html
+     *  <div class="foo">(</div> <-automatically complemented)
+     *  <p>
+     *      <em>Markdown<em>
+     *  </p>
+     *  (<div> <-automatically complemented)</div>
+     *  ```
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample152() = doTest(
+        markdown = "<DIV CLASS=\"foo\">\n\n*Markdown*\n\n</DIV>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<DIV CLASS=\"foo\">\n<p><em>Markdown</em></p>\n</DIV>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample153() = doTest(
+        markdown = "<div id=\"foo\"\n  class=\"bar\">\n</div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div id=\"foo\"\n  class=\"bar\">\n</div>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample154() = doTest(
+        markdown = "<div id=\"foo\" class=\"bar\n  baz\">\n</div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div id=\"foo\" class=\"bar\n  baz\">\n</div>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample155() = doTest(
+        markdown = "<div>\n*foo*\n\n*bar*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div>\n*foo*\n<p><em>bar</em></p>\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample156() = doTest(
+        markdown = "<div id=\"foo\"\n*hi*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div id=\"foo\"\n*hi*\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample157() = doTest(
+        markdown = "<div class\nfoo\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div class\nfoo\n"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample158() = doTest(
+        markdown = "<div *???-&&&-<---\n*foo*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div *???-&&&-<---\n*foo*\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample159() = doTest(
+        markdown = "<div><a href=\"bar\">*foo*</a></div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div><a href=\"bar\">*foo*</a></div>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample160() = doTest(
+        markdown = "<table><tr><td>\nfoo\n</td></tr></table>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<table><tr><td>\nfoo\n</td></tr></table>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample161() = doTest(
+        markdown = "<div></div>\n``` c\nint x = 33;\n```\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div></div>\n``` c\nint x = 33;\n```\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample162() = doTest(
+        markdown = "<a href=\"foo\">\n*bar*\n</a>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<a href=\"foo\">\n*bar*\n</a>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample163() = doTest(
+        markdown = "<Warning>\n*bar*\n</Warning>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<Warning>\n*bar*\n</Warning>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample164() = doTest(
+        markdown = "<i class=\"foo\">\n*bar*\n</i>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<i class=\"foo\">\n*bar*\n</i>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample165() = doTest(
+        markdown = "</ins>\n*bar*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "</ins>\n*bar*\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample166() = doTest(
+        markdown = "<del>\n*foo*\n</del>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<del>\n*foo*\n</del>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample167() = doTest(
+        markdown = "<del>\n\n*foo*\n\n</del>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<del>\n<p><em>foo</em></p>\n</del>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample168() = doTest(
+        markdown = "<del>*foo*</del>\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<p><del><em>foo</em></del></p>\n"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample169() = doTest(
+        markdown = "<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print \$ parseTags tags\n</code></pre>\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print \$ parseTags tags\n</code></pre>"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample170() = doTest(
+        markdown = "<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample171() = doTest(
+        markdown = "<textarea>\n\n*foo*\n\n_bar_\n\n</textarea>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<textarea>\n\n*foo*\n\n_bar_\n\n</textarea>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample172() = doTest(
+        markdown = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\np {color:blue;}\n</style>\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\np {color:blue;}\n</style>"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample173() = doTest(
+        markdown = "<style\n  type=\"text/css\">\n\nfoo\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<style\n  type=\"text/css\">\n\nfoo\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample174() = doTest(
+        markdown = "> <div>\n> foo\n\nbar\n",
+    ) {
+        blockquote {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<div>\nfoo"
+                }
+            }
+        }
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample175() = doTest(
+        markdown = "- <div>\n- foo\n",
+    ) {
+        ul {
+            li {
+                div {
+                    dangerouslySetInnerHTML = jso {
+                        __html = "<div>"
+                    }
+                }
+            }
+            li {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample176() = doTest(
+        markdown = "<style>p{color:red;}</style>\n*foo*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<style>p{color:red;}</style>"
+            }
+        }
+        p {
+            em {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample177() = doTest(
+        markdown = "<!-- foo -->*bar*\n*baz*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<!-- foo -->*bar*"
+            }
+        }
+        p {
+            em {
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample178() = doTest(
+        markdown = "<script>\nfoo\n</script>1. *bar*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<script>\nfoo\n</script>1. *bar*"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample179() = doTest(
+        markdown = "<!-- Foo\n\nbar\n   baz -->\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<!-- Foo\n\nbar\n   baz -->"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample180() = doTest(
+        markdown = "<?php\n\n  echo '>';\n\n?>\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<?php\n\n  echo '>';\n\n?>"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample181() = doTest(
+        markdown = "<!DOCTYPE html>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<!DOCTYPE html>"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample182() = doTest(
+        markdown = "<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>\nokay\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>"
+            }
+        }
+        p {
+            +"okay"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample183() = doTest(
+        markdown = "  <!-- foo -->\n\n    <!-- foo -->\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "  <!-- foo -->\n<pre><code>&lt;!-- foo --&gt;\n</code></pre>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample184() = doTest(
+        markdown = "  <div>\n\n    <div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "  <div>"
+            }
+        }
+        pre {
+            code {
+                +"&lt;div&gt;"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample185() = doTest(
+        markdown = "Foo\n<div>\nbar\n</div>\n",
+    ) {
+        p {
+            +"Foo"
+        }
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div>\nbar\n</div>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample186() = doTest(
+        markdown = "<div>\nbar\n</div>\n*foo*\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div>\nbar\n</div>\n*foo*\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample187() = doTest(
+        markdown = "Foo\n<a href=\"bar\">\nbaz\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"bar\">"
+                }
+            }
+            +"\n"
+            +"baz"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample188() = doTest(
+        markdown = "<div>\n\n*Emphasized* text.\n\n</div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div>\n<p><em>Emphasized</em> text.</p>\n</div>\n"
+            }
+        }
+    }
+
+    @Test
+    fun testHTMLBlocksExample189() = doTest(
+        markdown = "<div>\n*Emphasized* text.\n</div>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<div>\n*Emphasized* text.\n</div>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample190() = doTest(
+        markdown = "<table>\n\n<tr>\n\n<td>\nHi\n</td>\n\n</tr>\n\n</table>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<table>\n<tr>\n<td>\nHi\n</td>\n</tr>\n</table>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testHTMLBlocksExample152]
+     */
+    @Test
+    @Ignore
+    fun testHTMLBlocksExample191() = doTest(
+        markdown = "<table>\n\n  <tr>\n\n    <td>\n      Hi\n    </td>\n\n  </tr>\n\n</table>\n",
+    ) {
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<table>\n  <tr>\n<pre><code>&lt;td&gt;\n  Hi\n&lt;/td&gt;\n</code></pre>\n  </tr>\n</table>\n"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample192() = doTest(
+        markdown = "[foo]: /url \"title\"\n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample193() = doTest(
+        markdown = "   [foo]: \n      /url  \n           'the title'  \n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "the title"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample194() = doTest(
+        markdown = "[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n",
+    ) {
+        p {
+            a {
+                href = "my_(url)"
+                title = "title (with params)"
+                +"Foo*bar]"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample195() = doTest(
+        markdown = "[Foo bar]:\n<my url>\n'title'\n\n[Foo bar]\n",
+    ) {
+        p {
+            a {
+                href = "my%20url"
+                title = "title"
+                +"Foo bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample196() = doTest(
+        markdown = "[foo]: /url '\ntitle\nline1\nline2\n'\n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "\ntitle\nline1\nline2\n"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample197() = doTest(
+        markdown = "[foo]: /url 'title\n\nwith blank line'\n\n[foo]\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +":"
+            +" "
+            +"/url"
+            +" "
+            +"'"
+            +"title"
+        }
+        p {
+            +"with blank line"
+            +"'"
+        }
+        p {
+            +"["
+            +"foo"
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample198() = doTest(
+        markdown = "[foo]:\n/url\n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample199() = doTest(
+        markdown = "[foo]:\n\n[foo]\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +":"
+        }
+        p {
+            +"["
+            +"foo"
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample200() = doTest(
+        markdown = "[foo]: <>\n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = ""
+                +"foo"
             }
         }
     }
