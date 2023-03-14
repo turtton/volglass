@@ -30,7 +30,7 @@ class HtmlBlockElementProcessor<Parent> :
         visitor.consume {
             div {
                 dangerouslySetInnerHTML = jso {
-                    __html = "$html\n"
+                    __html = html
                 }
             }
         }
