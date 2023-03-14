@@ -36,8 +36,8 @@ fun <Parent> createReactElementGeneratingProcessors(linkMap: LinkMap, baseURI: U
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =
     mapOf(
         MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(body),
-        MarkdownElementTypes.HTML_BLOCK to HtmlElementProcessor(),
-        MarkdownTokenTypes.HTML_TAG to HtmlBlockElementProcessor(),
+        MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),
+        MarkdownTokenTypes.HTML_TAG to HtmlElementProcessor(),
         MarkdownElementTypes.BLOCK_QUOTE to SimpleElementNodeProcessor(blockquote),
         MarkdownElementTypes.ORDERED_LIST to OrderedListElementProcessor(),
         MarkdownElementTypes.UNORDERED_LIST to SimpleElementNodeProcessor(ul),
