@@ -2702,4 +2702,747 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
     }
+
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample201() = doTest(
+        markdown = "[foo]: <bar>(baz)\n\n[foo]\n",
+    ) {
+        p {
+            +"[foo]: <bar>(baz)</p>\\n<p>[foo]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample202() = doTest(
+        markdown = "[foo]: /url\\bar\\*baz \"foo\\\"bar\\baz\"\n\n[foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url%5Cbar*baz"
+                title = "foo&quot;bar\\baz"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample203() = doTest(
+        markdown = "[foo]\n\n[foo]: url\n",
+    ) {
+        p {
+            a {
+                href = "url"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample204() = doTest(
+        markdown = "[foo]\n\n[foo]: first\n[foo]: second\n",
+    ) {
+        p {
+            a {
+                href = "first"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample205() = doTest(
+        markdown = "[FOO]: /url\n\n[Foo]\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                +"Foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample206() = doTest(
+        markdown = "[ΑΓΩ]: /φου\n\n[αγω]\n",
+    ) {
+        p {
+            a {
+                href = "/%CF%86%CE%BF%CF%85"
+                +"αγω"
+            }
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample207() = doTest(
+        markdown = "[foo]: /url\n",
+    ) {}
+
+    @Test
+    fun testLinkReferenceDefinitionsExample208() = doTest(
+        markdown = "[\nfoo\n]: /url\nbar\n",
+    ) {
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample209() = doTest(
+        markdown = "[foo]: /url \"title\" ok\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +":"
+            +" "
+            +"/url"
+            +" "
+            +"&quot;"
+            +"title"
+            +"&quot;"
+            +" "
+            +"ok"
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample210() = doTest(
+        markdown = "[foo]: /url\n\"title\" ok\n",
+    ) {
+        p {
+            +"&quot;"
+            +"title"
+            +"&quot;"
+            +" "
+            +"ok"
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample211() = doTest(
+        markdown = "    [foo]: /url \"title\"\n\n[foo]\n",
+    ) {
+        pre {
+            code {
+                +"[foo]: /url &quot;title&quot;"
+                +"\n"
+            }
+        }
+        p {
+            +"["
+            +"foo"
+            +"]"
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample212() = doTest(
+        markdown = "```\n[foo]: /url\n```\n\n[foo]\n",
+    ) {
+        pre {
+            code {
+                +"[foo]: /url"
+                +"\n"
+            }
+        }
+        p {
+            +"["
+            +"foo"
+            +"]"
+        }
+    }
+
+    @Test
+    fun testLinkReferenceDefinitionsExample213() = doTest(
+        markdown = "Foo\n[bar]: /baz\n\n[bar]\n",
+    ) {
+        p {
+            +"Foo"
+            +"\n"
+            +"["
+            +"bar"
+            +"]"
+            +":"
+            +" "
+            +"/baz"
+        }
+        p {
+            +"["
+            +"bar"
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample214() = doTest(
+        markdown = "# [Foo]\n[foo]: /url\n> bar\n",
+    ) {
+        h1 {
+            a {
+                href = "/url"
+                +"Foo"
+            }
+        }
+        blockquote {
+            p {
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample215() = doTest(
+        markdown = "[foo]: /url\nbar\n===\n[foo]\n",
+    ) {
+        h1 {
+            +"bar"
+        }
+        p {
+            a {
+                href = "/url"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample216() = doTest(
+        markdown = "[foo]: /url\n===\n[foo]\n",
+    ) {
+        p {
+            +"==="
+            a {
+                href = "/url"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample217() = doTest(
+        markdown = "[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n",
+    ) {
+        p {
+            a {
+                href = "/foo-url"
+                title = "foo"
+                +"foo"
+            }
+            a {
+                href = "/bar-url"
+                title = "bar"
+                +"bar"
+            }
+            a {
+                href = "/baz-url"
+                +"baz"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinkReferenceDefinitionsExample218() = doTest(
+        markdown = "[foo]\n\n> [foo]: /url\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                +"foo"
+            }
+        }
+        blockquote()
+    }
+
+    @Test
+    fun testParagraphsExample219() = doTest(
+        markdown = "aaa\n\nbbb\n",
+    ) {
+        p {
+            +"aaa"
+        }
+        p {
+            +"bbb"
+        }
+    }
+
+    @Test
+    fun testParagraphsExample220() = doTest(
+        markdown = "aaa\nbbb\n\nccc\nddd\n",
+    ) {
+        p {
+            +"aaa"
+            +"\n"
+            +"bbb"
+        }
+        p {
+            +"ccc"
+            +"\n"
+            +"ddd"
+        }
+    }
+
+    @Test
+    fun testParagraphsExample221() = doTest(
+        markdown = "aaa\n\n\nbbb\n",
+    ) {
+        p {
+            +"aaa"
+        }
+        p {
+            +"bbb"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testParagraphsExample222() = doTest(
+        markdown = "  aaa\n bbb\n",
+    ) {
+        p {
+            +"aaa"
+            +"\n"
+            +"bbb"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testParagraphsExample223() = doTest(
+        markdown = "aaa\n             bbb\n                                       ccc\n",
+    ) {
+        p {
+            +"aaa"
+            +"\n"
+            +"bbb"
+            +"\n"
+            +"ccc"
+        }
+    }
+
+    @Test
+    fun testParagraphsExample224() = doTest(
+        markdown = "   aaa\nbbb\n",
+    ) {
+        p {
+            +"aaa"
+            +"\n"
+            +"bbb"
+        }
+    }
+
+    @Test
+    fun testParagraphsExample225() = doTest(
+        markdown = "    aaa\nbbb\n",
+    ) {
+        pre {
+            code {
+                +"aaa"
+                +"\n"
+            }
+        }
+        p {
+            +"bbb"
+        }
+    }
+
+    @Test
+    fun testParagraphsExample226() = doTest(
+        markdown = "aaa     \nbbb     \n",
+    ) {
+        p {
+            +"aaa"
+            br()
+            +"\n"
+            +"bbb"
+        }
+    }
+
+    @Test
+    fun testBlankLinesExample227() = doTest(
+        markdown = "  \n\naaa\n  \n\n# aaa\n\n  \n",
+    ) {
+        p {
+            +"aaa"
+        }
+        h1 {
+            +"aaa"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample228() = doTest(
+        markdown = "> # Foo\n> bar\n> baz\n",
+    ) {
+        blockquote {
+            h1 {
+                +"Foo"
+            }
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample229() = doTest(
+        markdown = "># Foo\n>bar\n> baz\n",
+    ) {
+        blockquote {
+            h1 {
+                +"Foo"
+            }
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample230() = doTest(
+        markdown = "   > # Foo\n   > bar\n > baz\n",
+    ) {
+        blockquote {
+            h1 {
+                +"Foo"
+            }
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample231() = doTest(
+        markdown = "    > # Foo\n    > bar\n    > baz\n",
+    ) {
+        pre {
+            code {
+                +"&gt; # Foo"
+                +"\n"
+                +"&gt; bar"
+                +"\n"
+                +"&gt; baz"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample232() = doTest(
+        markdown = "> # Foo\n> bar\nbaz\n",
+    ) {
+        blockquote {
+            h1 {
+                +"Foo"
+            }
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample233() = doTest(
+        markdown = "> bar\nbaz\n> foo\n",
+    ) {
+        blockquote {
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+                +"\n"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample234() = doTest(
+        markdown = "> foo\n---\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+        }
+        hr()
+    }
+
+    @Test
+    fun testBlockQuotesExample235() = doTest(
+        markdown = "> - foo\n- bar\n",
+    ) {
+        blockquote {
+            ul {
+                li {
+                    +"foo"
+                }
+            }
+        }
+        ul {
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample236() = doTest(
+        markdown = ">     foo\n    bar\n",
+    ) {
+        blockquote {
+            pre {
+                code {
+                    +"foo"
+                    +"\n"
+                }
+            }
+        }
+        pre {
+            code {
+                +"bar"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample237() = doTest(
+        markdown = "> ```\nfoo\n```\n",
+    ) {
+        blockquote {
+            pre {
+                code()
+            }
+        }
+        p {
+            +"foo"
+        }
+        pre {
+            code()
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample238() = doTest(
+        markdown = "> foo\n    - bar\n",
+    ) {
+        blockquote {
+            p {
+                +"foo\n- bar"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample239() = doTest(
+        markdown = ">\n",
+    ) {
+        blockquote()
+    }
+
+    @Test
+    fun testBlockQuotesExample240() = doTest(
+        markdown = ">\n>  \n> \n",
+    ) {
+        blockquote()
+    }
+
+    @Test
+    fun testBlockQuotesExample241() = doTest(
+        markdown = ">\n> foo\n>  \n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample242() = doTest(
+        markdown = "> foo\n\n> bar\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+        }
+        blockquote {
+            p {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample243() = doTest(
+        markdown = "> foo\n> bar\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+            p {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample244() = doTest(
+        markdown = "> foo\n>\n> bar\n",
+    ) {
+        blockquote {
+            p {
+                +"foo"
+            }
+            p {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample245() = doTest(
+        markdown = "foo\n> bar\n",
+    ) {
+        p {
+            +"foo"
+        }
+        blockquote {
+            p {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample246() = doTest(
+        markdown = "> aaa\n***\n> bbb\n",
+    ) {
+        blockquote {
+            p {
+                +"aaa"
+            }
+        }
+        hr()
+        blockquote {
+            p {
+                +"bbb"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample247() = doTest(
+        markdown = "> bar\nbaz\n",
+    ) {
+        blockquote {
+            p {
+                +"bar"
+                +"\n"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample248() = doTest(
+        markdown = "> bar\n\nbaz\n",
+    ) {
+        blockquote {
+            p {
+                +"bar"
+            }
+        }
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample249() = doTest(
+        markdown = "> bar\n>\nbaz\n",
+    ) {
+        blockquote {
+            p {
+                +"bar"
+            }
+        }
+        p {
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample250() = doTest(
+        markdown = "> > > foo\nbar\n",
+    ) {
+        blockquote {
+            blockquote {
+                blockquote {
+                    p {
+                        +"foo"
+                        +"\n"
+                        +"bar"
+                    }
+                }
+            }
+        }
+    }
 }
