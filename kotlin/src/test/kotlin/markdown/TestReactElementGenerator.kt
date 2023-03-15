@@ -165,13 +165,14 @@ class TestReactElementGenerator : ReactTestSupport {
     }
 
     @Test
-    fun testBackslashEscapesExample12() = doTest("\\!\\\"\\#\\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n") {
-        p {
-            +"!&quot;#\$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
-            +"`"
-            +"{|}~"
+    fun testBackslashEscapesExample12() =
+        doTest("\\!\\\"\\#\\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n") {
+            p {
+                +"!&quot;#\$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
+                +"`"
+                +"{|}~"
+            }
         }
-    }
 
     @Test
     fun testBackslashEscapesExample13() = doTest("\\\t\\A\\a\\ \\3\\φ\\«\n") {
@@ -185,53 +186,54 @@ class TestReactElementGenerator : ReactTestSupport {
     }
 
     @Test
-    fun testBackslashEscapesExample14() = doTest("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity\n") {
-        p {
-            +"*not emphasized"
-            +"*"
-            +"\n"
-            +"&lt;br/"
-            +"&gt;"
-            +" "
-            +"not a tag"
-            +"\n"
-            +"[not a link"
-            +"]"
-            +"("
-            +"/foo"
-            +")"
-            +"\n"
-            +"`"
-            +"not code"
-            +"`"
-            +"\n"
-            +"1."
-            +" "
-            +"not a list"
-            +"\n"
-            +"*"
-            +" "
-            +"not a list"
-            +"\n"
-            +"#"
-            +" "
-            +"not a heading"
-            +"\n"
-            +"[foo"
-            +"]"
-            +":"
-            +" "
-            +"/url"
-            +" "
-            +"&quot;"
-            +"not a reference"
-            +"&quot;"
-            +"\n"
-            +"&amp;ouml;"
-            +" "
-            +"not a character entity"
+    fun testBackslashEscapesExample14() =
+        doTest("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity\n") {
+            p {
+                +"*not emphasized"
+                +"*"
+                +"\n"
+                +"&lt;br/"
+                +"&gt;"
+                +" "
+                +"not a tag"
+                +"\n"
+                +"[not a link"
+                +"]"
+                +"("
+                +"/foo"
+                +")"
+                +"\n"
+                +"`"
+                +"not code"
+                +"`"
+                +"\n"
+                +"1."
+                +" "
+                +"not a list"
+                +"\n"
+                +"*"
+                +" "
+                +"not a list"
+                +"\n"
+                +"#"
+                +" "
+                +"not a heading"
+                +"\n"
+                +"[foo"
+                +"]"
+                +":"
+                +" "
+                +"/url"
+                +" "
+                +"&quot;"
+                +"not a reference"
+                +"&quot;"
+                +"\n"
+                +"&amp;ouml;"
+                +" "
+                +"not a character entity"
+            }
         }
-    }
 
     @Test
     fun testBackslashEscapesExample15() = doTest("\\\\*emphasis*\n") {
@@ -338,11 +340,12 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     @Ignore
-    fun testEntityAndNumericCharacterReferencesExample25() = doTest("&nbsp; &amp; &copy; &AElig; &Dcaron;\n&frac34; &HilbertSpace; &DifferentialD;\n&ClockwiseContourIntegral; &ngE;\n") {
-        p {
-            +"  &amp; © Æ Ď\n¾ ℋ ⅆ\n∲ ≧̸"
+    fun testEntityAndNumericCharacterReferencesExample25() =
+        doTest("&nbsp; &amp; &copy; &AElig; &Dcaron;\n&frac34; &HilbertSpace; &DifferentialD;\n&ClockwiseContourIntegral; &ngE;\n") {
+            p {
+                +"  &amp; © Æ Ď\n¾ ℋ ⅆ\n∲ ≧̸"
+            }
         }
-    }
 
     @Test
     @Ignore
@@ -2227,7 +2230,8 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print \$ parseTags tags\n</code></pre>"
+                __html =
+                    "<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print \$ parseTags tags\n</code></pre>"
             }
         }
         p {
@@ -2241,7 +2245,8 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>"
+                __html =
+                    "<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>"
             }
         }
         p {
@@ -2408,7 +2413,8 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>"
+                __html =
+                    "<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>"
             }
         }
         p {
@@ -3442,6 +3448,918 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"bar"
                     }
                 }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testBlockQuotesExample251() = doTest(
+        markdown = ">>> foo\n> bar\n>>baz\n",
+    ) {
+        blockquote {
+            blockquote {
+                blockquote {
+                    p {
+                        +"foo"
+                        +"\n"
+                        +"bar"
+                        +"\n"
+                        +"baz"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testBlockQuotesExample252() = doTest(
+        markdown = ">     code\n\n>    not code\n",
+    ) {
+        blockquote {
+            pre {
+                code {
+                    +"code"
+                    +"\n"
+                }
+            }
+        }
+        blockquote {
+            p {
+                +"not code"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample253() = doTest(
+        markdown = "A paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n",
+    ) {
+        p {
+            +"A paragraph"
+            +"\n"
+            +"with two lines."
+        }
+        pre {
+            code {
+                +"indented code"
+                +"\n"
+            }
+        }
+        blockquote {
+            p {
+                +"A block quote."
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample254() = doTest(
+        markdown = "1.  A paragraph\n    with two lines.\n\n        indented code\n\n    > A block quote.\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"A paragraph"
+                    +"\n"
+                    +"with no lines."
+                }
+                pre {
+                    code {
+                        +"indented code"
+                        +"\n"
+                    }
+                }
+                blockquote {
+                    p {
+                        +"A block quote."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample255() = doTest(
+        markdown = "- one\n\n two\n",
+    ) {
+        ul {
+            li {
+                +"one"
+            }
+        }
+        p {
+            +"two"
+        }
+    }
+
+    @Test
+    fun testListItemsExample256() = doTest(
+        markdown = "- one\n\n  two\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"one"
+                }
+                p {
+                    +"two"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample257() = doTest(
+        markdown = " -    one\n\n     two\n",
+    ) {
+        ul {
+            li {
+                +"one"
+            }
+        }
+        pre {
+            code {
+                +" two"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample258() = doTest(
+        markdown = " -    one\n\n      two\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"one"
+                }
+                p {
+                    +"two"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample259() = doTest(
+        markdown = "   > > 1.  one\n>>\n>>     two\n",
+    ) {
+        blockquote {
+            blockquote {
+                ol {
+                    li {
+                        p {
+                            +"one"
+                        }
+                        p {
+                            +"two"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample260() = doTest(
+        markdown = ">>- one\n>>\n  >  > two\n",
+    ) {
+        blockquote {
+            blockquote {
+                ul {
+                    li {
+                        +"one"
+                    }
+                }
+                p {
+                    +"two"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample261() = doTest(
+        markdown = "-one\n\n2.two\n",
+    ) {
+        p {
+            +"-one"
+        }
+        p {
+            +"2.two"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample262() = doTest(
+        markdown = "- foo\n\n\n  bar\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                p {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample263() = doTest(
+        markdown = "1.  foo\n\n    ```\n    bar\n    ```\n\n    baz\n\n    > bam\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"foo"
+                }
+                pre {
+                    code {
+                        +"bar"
+                        +"\n"
+                    }
+                }
+                p {
+                    +"baz"
+                }
+                blockquote {
+                    p {
+                        +"bam"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample264() = doTest(
+        markdown = "- Foo\n\n      bar\n\n\n      baz\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"Foo"
+                }
+                pre {
+                    code {
+                        +"bar"
+                        +"\n"
+                        +"\n"
+                        +"\n"
+                        +"baz"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample265() = doTest(
+        markdown = "123456789. ok\n",
+    ) {
+        ol {
+            start = 123456789
+            li {
+                +"ok"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample266() = doTest(
+        markdown = "1234567890. not ok\n",
+    ) {
+        p {
+            +"1234567890."
+            +" "
+            +"not ok"
+        }
+    }
+
+    @Test
+    fun testListItemsExample267() = doTest(
+        markdown = "0. ok\n",
+    ) {
+        ol {
+            start = 0
+            li {
+                +"ok"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample268() = doTest(
+        markdown = "003. ok\n",
+    ) {
+        ol {
+            start = 3
+            li {
+                +"ok"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample269() = doTest(
+        markdown = "-1. not ok\n",
+    ) {
+        p {
+            +"-1."
+            +" "
+            +"not ok"
+        }
+    }
+
+    @Test
+    fun testListItemsExample270() = doTest(
+        markdown = "- foo\n\n      bar\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                pre {
+                    code {
+                        +"bar"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample271() = doTest(
+        markdown = "  10.  foo\n\n           bar\n",
+    ) {
+        ol {
+            start = 10
+            li {
+                p {
+                    +"foo"
+                }
+                pre {
+                    code {
+                        +"bar"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample272() = doTest(
+        markdown = "    indented code\n\nparagraph\n\n    more code\n",
+    ) {
+        pre {
+            code {
+                +"indented code"
+                +"\n"
+            }
+        }
+        p {
+            +"paragraph"
+        }
+        pre {
+            code {
+                +"more code"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample273() = doTest(
+        markdown = "1.     indented code\n\n   paragraph\n\n       more code\n",
+    ) {
+        ol {
+            li {
+                pre {
+                    code {
+                        +"indented code"
+                        +"\n"
+                    }
+                }
+                p {
+                    +"paragraph"
+                }
+                pre {
+                    code {
+                        +"more code"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample274() = doTest(
+        markdown = "1.      indented code\n\n   paragraph\n\n       more code\n",
+    ) {
+        ol {
+            li {
+                pre {
+                    code {
+                        +" indented code"
+                        +"\n"
+                    }
+                }
+                p {
+                    +"paragraph"
+                }
+                pre {
+                    code {
+                        +"more code"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample275() = doTest(
+        markdown = "   foo\n\nbar\n",
+    ) {
+        p {
+            +"foo"
+        }
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testListItemsExample276() = doTest(
+        markdown = "-    foo\n\n  bar\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+        }
+        p {
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testListItemsExample277() = doTest(
+        markdown = "-  foo\n\n   bar\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                p {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample278() = doTest(
+        markdown = "-\n  foo\n-\n  ```\n  bar\n  ```\n-\n      baz\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li {
+                pre {
+                    code {
+                        +"bar"
+                        +"\n"
+                    }
+                }
+            }
+            li {
+                pre {
+                    code {
+                        +"baz"
+                        +"\n"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample279() = doTest(
+        markdown = "-   \n  foo\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample280() = doTest(
+        markdown = "-\n\n  foo\n",
+    ) {
+        ul {
+            li()
+        }
+        p {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testListItemsExample281() = doTest(
+        markdown = "- foo\n-\n- bar\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li()
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample282() = doTest(
+        markdown = "- foo\n-   \n- bar\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li()
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample283() = doTest(
+        markdown = "1. foo\n2.\n3. bar\n",
+    ) {
+        ol {
+            li {
+                +"foo"
+            }
+            li()
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample284() = doTest(
+        markdown = "*\n",
+    ) {
+        ul {
+            li()
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample285() = doTest(
+        markdown = "foo\n*\n\nfoo\n1.\n",
+    ) {
+        p {
+            +"foo"
+            +"\n"
+            +"*"
+        }
+        p {
+            +"foo"
+            +"\n"
+            +"1."
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample286() = doTest(
+        markdown = " 1.  A paragraph\n     with two lines.\n\n         indented code\n\n     > A block quote.\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"A paragraph"
+                    +"\n"
+                    +"with two lines"
+                }
+                pre {
+                    code {
+                        +"indented code"
+                    }
+                }
+                blockquote {
+                    p {
+                        +"A block quote."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample287() = doTest(
+        markdown = "  1.  A paragraph\n      with two lines.\n\n          indented code\n\n      > A block quote.\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"A parapraph"
+                    +"\n"
+                    +"with two lines."
+                }
+                pre {
+                    code {
+                        +"indented code"
+                    }
+                }
+                blockquote {
+                    p {
+                        +"A block quote."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample288() = doTest(
+        markdown = "   1.  A paragraph\n       with two lines.\n\n           indented code\n\n       > A block quote.\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"A paragraph"
+                    +"\n"
+                    +"with two lines."
+                }
+                pre {
+                    code {
+                        +"indented code"
+                        +"\n"
+                    }
+                }
+                blockquote {
+                    p {
+                        +"A block quote."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample289() = doTest(
+        markdown = "    1.  A paragraph\n        with two lines.\n\n            indented code\n\n        > A block quote.\n",
+    ) {
+        pre {
+            code {
+                +"1.  A paragraph"
+                +"\n"
+                +"    with two lines."
+                +"\n"
+                +"\n"
+                +"        indented code"
+                +"\n"
+                +"\n"
+                +"    &gt; A block quote."
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample290() = doTest(
+        markdown = "  1.  A paragraph\nwith two lines.\n\n          indented code\n\n      > A block quote.\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"A paragraph"
+                    +"\n"
+                    +"with two lines."
+                }
+                pre {
+                    code {
+                        +"indented code"
+                        +"\n"
+                    }
+                }
+                blockquote {
+                    p {
+                        +"A block quote."
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample291() = doTest(
+        markdown = "  1.  A paragraph\n    with two lines.\n",
+    ) {
+        ol {
+            li {
+                +"A parapraph"
+                +"\n"
+                +"with two lines."
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample292() = doTest(
+        markdown = "> 1. > Blockquote\ncontinued here.\n",
+    ) {
+        blockquote {
+            ol {
+                li {
+                    blockquote {
+                        p {
+                            +"Blockquote"
+                            +"\n"
+                            +"continued here."
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListItemsExample293() = doTest(
+        markdown = "> 1. > Blockquote\n> continued here.\n",
+    ) {
+        blockquote {
+            ol {
+                li {
+                    blockquote {
+                        p {
+                            +"Blockquote"
+                            +"\n"
+                            +"continued here."
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample294() = doTest(
+        markdown = "- foo\n  - bar\n    - baz\n      - boo\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+                ul {
+                    li {
+                        +"bar"
+                        ul {
+                            li {
+                                +"baz"
+                                ul {
+                                    li {
+                                        +"boo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample295() = doTest(
+        markdown = "- foo\n - bar\n  - baz\n   - boo\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li {
+                +"bar"
+            }
+            li {
+                +"baz"
+            }
+            li {
+                +"boo"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample296() = doTest(
+        markdown = "10) foo\n    - bar\n",
+    ) {
+        ol {
+            start = 10
+            li {
+                +"foo"
+                ul {
+                    li {
+                        +"bar"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample297() = doTest(
+        markdown = "10) foo\n   - bar\n",
+    ) {
+        ol {
+            start = 10
+            li {
+                +"foo"
+            }
+        }
+        ul {
+            li {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample298() = doTest(
+        markdown = "- - foo\n",
+    ) {
+        ul {
+            li {
+                ul {
+                    li {
+                        +"foo"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample299() = doTest(
+        markdown = "1. - 2. foo\n",
+    ) {
+        ol {
+            li {
+                ul {
+                    li {
+                        ol {
+                            start = 2
+                            li {
+                                +"foo"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListItemsExample300() = doTest(
+        markdown = "- # Foo\n- Bar\n  ---\n  baz\n",
+    ) {
+        ul {
+            li {
+                h1 {
+                    +"Foo"
+                }
+            }
+            li {
+                h2 {
+                    +"Bar"
+                }
+                +"baz"
             }
         }
     }
