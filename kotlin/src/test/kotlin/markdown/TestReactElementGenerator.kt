@@ -4363,4 +4363,872 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
     }
+
+    @Test
+    fun testListsExample301() = doTest(
+        markdown = "- foo\n- bar\n+ baz\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li {
+                +"bar"
+            }
+        }
+        ul {
+            li {
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample302() = doTest(
+        markdown = "1. foo\n2. bar\n3) baz\n",
+    ) {
+        ol {
+            li {
+                +"foo"
+            }
+            li {
+                +"bar"
+            }
+        }
+        ol {
+            start = 3
+            li {
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample303() = doTest(
+        markdown = "Foo\n- bar\n- baz\n",
+    ) {
+        p {
+            +"Foo"
+        }
+        ul {
+            li {
+                +"bar"
+            }
+            li {
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListsExample304() = doTest(
+        markdown = "The number of windows in my house is\n14.  The number of doors is 6.\n",
+    ) {
+        p {
+            +"The number of windows in my house is"
+            +"\n"
+            +"14.  The number of doors is 6."
+        }
+    }
+
+    @Test
+    fun testListsExample305() = doTest(
+        markdown = "The number of windows in my house is\n1.  The number of doors is 6.\n",
+    ) {
+        p {
+            +"The number of windows in my house is"
+        }
+        ol {
+            li {
+                +"The number of doors is 6."
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListsExample306() = doTest(
+        markdown = "- foo\n\n- bar\n\n\n- baz\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+            }
+            li {
+                p {
+                    +"bar"
+                }
+            }
+            li {
+                p {
+                    +"baz"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListsExample307() = doTest(
+        markdown = "- foo\n  - bar\n    - baz\n\n\n      bim\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+                ul {
+                    li {
+                        +"bar\n"
+                        ul {
+                            li {
+                                p {
+                                    +"baz"
+                                }
+                                p {
+                                    +"bim"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample308() = doTest(
+        markdown = "- foo\n- bar\n\n<!-- -->\n\n- baz\n- bim\n",
+    ) {
+        ul {
+            li {
+                +"foo"
+            }
+            li {
+                +"bar"
+            }
+        }
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<!-- -->"
+            }
+        }
+        ul {
+            li {
+                +"baz"
+            }
+            li {
+                +"bim"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample309() = doTest(
+        markdown = "-   foo\n\n    notcode\n\n-   foo\n\n<!-- -->\n\n    code\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                p {
+                    +"notcode"
+                }
+            }
+            li {
+                p {
+                    +"foo"
+                }
+            }
+        }
+        div {
+            dangerouslySetInnerHTML = jso {
+                __html = "<!-- -->"
+            }
+        }
+        pre {
+            code {
+                +"code"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample310() = doTest(
+        markdown = "- a\n - b\n  - c\n   - d\n  - e\n - f\n- g\n",
+    ) {
+        ul {
+            li {
+                +"a"
+            }
+            li {
+                +"b"
+            }
+            li {
+                +"c"
+            }
+            li {
+                +"d"
+            }
+            li {
+                +"e"
+            }
+            li {
+                +"f"
+            }
+            li {
+                +"g"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample311() = doTest(
+        markdown = "1. a\n\n  2. b\n\n   3. c\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li {
+                p {
+                    +"b"
+                }
+            }
+            li {
+                p {
+                    +"c"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListsExample312() = doTest(
+        markdown = "- a\n - b\n  - c\n   - d\n    - e\n",
+    ) {
+        ul {
+            li {
+                +"a"
+            }
+            li {
+                +"b"
+            }
+            li {
+                +"c"
+            }
+            li {
+                +"d\n- e"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testListsExample313() = doTest(
+        markdown = "1. a\n\n  2. b\n\n    3. c\n",
+    ) {
+        ol {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li {
+                p {
+                    +"b"
+                }
+            }
+        }
+        pre {
+            code {
+                +"3. c"
+                +"\n"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample314() = doTest(
+        markdown = "- a\n- b\n\n- c\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li {
+                p {
+                    +"b"
+                }
+            }
+            li {
+                p {
+                    +"c"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample315() = doTest(
+        markdown = "* a\n*\n\n* c\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li()
+            li {
+                p {
+                    +"c"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample316() = doTest(
+        markdown = "- a\n- b\n\n  c\n- d\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li {
+                p {
+                    +"b"
+                }
+                p {
+                    +"c"
+                }
+            }
+            li {
+                p {
+                    +"d"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample317() = doTest(
+        markdown = "- a\n- b\n\n  [ref]: /url\n- d\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"a"
+                }
+            }
+            li {
+                p {
+                    +"b"
+                }
+            }
+            li {
+                p {
+                    +"d"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample318() = doTest(
+        markdown = "- a\n- ```\n  b\n\n\n  ```\n- c\n",
+    ) {
+        ul {
+            li {
+                +"a"
+            }
+            li {
+                pre {
+                    code {
+                        +"b"
+                        +"\n"
+                        +"\n"
+                        +"\n"
+                    }
+                }
+            }
+            li {
+                +"c"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample319() = doTest(
+        markdown = "- a\n  - b\n\n    c\n- d\n",
+    ) {
+        ul {
+            li {
+                +"a"
+                ul {
+                    li {
+                        p {
+                            +"b"
+                        }
+                        p {
+                            +"c"
+                        }
+                    }
+                }
+            }
+            li {
+                +"d"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample320() = doTest(
+        markdown = "* a\n  > b\n  >\n* c\n",
+    ) {
+        ul {
+            li {
+                +"a"
+                blockquote {
+                    p {
+                        +"b"
+                    }
+                }
+            }
+            li {
+                +"c"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample321() = doTest(
+        markdown = "- a\n  > b\n  ```\n  c\n  ```\n- d\n",
+    ) {
+        ul {
+            li {
+                +"a"
+                blockquote {
+                    p {
+                        +"b"
+                    }
+                }
+                pre {
+                    code {
+                        +"c"
+                        +"\n"
+                    }
+                }
+            }
+            li {
+                +"d"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample322() = doTest(
+        markdown = "- a\n",
+    ) {
+        ul {
+            li {
+                +"a"
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample323() = doTest(
+        markdown = "- a\n  - b\n",
+    ) {
+        ul {
+            li {
+                +"a"
+                ul {
+                    li {
+                        +"b"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample324() = doTest(
+        markdown = "1. ```\n   foo\n   ```\n\n   bar\n",
+    ) {
+        ol {
+            li {
+                pre {
+                    code {
+                        +"foo"
+                        +"\n"
+                    }
+                }
+                p {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample325() = doTest(
+        markdown = "* foo\n  * bar\n\n  baz\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"foo"
+                }
+                ul {
+                    li {
+                        +"bar"
+                    }
+                }
+                p {
+                    +"baz"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testListsExample326() = doTest(
+        markdown = "- a\n  - b\n  - c\n\n- d\n  - e\n  - f\n",
+    ) {
+        ul {
+            li {
+                p {
+                    +"a"
+                }
+                ul {
+                    li {
+                        +"b"
+                    }
+                    li {
+                        +"c"
+                    }
+                }
+            }
+            li {
+                p {
+                    +"d"
+                }
+                ul {
+                    li {
+                        +"e"
+                    }
+                    li {
+                        +"f"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testInlinesExample327() = doTest(
+        markdown = "`hi`lo`\n",
+    ) {
+        p {
+            code {
+                +"hi"
+            }
+            +"lo"
+            +"`"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample328() = doTest(
+        markdown = "`foo`\n",
+    ) {
+        p {
+            code {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample329() = doTest(
+        markdown = "`` foo ` bar ``\n",
+    ) {
+        p {
+            code {
+                +"foo ` bar"
+            }
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample330() = doTest(
+        markdown = "` `` `\n",
+    ) {
+        p {
+            code {
+                +"``"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample331() = doTest(
+        markdown = "`  ``  `\n",
+    ) {
+        p {
+            code {
+                +" `` "
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample332() = doTest(
+        markdown = "` a`\n",
+    ) {
+        p {
+            code {
+                +" a"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample333() = doTest(
+        markdown = "` b `\n",
+    ) {
+        p {
+            code {
+                +" b "
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample334() = doTest(
+        markdown = "` `\n`  `\n",
+    ) {
+        p {
+            code {
+                +" "
+            }
+            code {
+                +"  "
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample335() = doTest(
+        markdown = "``\nfoo\nbar  \nbaz\n``\n",
+    ) {
+        p {
+            code {
+                +"foo bar   baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample336() = doTest(
+        markdown = "``\nfoo \n``\n",
+    ) {
+        p {
+            code {
+                +"foo "
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample337() = doTest(
+        markdown = "`foo   bar \nbaz`\n",
+    ) {
+        p {
+            code {
+                +"foo   bar  baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample338() = doTest(
+        markdown = "`foo\\`bar`\n",
+    ) {
+        p {
+            code {
+                +"foo\\"
+            }
+            +"bar`"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample339() = doTest(
+        markdown = "``foo`bar``\n",
+    ) {
+        p {
+            code {
+                +"foo`bar"
+            }
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample340() = doTest(
+        markdown = "` foo `` bar `\n",
+    ) {
+        p {
+            code {
+                +"foo `` bar"
+            }
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample341() = doTest(
+        markdown = "*foo`*`\n",
+    ) {
+        p {
+            +"*"
+            +"foo"
+            code {
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample342() = doTest(
+        markdown = "[not a `link](/foo`)\n",
+    ) {
+        p {
+            +"["
+            +"not a"
+            +" "
+            code {
+                +"link](/foo"
+            }
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample343() = doTest(
+        markdown = "`<a href=\"`\">`\n",
+    ) {
+        p {
+            code {
+                +"&lt;a href=&quot;"
+            }
+            +"&quot;&gt;`"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample344() = doTest(
+        markdown = "<a href=\"`\">`\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"`\">"
+                }
+            }
+            +"`"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testCodeSpansExample345() = doTest(
+        markdown = "`<http://foo.bar.`baz>`\n",
+    ) {
+        p {
+            code {
+                +"&lt;http://foo.bar."
+            }
+            +"baz&gt;`"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample346() = doTest(
+        markdown = "<http://foo.bar.`baz>`\n",
+    ) {
+        p {
+            a {
+                href = "http://foo.bar.%60baz"
+                +"http://foo.bar.`baz"
+            }
+            +"`"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample347() = doTest(
+        markdown = "```foo``\n",
+    ) {
+        p {
+            +"```"
+            +"foo"
+            +"``"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample348() = doTest(
+        markdown = "`foo\n",
+    ) {
+        p {
+            +"`"
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testCodeSpansExample349() = doTest(
+        markdown = "`foo``bar``\n",
+    ) {
+        p {
+            +"`"
+            +"foo"
+            code {
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample350() = doTest(
+        markdown = "*foo bar*\n",
+    ) {
+        p {
+            em {
+                +"foo bar"
+            }
+        }
+    }
 }
