@@ -15,7 +15,7 @@ private val parser = MarkdownParser(descriptor)
 fun Json.serialize(): String = JSON.stringify(this)
 fun ReactTestSupport.doTest(markdown: String, expect: ChildrenBuilder.() -> Unit) {
     val markdownTree = parser.buildMarkdownTreeFromString(markdown)
-    val element = ReactElementGenerator(markdown, markdownTree, createReactElementGeneratingProcessors(LinkMap(hashMapOf()), null)).generateElement()
+    val element = ReactElementGenerator(markdown, markdownTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(markdownTree, markdown), null)).generateElement()
     val actualRender = render { element() }
     val expectRender = render { ReactHTML.body(expect) }
     val expectJson = expectRender.toJSON().serialize()

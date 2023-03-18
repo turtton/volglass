@@ -14,7 +14,7 @@ import react.Props
 fun convertMarkdownToReactElement(content: String): FC<Props> {
     val flavour = ObsidianMarkFlavourDescriptor()
     val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(content)
-    return ReactElementGenerator(content, parsedTree, createReactElementGeneratingProcessors(LinkMap(hashMapOf()), null)).generateElement()
+    return ReactElementGenerator(content, parsedTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(parsedTree, content), null)).generateElement()
 }
 
 @JsExport

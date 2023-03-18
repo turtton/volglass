@@ -317,8 +317,6 @@ class TestReactElementGenerator : ReactTestSupport {
     }
 
     @Test
-    // FIXME I cannot resolve this situation
-    @Ignore
     fun testBackslashEscapesExample23() = doTest("[foo]\n\n[foo]: /bar\\* \"ti\\*tle\"\n") {
         p {
             a {
@@ -418,11 +416,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testEntityAndNumericCharacterReferencesExample33() = doTest(
         markdown = "[foo]\n\n[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\"\n",
     ) {
@@ -2554,11 +2548,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample192() = doTest(
         markdown = "[foo]: /url \"title\"\n\n[foo]\n",
     ) {
@@ -2571,11 +2561,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample193() = doTest(
         markdown = "   [foo]: \n      /url  \n           'the title'  \n\n[foo]\n",
     ) {
@@ -2588,19 +2574,17 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample194() = doTest(
         markdown = "[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n",
     ) {
         p {
             a {
                 href = "my_(url)"
-                title = "title (with params)"
-                +"Foo*bar]"
+                title = "title (with parens)"
+                +"Foo"
+                +"*"
+                +"bar]"
             }
         }
     }
@@ -2619,11 +2603,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample196() = doTest(
         markdown = "[foo]: /url '\ntitle\nline1\nline2\n'\n\n[foo]\n",
     ) {
@@ -2662,11 +2642,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample198() = doTest(
         markdown = "[foo]:\n/url\n\n[foo]\n",
     ) {
@@ -2695,11 +2671,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample200() = doTest(
         markdown = "[foo]: <>\n\n[foo]\n",
     ) {
@@ -2721,11 +2693,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample202() = doTest(
         markdown = "[foo]: /url\\bar\\*baz \"foo\\\"bar\\baz\"\n\n[foo]\n",
     ) {
@@ -2738,11 +2706,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample203() = doTest(
         markdown = "[foo]\n\n[foo]: url\n",
     ) {
@@ -2754,11 +2718,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample204() = doTest(
         markdown = "[foo]\n\n[foo]: first\n[foo]: second\n",
     ) {
@@ -2770,11 +2730,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample205() = doTest(
         markdown = "[FOO]: /url\n\n[Foo]\n",
     ) {
@@ -2786,11 +2742,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample206() = doTest(
         markdown = "[ΑΓΩ]: /φου\n\n[αγω]\n",
     ) {
@@ -2904,11 +2856,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample214() = doTest(
         markdown = "# [Foo]\n[foo]: /url\n> bar\n",
     ) {
@@ -2925,11 +2873,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample215() = doTest(
         markdown = "[foo]: /url\nbar\n===\n[foo]\n",
     ) {
@@ -2958,11 +2902,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample217() = doTest(
         markdown = "[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n",
     ) {
@@ -2972,11 +2912,15 @@ class TestReactElementGenerator : ReactTestSupport {
                 title = "foo"
                 +"foo"
             }
+            +","
+            +"\n"
             a {
                 href = "/bar-url"
                 title = "bar"
                 +"bar"
             }
+            +","
+            +"\n"
             a {
                 href = "/baz-url"
                 +"baz"
@@ -2984,11 +2928,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinkReferenceDefinitionsExample218() = doTest(
         markdown = "[foo]\n\n> [foo]: /url\n",
     ) {
@@ -7721,11 +7661,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample526() = doTest(
         markdown = "[foo][bar]\n\n[bar]: /url \"title\"\n",
     ) {
@@ -7738,52 +7674,52 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample527() = doTest(
         markdown = "[link [foo [bar]]][ref]\n\n[ref]: /uri\n",
     ) {
         p {
             a {
                 href = "/uri"
-                +"link [foo [bar]]"
+                +"link"
+                +" "
+                +"["
+                +"foo"
+                +" "
+                +"["
+                +"bar"
+                +"]"
+                +"]"
             }
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample528() = doTest(
         markdown = "[link \\[bar][ref]\n\n[ref]: /uri\n",
     ) {
         p {
             a {
                 href = "/uri"
-                +"link [bar"
+                +"link"
+                +" "
+                +"[bar"
             }
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample529() = doTest(
         markdown = "[link *foo **bar** `#`*][ref]\n\n[ref]: /uri\n",
     ) {
         p {
             a {
                 href = "/uri"
-                +"link "
+                +"link"
+                +" "
                 em {
-                    +"foo "
+                    +"foo"
+                    +" "
                     strong {
                         +"bar"
                     }
@@ -7796,21 +7732,17 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample530() = doTest(
         markdown = "[![moon](moon.jpg)][ref]\n\n[ref]: /uri\n",
     ) {
         p {
             a {
                 href = "/uri"
-            }
-            img {
-                src = "moon.jpg"
-                alt = "moon"
+                img {
+                    src = "moon.jpg"
+                    alt = "moon"
+                }
             }
         }
     }
@@ -7861,11 +7793,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample533() = doTest(
         markdown = "*[foo*][ref]\n\n[ref]: /uri\n",
     ) {
@@ -7879,18 +7807,17 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample534() = doTest(
         markdown = "[foo *bar][ref]*\n\n[ref]: /uri\n",
     ) {
         p {
             a {
                 href = "/uri"
-                +"foo *bar"
+                +"foo"
+                +" "
+                +"*"
+                +"bar"
             }
             +"*"
         }
@@ -7940,17 +7867,13 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample538() = doTest(
         markdown = "[foo][BaR]\n\n[bar]: /url \"title\"\n",
     ) {
         p {
             a {
-                href = "/uri"
+                href = "/url"
                 title = "title"
                 +"foo"
             }
@@ -7970,17 +7893,13 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample540() = doTest(
         markdown = "[Foo\n  bar]: /url\n\n[Baz][Foo bar]\n",
     ) {
         p {
             a {
-                href = "/uri"
+                href = "/url"
                 +"Baz"
             }
         }
@@ -8021,17 +7940,13 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample543() = doTest(
         markdown = "[foo]: /url1\n\n[foo]: /url2\n\n[bar][foo]\n",
     ) {
         p {
             a {
-                href = "/uri1"
+                href = "/url1"
                 +"bar"
             }
         }
@@ -8130,11 +8045,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample548() = doTest(
         markdown = "[foo][ref\\[]\n\n[ref\\[]: /uri\n",
     ) {
@@ -8146,18 +8057,14 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample549() = doTest(
         markdown = "[bar\\\\]: /uri\n\n[bar\\\\]\n",
     ) {
         p {
             a {
                 href = "/uri"
-                +"bar"
+                +"bar\\"
             }
         }
     }
@@ -8199,11 +8106,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample552() = doTest(
         markdown = "[foo][]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8216,11 +8119,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample553() = doTest(
         markdown = "[*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
@@ -8237,11 +8136,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample554() = doTest(
         markdown = "[Foo][]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8270,11 +8165,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample556() = doTest(
         markdown = "[foo]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8287,11 +8178,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample557() = doTest(
         markdown = "[*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
@@ -8308,11 +8195,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample558() = doTest(
         markdown = "[[*foo* bar]]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
@@ -8327,14 +8210,11 @@ class TestReactElementGenerator : ReactTestSupport {
                 +" "
                 +"bar"
             }
+            +"]"
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample559() = doTest(
         markdown = "[[bar [foo]\n\n[foo]: /url\n",
     ) {
@@ -8350,11 +8230,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample560() = doTest(
         markdown = "[Foo]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8367,11 +8243,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample561() = doTest(
         markdown = "[foo] bar\n\n[foo]: /url\n",
     ) {
@@ -8395,11 +8267,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample563() = doTest(
         markdown = "[foo*]: /url\n\n*[foo*]\n",
     ) {
@@ -8407,16 +8275,13 @@ class TestReactElementGenerator : ReactTestSupport {
             +"*"
             a {
                 href = "/url"
-                +"foo*"
+                +"foo"
+                +"*"
             }
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample564() = doTest(
         markdown = "[foo][bar]\n\n[foo]: /url1\n[bar]: /url2\n",
     ) {
@@ -8428,11 +8293,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample565() = doTest(
         markdown = "[foo][]\n\n[foo]: /url1\n",
     ) {
@@ -8488,11 +8349,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testLinksExample569() = doTest(
         markdown = "[foo][bar][baz]\n\n[baz]: /url1\n[bar]: /url2\n",
     ) {
@@ -8537,11 +8394,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample572() = doTest(
         markdown = "![foo *bar*]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
     ) {
@@ -8580,11 +8433,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample575() = doTest(
         markdown = "![foo *bar*][]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
     ) {
@@ -8597,11 +8446,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample576() = doTest(
         markdown = "![foo *bar*][foobar]\n\n[FOOBAR]: train.jpg \"train & tracks\"\n",
     ) {
@@ -8665,11 +8510,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample581() = doTest(
         markdown = "![foo][bar]\n\n[bar]: /url\n",
     ) {
@@ -8681,11 +8522,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample582() = doTest(
         markdown = "![foo][bar]\n\n[BAR]: /url\n",
     ) {
@@ -8697,11 +8534,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample583() = doTest(
         markdown = "![foo][]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8714,11 +8547,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample584() = doTest(
         markdown = "![*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
@@ -8731,11 +8560,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample585() = doTest(
         markdown = "![Foo][]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8763,11 +8588,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample587() = doTest(
         markdown = "![foo]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8780,11 +8601,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample588() = doTest(
         markdown = "![*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
@@ -8825,11 +8642,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample590() = doTest(
         markdown = "![Foo]\n\n[foo]: /url \"title\"\n",
     ) {
@@ -8853,11 +8666,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
-    /**
-     * FIXME: Same case in [testBackslashEscapesExample23]
-     */
     @Test
-    @Ignore
     fun testImagesExample592() = doTest(
         markdown = "\\![foo]\n\n[foo]: /url \"title\"\n",
     ) {
