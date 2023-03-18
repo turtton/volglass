@@ -18,6 +18,7 @@ import react.dom.html.ReactHTML.h4
 import react.dom.html.ReactHTML.h5
 import react.dom.html.ReactHTML.h6
 import react.dom.html.ReactHTML.hr
+import react.dom.html.ReactHTML.img
 import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.ol
 import react.dom.html.ReactHTML.p
@@ -7303,6 +7304,1667 @@ class TestReactElementGenerator : ReactTestSupport {
             a {
                 href = "http://example.com?foo=3#frag"
                 +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample501() = doTest(
+        markdown = "[link](foo\\bar)\n",
+    ) {
+        p {
+            a {
+                href = "foo%5Cbar"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample502() = doTest(
+        markdown = "[link](foo%20b&auml;)\n",
+    ) {
+        p {
+            a {
+                href = "foo%20b%C3%A4"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample503() = doTest(
+        markdown = "[link](\"title\")\n",
+    ) {
+        p {
+            a {
+                href = "%22title%22"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample504() = doTest(
+        markdown = "[link](/url \"title\")\n[link](/url 'title')\n[link](/url (title))\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"link"
+            }
+            +"\n"
+            a {
+                href = "/url"
+                title = "title"
+                +"link"
+            }
+            +"\n"
+            a {
+                href = "/url"
+                title = "title"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample505() = doTest(
+        markdown = "[link](/url \"title \\\"&quot;\")\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title &quot;&quot;"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample506() = doTest(
+        markdown = "[link](/url \"title\")\n",
+    ) {
+        p {
+            a {
+                href = "/url%C2%A0%22title%22"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample507() = doTest(
+        markdown = "[link](/url \"title \"and\" title\")\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +"("
+            +"/url"
+            +" "
+            +"&quot;"
+            +"title"
+            +" "
+            +"&quot;"
+            +"and"
+            +"&quot;"
+            +" "
+            +"title"
+            +"&quot;"
+            +")"
+        }
+    }
+
+    @Test
+    fun testLinksExample508() = doTest(
+        markdown = "[link](/url 'title \"and\" title')\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title &quot;and&quot; title"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample509() = doTest(
+        markdown = "[link](   /uri\n  \"title\"  )\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                title = "title"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample510() = doTest(
+        markdown = "[link] (/uri)\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +" "
+            +"("
+            +"/uri"
+            +")"
+        }
+    }
+
+    @Test
+    fun testLinksExample511() = doTest(
+        markdown = "[link [foo [bar]]](/uri)\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link"
+                +" "
+                +"["
+                +"foo"
+                +" "
+                +"["
+                +"bar"
+                +"]"
+                +"]"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample512() = doTest(
+        markdown = "[link] bar](/uri)\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +" "
+            +"bar"
+            +"]"
+            +"("
+            +"/uri"
+            +")"
+        }
+    }
+
+    @Test
+    fun testLinksExample513() = doTest(
+        markdown = "[link [bar](/uri)\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +" "
+            a {
+                href = "/uri"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample514() = doTest(
+        markdown = "[link \\[bar](/uri)\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link"
+                +" "
+                +"[bar"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample515() = doTest(
+        markdown = "[link *foo **bar** `#`*](/uri)\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link"
+                +" "
+                em {
+                    +"foo"
+                    +" "
+                    strong {
+                        +"bar"
+                    }
+                    +" "
+                    code {
+                        +"#"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample516() = doTest(
+        markdown = "[![moon](moon.jpg)](/uri)\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                img {
+                    src = "moon.jpg"
+                    alt = "moon"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample517() = doTest(
+        markdown = "[foo [bar](/uri)](/uri)\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            a {
+                href = "/uri"
+                +"bar"
+            }
+
+            +"]"
+            +"("
+            +"/uri"
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample518() = doTest(
+        markdown = "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            em {
+                +"["
+                +"bar"
+                +" "
+                a {
+                    href = "/uri"
+                    +"baz"
+                }
+                +"]"
+                +"("
+                +"/uri"
+                +")"
+            }
+            +"]"
+            +"("
+            +"/uri"
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample519() = doTest(
+        markdown = "![[[foo](uri1)](uri2)](uri3)\n",
+    ) {
+        p {
+            img {
+                src = "uri3"
+                alt = "[foo](uri2)"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample520() = doTest(
+        markdown = "*[foo*](/uri)\n",
+    ) {
+        p {
+            +"*"
+            a {
+                href = "/uri"
+                +"foo"
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample521() = doTest(
+        markdown = "[foo *bar](baz*)\n",
+    ) {
+        p {
+            a {
+                href = "baz*"
+                +"foo"
+                +" "
+                +"*"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample522() = doTest(
+        markdown = "*foo [bar* baz]\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                +"["
+                +"bar"
+            }
+            +" "
+            +"baz"
+            +"]"
+        }
+    }
+
+    @Test
+    fun testLinksExample523() = doTest(
+        markdown = "[foo <bar attr=\"](baz)\">\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            +""
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<bar attr=\"](baz)\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample524() = doTest(
+        markdown = "[foo`](/uri)`\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            code {
+                +"](/uri)"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample525() = doTest(
+        markdown = "[foo<http://example.com/?search=](uri)>\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            a {
+                href = "http://example.com/?search=%5D(uri)"
+                +"http://example.com/?search=](uri)"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample526() = doTest(
+        markdown = "[foo][bar]\n\n[bar]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample527() = doTest(
+        markdown = "[link [foo [bar]]][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link [foo [bar]]"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample528() = doTest(
+        markdown = "[link \\[bar][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link [bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample529() = doTest(
+        markdown = "[link *foo **bar** `#`*][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link "
+                em {
+                    +"foo "
+                    strong {
+                        +"bar"
+                    }
+                    +" "
+                    code {
+                        +"#"
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample530() = doTest(
+        markdown = "[![moon](moon.jpg)][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+            }
+            img {
+                src = "moon.jpg"
+                alt = "moon"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample531() = doTest(
+        markdown = "[foo [bar](/uri)][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            a {
+                href = "/uri"
+                +"bar"
+            }
+            +"]"
+            a {
+                href = "/uri"
+                +"ref"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample532() = doTest(
+        markdown = "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            em {
+                +"bar"
+                +" "
+                a {
+                    href = "/uri"
+                    +"baz"
+                }
+            }
+            +"]"
+            a {
+                href = "/uri"
+                +"ref"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample533() = doTest(
+        markdown = "*[foo*][ref]\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"*"
+            a {
+                href = "/uri"
+                +"foo"
+                +"*"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample534() = doTest(
+        markdown = "[foo *bar][ref]*\n\n[ref]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"foo *bar"
+            }
+            +"*"
+        }
+    }
+
+    @Test
+    fun testLinksExample535() = doTest(
+        markdown = "[foo <bar attr=\"][ref]\">\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<bar attr=\"][ref]\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample536() = doTest(
+        markdown = "[foo`][ref]`\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            code {
+                +"][ref]"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample537() = doTest(
+        markdown = "[foo<http://example.com/?search=][ref]>\n\n[ref]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            a {
+                href = "http://example.com/?search=%5D%5Bref%5D"
+                +"http://example.com/?search=][ref]"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample538() = doTest(
+        markdown = "[foo][BaR]\n\n[bar]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample539() = doTest(
+        markdown = "[ẞ]\n\n[SS]: /url\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"ẞ"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample540() = doTest(
+        markdown = "[Foo\n  bar]: /url\n\n[Baz][Foo bar]\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"Baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample541() = doTest(
+        markdown = "[foo] [bar]\n\n[bar]: /url \"title\"\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            a {
+                href = "/uri"
+                title = "title"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample542() = doTest(
+        markdown = "[foo]\n[bar]\n\n[bar]: /url \"title\"\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +"\n"
+            a {
+                href = "/uri"
+                title = "title"
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample543() = doTest(
+        markdown = "[foo]: /url1\n\n[foo]: /url2\n\n[bar][foo]\n",
+    ) {
+        p {
+            a {
+                href = "/uri1"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample544() = doTest(
+        markdown = "[bar][foo\\!]\n\n[foo!]: /url\n",
+    ) {
+        p {
+            +"["
+            +"bar"
+            +"]"
+            +"["
+            +"foo!"
+            +"]"
+        }
+    }
+
+    @Test
+    fun testLinksExample545() = doTest(
+        markdown = "[foo][ref[]\n\n[ref[]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +"["
+            +"ref"
+            +"["
+            +"]"
+        }
+        p {
+            +"["
+            +"ref"
+            +"["
+            +"]"
+            +":"
+            +" "
+            +"/uri"
+        }
+    }
+
+    @Test
+    fun testLinksExample546() = doTest(
+        markdown = "[foo][ref[bar]]\n\n[ref[bar]]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            +"["
+            +"ref"
+            +"["
+            +"bar"
+            +"]"
+            +"]"
+        }
+        p {
+            +"["
+            +"ref"
+            +"["
+            +"bar"
+            +"]"
+            +"]"
+            +":"
+            +" "
+            +"/uri"
+        }
+    }
+
+    @Test
+    fun testLinksExample547() = doTest(
+        markdown = "[[[foo]]]\n\n[[[foo]]]: /url\n",
+    ) {
+        p {
+            +"["
+            +"["
+            +"["
+            +"foo"
+            +"]"
+            +"]"
+            +"]"
+        }
+        p {
+            +"["
+            +"["
+            +"["
+            +"foo"
+            +"]"
+            +"]"
+            +"]"
+            +":"
+            +" "
+            +"/url"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample548() = doTest(
+        markdown = "[foo][ref\\[]\n\n[ref\\[]: /uri\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample549() = doTest(
+        markdown = "[bar\\\\]: /uri\n\n[bar\\\\]\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample550() = doTest(
+        markdown = "[]\n\n[]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"]"
+        }
+        p {
+            +"["
+            +"]"
+            +":"
+            +" "
+            +"/uri"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample551() = doTest(
+        markdown = "[\n ]\n\n[\n ]: /uri\n",
+    ) {
+        p {
+            +"["
+            +"\n"
+            +"]"
+        }
+        p {
+            +"["
+            +"\n"
+            +"]"
+            +":"
+            +" "
+            +"/uri"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample552() = doTest(
+        markdown = "[foo][]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample553() = doTest(
+        markdown = "[*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                em {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample554() = doTest(
+        markdown = "[Foo][]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"Foo"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample555() = doTest(
+        markdown = "[foo] \n[]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+            +"["
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample556() = doTest(
+        markdown = "[foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample557() = doTest(
+        markdown = "[*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                em {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample558() = doTest(
+        markdown = "[[*foo* bar]]\n\n[*foo* bar]: /url \"title\"\n",
+    ) {
+        p {
+            +"["
+            a {
+                href = "/url"
+                title = "title"
+                em {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample559() = doTest(
+        markdown = "[[bar [foo]\n\n[foo]: /url\n",
+    ) {
+        p {
+            +"["
+            +"["
+            +"bar"
+            +" "
+            a {
+                href = "/url"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample560() = doTest(
+        markdown = "[Foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                title = "title"
+                +"Foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample561() = doTest(
+        markdown = "[foo] bar\n\n[foo]: /url\n",
+    ) {
+        p {
+            a {
+                href = "/url"
+                +"foo"
+            }
+            +" "
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testLinksExample562() = doTest(
+        markdown = "\\[foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            +"[foo"
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample563() = doTest(
+        markdown = "[foo*]: /url\n\n*[foo*]\n",
+    ) {
+        p {
+            +"*"
+            a {
+                href = "/url"
+                +"foo*"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample564() = doTest(
+        markdown = "[foo][bar]\n\n[foo]: /url1\n[bar]: /url2\n",
+    ) {
+        p {
+            a {
+                href = "/url2"
+                +"foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample565() = doTest(
+        markdown = "[foo][]\n\n[foo]: /url1\n",
+    ) {
+        p {
+            a {
+                href = "/url1"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample566() = doTest(
+        markdown = "[foo]()\n\n[foo]: /url1\n",
+    ) {
+        p {
+            a {
+                href = ""
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample567() = doTest(
+        markdown = "[foo](not a link)\n\n[foo]: /url1\n",
+    ) {
+        p {
+            a {
+                href = "/url1"
+                +"foo"
+            }
+            +"("
+            +"not a link"
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample568() = doTest(
+        markdown = "[foo][bar][baz]\n\n[baz]: /url\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            a {
+                href = "/url"
+                +"bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testLinksExample569() = doTest(
+        markdown = "[foo][bar][baz]\n\n[baz]: /url1\n[bar]: /url2\n",
+    ) {
+        p {
+            a {
+                href = "/url2"
+                +"foo"
+            }
+            a {
+                href = "/url1"
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample570() = doTest(
+        markdown = "[foo][bar][baz]\n\n[baz]: /url1\n[foo]: /url2\n",
+    ) {
+        p {
+            +"["
+            +"foo"
+            +"]"
+            a {
+                href = "/url1"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample571() = doTest(
+        markdown = "![foo](/url \"title\")\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+                title = "title"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample572() = doTest(
+        markdown = "![foo *bar*]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
+    ) {
+        p {
+            img {
+                src = "train.jpg"
+                alt = "foo bar"
+                title = "train &amp; tracks"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testImagesExample573() = doTest(
+        markdown = "![foo ![bar](/url)](/url2)\n",
+    ) {
+        p {
+            img {
+                src = "/url2"
+                alt = "foo bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testImagesExample574() = doTest(
+        markdown = "![foo [bar](/url)](/url2)\n",
+    ) {
+        p {
+            img {
+                src = "/url2"
+                alt = "foo bar"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample575() = doTest(
+        markdown = "![foo *bar*][]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
+    ) {
+        p {
+            img {
+                src = "train.jpg"
+                alt = "foo bar"
+                title = "train &amp; tracks"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample576() = doTest(
+        markdown = "![foo *bar*][foobar]\n\n[FOOBAR]: train.jpg \"train & tracks\"\n",
+    ) {
+        p {
+            img {
+                src = "train.jpg"
+                alt = "foo bar"
+                title = "train &amp; tracks"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample577() = doTest(
+        markdown = "![foo](train.jpg)\n",
+    ) {
+        p {
+            img {
+                src = "train.jpg"
+                alt = "foo"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample578() = doTest(
+        markdown = "My ![foo bar](/path/to/train.jpg  \"title\"   )\n",
+    ) {
+        p {
+            +"My"
+            +" "
+            img {
+                src = "/path/to/train.jpg"
+                alt = "foo bar"
+                title = "title"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample579() = doTest(
+        markdown = "![foo](<url>)\n",
+    ) {
+        p {
+            img {
+                src = "url"
+                alt = "foo"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample580() = doTest(
+        markdown = "![](/url)\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = ""
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample581() = doTest(
+        markdown = "![foo][bar]\n\n[bar]: /url\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample582() = doTest(
+        markdown = "![foo][bar]\n\n[BAR]: /url\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample583() = doTest(
+        markdown = "![foo][]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+                title = "title"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample584() = doTest(
+        markdown = "![*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo bar"
+                title = "title"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample585() = doTest(
+        markdown = "![Foo][]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "Foo"
+                title = "title"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testImagesExample586() = doTest(
+        markdown = "![foo] \n[]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+                title = "titile"
+            }
+            +"[]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample587() = doTest(
+        markdown = "![foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo"
+                title = "title"
+            }
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample588() = doTest(
+        markdown = "![*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "foo bar"
+                title = "title"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample589() = doTest(
+        markdown = "![[foo]]\n\n[[foo]]: /url \"title\"\n",
+    ) {
+        p {
+            +"!"
+            +"["
+            +"["
+            +"foo"
+            +"]"
+            +"]"
+        }
+        p {
+            +"["
+            +"["
+            +"foo"
+            +"]"
+            +"]"
+            +":"
+            +" "
+            +"/url"
+            +" "
+            +"&quot;"
+            +"title"
+            +"&quot;"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample590() = doTest(
+        markdown = "![Foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            img {
+                src = "/url"
+                alt = "Foo"
+                title = "title"
+            }
+        }
+    }
+
+    @Test
+    fun testImagesExample591() = doTest(
+        markdown = "!\\[foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            +"!"
+            +"[foo"
+            +"]"
+        }
+    }
+
+    /**
+     * FIXME: Same case in [testBackslashEscapesExample23]
+     */
+    @Test
+    @Ignore
+    fun testImagesExample592() = doTest(
+        markdown = "\\![foo]\n\n[foo]: /url \"title\"\n",
+    ) {
+        p {
+            +"!"
+            a {
+                href = "/url"
+                title = "title"
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample593() = doTest(
+        markdown = "<http://foo.bar.baz>\n",
+    ) {
+        p {
+            a {
+                href = "http://foo.bar.baz"
+                +"http://foo.bar.baz"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample594() = doTest(
+        markdown = "<http://foo.bar.baz/test?q=hello&id=22&boolean>\n",
+    ) {
+        p {
+            a {
+                href = "http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean"
+                +"http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample595() = doTest(
+        markdown = "<irc://foo.bar:2233/baz>\n",
+    ) {
+        p {
+            a {
+                href = "irc://foo.bar:2233/baz"
+                +"irc://foo.bar:2233/baz"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample596() = doTest(
+        markdown = "<MAILTO:FOO@BAR.BAZ>\n",
+    ) {
+        p {
+            a {
+                href = "MAILTO:FOO@BAR.BAZ"
+                +"MAILTO:FOO@BAR.BAZ"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample597() = doTest(
+        markdown = "<a+b+c:d>\n",
+    ) {
+        p {
+            a {
+                href = "a+b+c:d"
+                +"a+b+c:d"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample598() = doTest(
+        markdown = "<made-up-scheme://foo,bar>\n",
+    ) {
+        p {
+            a {
+                href = "made-up-scheme://foo,bar"
+                +"made-up-scheme://foo,bar"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample599() = doTest(
+        markdown = "<http://../>\n",
+    ) {
+        p {
+            a {
+                href = "http://../"
+                +"http://../"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample600() = doTest(
+        markdown = "<localhost:5001/foo>\n",
+    ) {
+        p {
+            a {
+                href = "localhost:5001/foo"
+                +"localhost:5001/foo"
             }
         }
     }
