@@ -46,7 +46,9 @@ class ImageElementProcessor<Parent>(linkMap: LinkMap, baseURI: URI?) : LinkEleme
             this.unsafeCast<ImgHTMLAttributes<HTMLImageElement>>().also {
                 it.src = url
                 it.alt = label
-                it.title = title
+                if (title != null) {
+                    it.title = title
+                }
             }
         }
         visitor.consumeTagClose(img.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
