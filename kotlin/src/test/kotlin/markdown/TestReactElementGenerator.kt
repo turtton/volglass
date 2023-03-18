@@ -8968,4 +8968,747 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
     }
+
+    @Test
+    fun testAutolinksExample601() = doTest(
+        markdown = "<http://foo.bar/baz bim>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"http"
+            +":"
+            +"//foo.bar/baz bim"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample602() = doTest(
+        markdown = "<http://example.com/\\[\\>\n",
+    ) {
+        p {
+            a {
+                href = "http://example.com/%5C%5B%5C"
+                +"http://example.com/\\[\\"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample603() = doTest(
+        markdown = "<foo@bar.example.com>\n",
+    ) {
+        p {
+            a {
+                href = "mailto:foo@bar.example.com"
+                +"foo@bar.example.com"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample604() = doTest(
+        markdown = "<foo+special@Bar.baz-bar0.com>\n",
+    ) {
+        p {
+            a {
+                href = "mailto:foo+special@Bar.baz-bar0.com"
+                +"foo+special@Bar.baz-bar0.com"
+            }
+        }
+    }
+
+    @Test
+    fun testAutolinksExample605() = doTest(
+        markdown = "<foo\\+@bar.example.com>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"foo+@bar.example.com"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testAutolinksExample606() = doTest(
+        markdown = "<>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testAutolinksExample607() = doTest(
+        markdown = "< http://foo.bar >\n",
+    ) {
+        p {
+            +"&lt;"
+            +" "
+            +"http"
+            +":"
+            +"//foo.bar"
+            +" "
+            +"&gt;"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testAutolinksExample608() = doTest(
+        markdown = "<m:abc>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"m"
+            +":"
+            +"abc"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testAutolinksExample609() = doTest(
+        markdown = "<foo.bar.baz>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"foo.bar.baz"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testAutolinksExample610() = doTest(
+        markdown = "http://example.com\n",
+    ) {
+        p {
+            +"http"
+            +":"
+            +"//example.com"
+        }
+    }
+
+    @Test
+    fun testAutolinksExample611() = doTest(
+        markdown = "foo@bar.example.com\n",
+    ) {
+        p {
+            +"foo@bar.example.com"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample612() = doTest(
+        markdown = "<a><bab><c2c>\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a>"
+                }
+            }
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<bab>"
+                }
+            }
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<c2c>"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample613() = doTest(
+        markdown = "<a/><b2/>\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a/>"
+                }
+            }
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<b2/>"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample614() = doTest(
+        markdown = "<a  /><b2\ndata=\"foo\" >\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a />"
+                }
+            }
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<b2\ndata=\"foo\" >"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample615() = doTest(
+        markdown = "<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample616() = doTest(
+        markdown = "Foo <responsive-image src=\"foo.jpg\" />\n",
+    ) {
+        p {
+            +"Foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<responsive-image src=\"foo.jpg\" />"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample617() = doTest(
+        markdown = "<33> <__>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"33"
+            +"&gt;"
+            +" "
+            +"&lt;"
+            +"_"
+            +"_"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample618() = doTest(
+        markdown = "<a h*#ref=\"hi\">\n",
+    ) {
+        p {
+            +"&lt;"
+            +"a h"
+            +"*"
+            +"#ref="
+            +"&quot;"
+            +"hi"
+            +"&quot;"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample619() = doTest(
+        markdown = "<a href=\"hi'> <a href=hi'>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"a href="
+            +"&quot;"
+            +"hi"
+            +"'"
+            +"&gt;"
+            +" "
+            +"&lt;"
+            +"a href=hi"
+            +"'"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample620() = doTest(
+        markdown = "< a><\nfoo><bar/ >\n<foo bar=baz\nbim!bop />\n",
+    ) {
+        p {
+            +"&lt;"
+            +" "
+            +"a"
+            +"&gt;"
+            +"&lt;"
+            +"\n"
+            +"foo"
+            +"&gt;"
+            +"&lt;"
+            +"bar/"
+            +" "
+            +"&gt;"
+            +"\n"
+            +"&lt;"
+            +"foo bar=baz"
+            +"\n"
+            +"bim"
+            +"!"
+            +"bop"
+            +" "
+            +"/"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample621() = doTest(
+        markdown = "<a href='bar'title=title>\n",
+    ) {
+        p {
+            +"&lt;"
+            +"a href="
+            +"'"
+            +"bar"
+            +"'"
+            +"title=title"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample622() = doTest(
+        markdown = "</a></foo >\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "</a>"
+                }
+            }
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "</foo >"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample623() = doTest(
+        markdown = "</a href=\"foo\">\n",
+    ) {
+        p {
+            +"&lt;"
+            +"/a href="
+            +"&quot;"
+            +"foo"
+            +"&quot;"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample624() = doTest(
+        markdown = "foo <!-- this is a\ncomment - with hyphen -->\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<!-- this is a\ncomment - with hyphen -->"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample625() = doTest(
+        markdown = "foo <!-- not a comment -- two hyphens -->\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"&lt;"
+            +"!"
+            +"--"
+            +" "
+            +"not a comment"
+            +" "
+            +"--"
+            +" "
+            +"two hyphens"
+            +" "
+            +"--"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample626() = doTest(
+        markdown = "foo <!--> foo -->\n\nfoo <!-- foo--->\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"&lt;"
+            +"!"
+            +"--"
+            +"&gt;"
+            +" "
+            +"foo"
+            +" "
+            +"--"
+            +"&gt;"
+        }
+        p {
+            +"foo"
+            +" "
+            +"&lt;"
+            +"!"
+            +"--"
+            +" "
+            +"foo"
+            +"---"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample627() = doTest(
+        markdown = "foo <?php echo \$a; ?>\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<?php echo \$a; ?>"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample628() = doTest(
+        markdown = "foo <!ELEMENT br EMPTY>\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<!ELEMENT br EMPTY>"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample629() = doTest(
+        markdown = "foo <![CDATA[>&<]]>\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<![CDATA[>&<]]>"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample630() = doTest(
+        markdown = "foo <a href=\"&ouml;\">\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"&ouml;\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testRawHTMLExample631() = doTest(
+        markdown = "foo <a href=\"\\*\">\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"\\*\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testRawHTMLExample632() = doTest(
+        markdown = "<a href=\"\\\"\">\n",
+    ) {
+        p {
+            +"&lt;"
+            +"a"
+            +" "
+            +"href="
+            +"&quot;"
+            +"&quot;"
+            +"&quot;"
+            +"&gt;"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample633() = doTest(
+        markdown = "foo  \nbaz\n",
+    ) {
+        p {
+            +"foo"
+            br()
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample634() = doTest(
+        markdown = "foo\\\nbaz\n",
+    ) {
+        p {
+            +"foo"
+            br()
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample635() = doTest(
+        markdown = "foo       \nbaz\n",
+    ) {
+        p {
+            +"foo"
+            br()
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample636() = doTest(
+        markdown = "foo  \n     bar\n",
+    ) {
+        p {
+            +"foo"
+            br()
+            +"bar"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample637() = doTest(
+        markdown = "foo\\\n     bar\n",
+    ) {
+        p {
+            +"foo"
+            br()
+            +"\n"
+            +"bar"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample638() = doTest(
+        markdown = "*foo  \nbar*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                br()
+                +"\n"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample639() = doTest(
+        markdown = "*foo\\\nbar*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                br()
+                +"\n"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample640() = doTest(
+        markdown = "`code  \nspan`\n",
+    ) {
+        p {
+            code {
+                +"code   span"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample641() = doTest(
+        markdown = "`code\\\nspan`\n",
+    ) {
+        p {
+            code {
+                +"code\\ span"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample642() = doTest(
+        markdown = "<a href=\"foo  \nbar\">\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"foo  \nbar\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testHardLineBreaksExample643() = doTest(
+        markdown = "<a href=\"foo\\\nbar\">\n",
+    ) {
+        p {
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"foo\\\nbar\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample644() = doTest(
+        markdown = "foo\\\n",
+    ) {
+        p {
+            +"foo\\"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample645() = doTest(
+        markdown = "foo  \n",
+    ) {
+        p {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample646() = doTest(
+        markdown = "### foo\\\n",
+    ) {
+        h3 {
+            +"foo\\"
+        }
+    }
+
+    @Test
+    fun testHardLineBreaksExample647() = doTest(
+        markdown = "### foo  \n",
+    ) {
+        h3 {
+            +"foo"
+        }
+    }
+
+    @Test
+    fun testSoftLineBreaksExample648() = doTest(
+        markdown = "foo\nbaz\n",
+    ) {
+        p {
+            +"foo"
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testSoftLineBreaksExample649() = doTest(
+        markdown = "foo \n baz\n",
+    ) {
+        p {
+            +"foo"
+            +"\n"
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testTextualContentExample650() = doTest(
+        markdown = "hello \$.;'there\n",
+    ) {
+        p {
+            +"hello"
+            +" "
+            +"\$.;"
+            +"'"
+            +"there"
+        }
+    }
+
+    @Test
+    fun testTextualContentExample651() = doTest(
+        markdown = "Foo χρῆν\n",
+    ) {
+        p {
+            +"Foo χρῆν"
+        }
+    }
+
+    @Test
+    fun testTextualContentExample652() = doTest(
+        markdown = "Multiple     spaces\n",
+    ) {
+        p {
+            +"Multiple     spaces"
+        }
+    }
 }
