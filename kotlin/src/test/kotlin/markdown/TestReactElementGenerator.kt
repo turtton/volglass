@@ -5881,4 +5881,1429 @@ class TestReactElementGenerator : ReactTestSupport {
             +"пристаням__стремятся"
         }
     }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample401() = doTest(
+        markdown = "__foo__bar__baz__\n",
+    ) {
+        p {
+            strong {
+                +"foo__bar__baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample402() = doTest(
+        markdown = "__(bar)__.\n",
+    ) {
+        p {
+            strong {
+                +"("
+                +"bar"
+                +")"
+            }
+            +"."
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample403() = doTest(
+        markdown = "*foo [bar](/url)*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                a {
+                    href = "/url"
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample404() = doTest(
+        markdown = "*foo\nbar*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +"\n"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample405() = doTest(
+        markdown = "_foo __bar__ baz_\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample406() = doTest(
+        markdown = "_foo _bar_ baz_\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample407() = doTest(
+        markdown = "__foo_ bar_\n",
+    ) {
+        p {
+            em {
+                em {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample408() = doTest(
+        markdown = "*foo *bar**\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample409() = doTest(
+        markdown = "*foo **bar** baz*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample410() = doTest(
+        markdown = "*foo**bar**baz*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                strong {
+                    +"bar"
+                }
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample411() = doTest(
+        markdown = "*foo**bar*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +"*"
+                +"*"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample412() = doTest(
+        markdown = "***foo** bar*\n",
+    ) {
+        p {
+            em {
+                strong {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample413() = doTest(
+        markdown = "*foo **bar***\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample414() = doTest(
+        markdown = "*foo**bar***\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                strong {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample415() = doTest(
+        markdown = "foo***bar***baz\n",
+    ) {
+        p {
+            +"foo"
+            em {
+                strong {
+                    +"bar"
+                }
+            }
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample416() = doTest(
+        markdown = "foo******bar*********baz\n",
+    ) {
+        p {
+            +"foo"
+            strong {
+                strong {
+                    strong {
+                        +"bar"
+                    }
+                }
+            }
+            +"*"
+            +"*"
+            +"*"
+            +"baz"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample417() = doTest(
+        markdown = "*foo **bar *baz* bim** bop*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                    +" "
+                    em {
+                        +"baz"
+                    }
+                    +" "
+                    +"bim"
+                }
+                +" "
+                +"bop"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample418() = doTest(
+        markdown = "*foo [*bar*](/url)*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                a {
+                    href = "/url"
+                    em {
+                        +"bar"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample419() = doTest(
+        markdown = "** is not an empty emphasis\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            +" "
+            +"is not an empty emphasis"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample420() = doTest(
+        markdown = "**** is not an empty strong emphasis\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            +"*"
+            +"*"
+            +" "
+            +"is not an empty strong emphasis"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample421() = doTest(
+        markdown = "**foo [bar](/url)**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                a {
+                    href = "/url"
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample422() = doTest(
+        markdown = "**foo\nbar**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +"\n"
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample423() = doTest(
+        markdown = "__foo _bar_ baz__\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample424() = doTest(
+        markdown = "__foo __bar__ baz__\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample425() = doTest(
+        markdown = "____foo__ bar__\n",
+    ) {
+        p {
+            strong {
+                strong {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample426() = doTest(
+        markdown = "**foo **bar****\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample427() = doTest(
+        markdown = "**foo *bar* baz**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                }
+                +" "
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample428() = doTest(
+        markdown = "**foo*bar*baz**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                em {
+                    +"bar"
+                }
+                +"baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample429() = doTest(
+        markdown = "***foo* bar**\n",
+    ) {
+        p {
+            strong {
+                em {
+                    +"foo"
+                }
+                +" "
+                +"bar"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample430() = doTest(
+        markdown = "**foo *bar***\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample431() = doTest(
+        markdown = "**foo *bar **baz**\nbim* bop**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                em {
+                    +"bar"
+                    +" "
+                    strong {
+                        +"baz"
+                    }
+                    +"\n"
+                    +"bim"
+                }
+                +" "
+                +"bop"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample432() = doTest(
+        markdown = "**foo [*bar*](/url)**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+                +" "
+                a {
+                    href = "/url"
+                    em {
+                        +"bar"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample433() = doTest(
+        markdown = "__ is not an empty emphasis\n",
+    ) {
+        p {
+            +"_"
+            +"_"
+            +" "
+            +"is not an empty emphasis"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample434() = doTest(
+        markdown = "____ is not an empty strong emphasis\n",
+    ) {
+        p {
+            +"_"
+            +"_"
+            +"_"
+            +"_"
+            +" "
+            +"is not an empty strong emphasis"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample435() = doTest(
+        markdown = "foo ***\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"*"
+            +"*"
+            +"*"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testEmphasisAndStrongEmphasisExample436() = doTest(
+        markdown = "foo *\\**\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            em {
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample437() = doTest(
+        markdown = "foo *_*\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            em {
+                +"_"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample438() = doTest(
+        markdown = "foo *****\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"*"
+            +"*"
+            +"*"
+            +"*"
+            +"*"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testEmphasisAndStrongEmphasisExample439() = doTest(
+        markdown = "foo **\\***\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            strong {
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample440() = doTest(
+        markdown = "foo **_**\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            strong {
+                +"_"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample441() = doTest(
+        markdown = "**foo*\n",
+    ) {
+        p {
+            +"*"
+            em {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample442() = doTest(
+        markdown = "*foo**\n",
+    ) {
+        p {
+            em {
+                +"foo"
+            }
+            +"*"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample443() = doTest(
+        markdown = "***foo**\n",
+    ) {
+        p {
+            +"*"
+            strong {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample444() = doTest(
+        markdown = "****foo*\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            +"*"
+            em {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample445() = doTest(
+        markdown = "**foo***\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+            }
+            +"*"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample446() = doTest(
+        markdown = "*foo****\n",
+    ) {
+        p {
+            em {
+                +"foo"
+            }
+            +"*"
+            +"*"
+            +"*"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample447() = doTest(
+        markdown = "foo ___\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"_"
+            +"_"
+            +"_"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testEmphasisAndStrongEmphasisExample448() = doTest(
+        markdown = "foo _\\__\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            em {
+                +"_"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample449() = doTest(
+        markdown = "foo _*_\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            em {
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample450() = doTest(
+        markdown = "foo _____\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            +"_"
+            +"_"
+            +"_"
+            +"_"
+            +"_"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testEmphasisAndStrongEmphasisExample451() = doTest(
+        markdown = "foo __\\___\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            strong {
+                +"_"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample452() = doTest(
+        markdown = "foo __*__\n",
+    ) {
+        p {
+            +"foo"
+            +" "
+            strong {
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample453() = doTest(
+        markdown = "__foo_\n",
+    ) {
+        p {
+            +"_"
+            em {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample454() = doTest(
+        markdown = "_foo__\n",
+    ) {
+        p {
+            em {
+                +"foo"
+            }
+            +"_"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample455() = doTest(
+        markdown = "___foo__\n",
+    ) {
+        p {
+            +"_"
+            strong {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample456() = doTest(
+        markdown = "____foo_\n",
+    ) {
+        p {
+            +"_"
+            +"_"
+            +"_"
+            em {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample457() = doTest(
+        markdown = "__foo___\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+            }
+            +"_"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample458() = doTest(
+        markdown = "_foo____\n",
+    ) {
+        p {
+            em {
+                +"foo"
+            }
+            +"_"
+            +"_"
+            +"_"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample459() = doTest(
+        markdown = "**foo**\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample460() = doTest(
+        markdown = "*_foo_*\n",
+    ) {
+        p {
+            em {
+                em {
+                    +"foo"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample461() = doTest(
+        markdown = "__foo__\n",
+    ) {
+        p {
+            strong {
+                +"foo"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample462() = doTest(
+        markdown = "_*foo*_\n",
+    ) {
+        p {
+            em {
+                em {
+                    +"foo"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample463() = doTest(
+        markdown = "****foo****\n",
+    ) {
+        p {
+            strong {
+                strong {
+                    +"foo"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample464() = doTest(
+        markdown = "____foo____\n",
+    ) {
+        p {
+            strong {
+                strong {
+                    +"foo"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample465() = doTest(
+        markdown = "******foo******\n",
+    ) {
+        p {
+            strong {
+                strong {
+                    strong {
+                        +"foo"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample466() = doTest(
+        markdown = "***foo***\n",
+    ) {
+        p {
+            em {
+                strong {
+                    +"foo"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample467() = doTest(
+        markdown = "_____foo_____\n",
+    ) {
+        p {
+            em {
+                strong {
+                    strong {
+                        +"foo"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample468() = doTest(
+        markdown = "*foo _bar* baz_\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                +"_"
+                +"bar"
+            }
+            +" "
+            +"baz"
+            +"_"
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample469() = doTest(
+        markdown = "*foo __bar *baz bim__ bam*\n",
+    ) {
+        p {
+            em {
+                +"foo"
+                +" "
+                strong {
+                    +"bar"
+                    +" "
+                    +"*"
+                    +"baz bim"
+                }
+                +" "
+                +"bam"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample470() = doTest(
+        markdown = "**foo **bar baz**\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            +"foo"
+            +" "
+            strong {
+                +"bar baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample471() = doTest(
+        markdown = "*foo *bar baz*\n",
+    ) {
+        p {
+            +"*"
+            +"foo"
+            +" "
+            em {
+                +"bar baz"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample472() = doTest(
+        markdown = "*[bar*](/url)\n",
+    ) {
+        p {
+            +"*"
+            a {
+                href = "/url"
+                +"bar"
+                +"*"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample473() = doTest(
+        markdown = "_foo [bar_](/url)\n",
+    ) {
+        p {
+            +"_"
+            +"foo"
+            +" "
+            a {
+                href = "/url"
+                +"bar"
+                +"_"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample474() = doTest(
+        markdown = "*<img src=\"foo\" title=\"*\"/>\n",
+    ) {
+        p {
+            +"*"
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<img src=\"foo\" title=\"*\"/>"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample475() = doTest(
+        markdown = "**<a href=\"**\">\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"**\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample476() = doTest(
+        markdown = "__<a href=\"__\">\n",
+    ) {
+        p {
+            +"_"
+            +"_"
+            div {
+                dangerouslySetInnerHTML = jso {
+                    __html = "<a href=\"__\">"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample477() = doTest(
+        markdown = "*a `*`*\n",
+    ) {
+        p {
+            em {
+                +"a"
+                +" "
+                code {
+                    +"*"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample478() = doTest(
+        markdown = "_a `_`_\n",
+    ) {
+        p {
+            em {
+                +"a"
+                +" "
+                code {
+                    +"_"
+                }
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample479() = doTest(
+        markdown = "**a<http://foo.bar/?q=**>\n",
+    ) {
+        p {
+            +"*"
+            +"*"
+            +"a"
+            a {
+                href = "http://foo.bar/?q=**"
+                +"http://foo.bar/?q=**"
+            }
+        }
+    }
+
+    @Test
+    fun testEmphasisAndStrongEmphasisExample480() = doTest(
+        markdown = "__a<http://foo.bar/?q=__>\n",
+    ) {
+        p {
+            +"_"
+            +"_"
+            +"a"
+            a {
+                href = "http://foo.bar/?q=__"
+                +"http://foo.bar/?q=__"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample481() = doTest(
+        markdown = "[link](/uri \"title\")\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                title = "title"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample482() = doTest(
+        markdown = "[link](/uri)\n",
+    ) {
+        p {
+            a {
+                href = "/uri"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample483() = doTest(
+        markdown = "[](./target.md)\n",
+    ) {
+        p {
+            a {
+                href = "./target.md"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample484() = doTest(
+        markdown = "[link]()\n",
+    ) {
+        p {
+            a {
+                href = ""
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample485() = doTest(
+        markdown = "[link](<>)\n",
+    ) {
+        p {
+            a {
+                href = ""
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample486() = doTest(
+        markdown = "[]()\n",
+    ) {
+        p {
+            a {
+                href = ""
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample487() = doTest(
+        markdown = "[link](/my uri)\n",
+    ) {
+        p {
+            +"[link](/my uri)"
+        }
+    }
+
+    @Test
+    fun testLinksExample488() = doTest(
+        markdown = "[link](</my uri>)\n",
+    ) {
+        p {
+            a {
+                href = "/my%20uri"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample489() = doTest(
+        markdown = "[link](foo\nbar)\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +"("
+            +"foo"
+            +"\n"
+            +"bar"
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample490() = doTest(
+        markdown = "[link](<foo\nbar>)\n",
+    ) {
+        p {
+            +"[link](<foo\nbar>)"
+        }
+    }
+
+    @Test
+    fun testLinksExample491() = doTest(
+        markdown = "[a](<b)c>)\n",
+    ) {
+        p {
+            a {
+                href = "b)c"
+                +"a"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample492() = doTest(
+        markdown = "[link](<foo\\>)\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +"("
+            +"&lt;"
+            +"foo&gt;"
+            +")"
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample493() = doTest(
+        markdown = "[a](<b)c\n[a](<b)c>\n[a](<b>c)\n",
+    ) {
+        p {
+            +"[a](&lt;b)c\n[a](&lt;b)c&gt;\n[a](<b>c)"
+        }
+    }
+
+    @Test
+    fun testLinksExample494() = doTest(
+        markdown = "[link](\\(foo\\))\n",
+    ) {
+        p {
+            a {
+                href = "(foo)"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    @Ignore
+    fun testLinksExample495() = doTest(
+        markdown = "[link](foo(and(bar)))\n",
+    ) {
+        p {
+            a {
+                href = "foo(and(bar))"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample496() = doTest(
+        markdown = "[link](foo(and(bar))\n",
+    ) {
+        p {
+            +"["
+            +"link"
+            +"]"
+            +"("
+            +"foo"
+            +"("
+            +"and"
+            +"("
+            +"bar"
+            +")"
+            +")"
+        }
+    }
+
+    @Test
+    fun testLinksExample497() = doTest(
+        markdown = "[link](foo\\(and\\(bar\\))\n",
+    ) {
+        p {
+            a {
+                href = "foo(and(bar)"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample498() = doTest(
+        markdown = "[link](<foo(and(bar)>)\n",
+    ) {
+        p {
+            a {
+                href = "foo(and(bar)"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample499() = doTest(
+        markdown = "[link](foo\\)\\:)\n",
+    ) {
+        p {
+            a {
+                href = "foo):"
+                +"link"
+            }
+        }
+    }
+
+    @Test
+    fun testLinksExample500() = doTest(
+        markdown = "[link](#fragment)\n\n[link](http://example.com#fragment)\n\n[link](http://example.com?foo=3#frag)\n",
+    ) {
+        p {
+            a {
+                href = "#fragment"
+                +"link"
+            }
+        }
+        p {
+            a {
+                href = "http://example.com#fragment"
+                +"link"
+            }
+        }
+        p {
+            a {
+                href = "http://example.com?foo=3#frag"
+                +"link"
+            }
+        }
+    }
 }
