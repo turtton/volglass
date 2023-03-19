@@ -4,6 +4,7 @@ import markdown.processor.EmptyNodeProcessor
 import markdown.processor.NodeProcessor
 import markdown.processor.TransparentInlineHolderNodeProcessor
 import markdown.processor.TrimmingInlineHolderNodeProcessor
+import markdown.type.ObsidianElementTypes
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
@@ -35,6 +36,8 @@ import react.dom.html.ReactHTML.ul
 fun <Parent> createReactElementGeneratingProcessors(linkMap: LinkMap, baseURI: URI?, useSafeLinks: Boolean = true, absolutizeAnchorLinks: Boolean = false): Map<IElementType, NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =
     mapOf(
+        ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+
         MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(body),
         MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),
         MarkdownTokenTypes.HTML_TAG to HtmlElementProcessor(),

@@ -10,6 +10,8 @@ class ObsidianMarkFlavourDescriptor(
     useSafeLinks: Boolean = true,
     absolutizeAnchorLinks: Boolean = false,
 ) : CommonMarkFlavourDescriptor(useSafeLinks, absolutizeAnchorLinks) {
+    override val sequentialParserManager = ObsidianSequentialParserManager(super.sequentialParserManager.getParserSequence())
+
     @Deprecated("Use createReactElementGeneratingProcessors()", ReplaceWith("createReactElementGeneratingProcessors()"))
     override fun createHtmlGeneratingProviders(linkMap: LinkMap, baseURI: URI?): Map<IElementType, GeneratingProvider> = emptyMap()
 }

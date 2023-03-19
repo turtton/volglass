@@ -8614,7 +8614,13 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Ignored
+     * Reason: Duplicates with obsidian link style
+     * Related: [TestObsidianElement.testObsidianLink1]
+     */
     @Test
+    @Ignore
     fun testImagesExample589() = doTest(
         markdown = "![[foo]]\n\n[[foo]]: /url \"title\"\n",
     ) {
