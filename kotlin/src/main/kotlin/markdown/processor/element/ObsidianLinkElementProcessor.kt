@@ -21,12 +21,12 @@ where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
         val separated = linkText.split('|')
         val destination = separated[0]
         val title = if (separated.size == 2) separated[1] else destination
-        val fakeNode = object : ASTNode by node {
+        val slimNode = object : ASTNode by node {
             // listOf([, [, link, ], ]) -> listOf([, link, ])
             override val children: List<ASTNode> = node.children.subList(1, node.children.size - 1)
         }
         return LinkGeneratingProvider.RenderInfo(
-            fakeNode,
+            slimNode,
             destination,
             title,
         )
