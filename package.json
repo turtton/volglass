@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "pnpm run build:kotlin && pnpm run build:next",
     "build:next": "next build",
-    "build:kotlin": "cd kotlin && ./gradlew build",
+    "build:kotlin": "cd kotlin && ./gradlew build --stacktrace",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push",
     "format": "prettier --write \"src/**/*.{ts,tsx,js}\"",
