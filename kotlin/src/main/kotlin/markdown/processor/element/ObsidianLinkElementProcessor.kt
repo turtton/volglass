@@ -18,6 +18,7 @@ class ObsidianLinkElementProcessor<Parent>(
         val linkText = node.getTextInNode(markdownText)
             .replace("\\[".toRegex(), "")
             .replace("\\]".toRegex(), "")
+            .trim()
         val separated = linkText.split('|')
         val destination = separated[0]
         val title = if (separated.size == 2) separated[1] else destination
