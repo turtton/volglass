@@ -12,7 +12,7 @@ class ObsidianLinkElementProcessor<Parent>(
     baseURI: URI?,
     resolveAnchors: Boolean = false,
 ) : LinkElementProcessor<Parent>(baseURI, resolveAnchors)
-where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo {
         @Suppress("RegExpRedundantEscape")
         val linkText = node.getTextInNode(markdownText)
