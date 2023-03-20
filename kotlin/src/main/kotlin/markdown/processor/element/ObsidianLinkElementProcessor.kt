@@ -1,5 +1,6 @@
 package markdown.processor.element
 
+import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.html.LinkGeneratingProvider
@@ -14,17 +15,20 @@ class ObsidianLinkElementProcessor<Parent>(
 ) : LinkElementProcessor<Parent>(baseURI, resolveAnchors)
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo {
-        @Suppress("RegExpRedundantEscape")
-        val linkText = node.getTextInNode(markdownText)
-            .replace("\\[".toRegex(), "")
-            .replace("\\]".toRegex(), "")
-            .trim()
-        val separated = linkText.split('|')
-        val destination = separated[0]
-        val title = if (separated.size == 2) separated[1] else destination
+        // listOf(link) or listOf(link, |, title)
+        val textNodes = node.children.filter { it.type == MarkdownTokenTypes.TEXT }
+        val destinationTextNode = textNodes.first()
+        val titleTextNode = if (textNodes.size > 1) textNodes.last() else destinationTextNode
+
+        val destination = destinationTextNode.getTextInNode(markdownText)
+        val title = titleTextNode.getTextInNode(markdownText)
+
+        val lbracketNode = node.children[0]
+        val rbracketNode = node.children.last()
         val slimNode = object : ASTNode by node {
             // listOf([, [, link, ], ]) -> listOf([, link, ])
-            override val children: List<ASTNode> = node.children.subList(1, node.children.size - 1)
+            // listOf([, [, link, title, ], ]) -> listOf([, title, ])
+            override val children: List<ASTNode> = listOf(lbracketNode, titleTextNode, rbracketNode)
         }
         return LinkGeneratingProvider.RenderInfo(
             slimNode,
