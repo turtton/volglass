@@ -187,6 +187,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testBackslashEscapesExample14() =
         doTest("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity\n") {
@@ -194,33 +199,40 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"*not emphasized"
                 +"*"
                 +"\n"
+                br()
                 +"&lt;br/"
                 +"&gt;"
                 +" "
                 +"not a tag"
                 +"\n"
+                br()
                 +"[not a link"
                 +"]"
                 +"("
                 +"/foo"
                 +")"
                 +"\n"
+                br()
                 +"`"
                 +"not code"
                 +"`"
                 +"\n"
+                br()
                 +"1."
                 +" "
                 +"not a list"
                 +"\n"
+                br()
                 +"*"
                 +" "
                 +"not a list"
                 +"\n"
+                br()
                 +"#"
                 +" "
                 +"not a heading"
                 +"\n"
+                br()
                 +"[foo"
                 +"]"
                 +":"
@@ -231,6 +243,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"not a reference"
                 +"&quot;"
                 +"\n"
+                br()
                 +"&amp;ouml;"
                 +" "
                 +"not a character entity"
@@ -465,6 +478,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample37() = doTest(
         markdown = "&#42;foo&#42;\n*foo*\n",
@@ -472,6 +490,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"*foo*"
             +"\n"
+            br()
             em {
                 +"foo"
             }
@@ -571,6 +590,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testThematicBreaksExample46() = doTest(
         markdown = "--\n**\n__\n",
@@ -578,9 +602,11 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"--"
             +"\n"
+            br()
             +"*"
             +"*"
             +"\n"
+            br()
             +"_"
             +"_"
         }
@@ -1096,6 +1122,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSetextHeadingsExample88() = doTest(
         markdown = "Foo\n= =\n\nFoo\n--- -\n",
@@ -1103,6 +1134,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             +"="
             +" "
             +"="
@@ -1168,6 +1200,11 @@ class TestReactElementGenerator : ReactTestSupport {
         hr()
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSetextHeadingsExample93() = doTest(
         markdown = "> foo\nbar\n===\n",
@@ -1176,8 +1213,10 @@ class TestReactElementGenerator : ReactTestSupport {
             p {
                 +"foo"
                 +"\n"
+                br()
                 +"bar"
                 +"\n"
+                br()
                 +"==="
             }
         }
@@ -1301,6 +1340,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSetextHeadingsExample104() = doTest(
         markdown = "Foo\nbar\n\n---\n\nbaz\n",
@@ -1308,6 +1352,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             +"bar"
         }
         hr()
@@ -1316,6 +1361,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSetextHeadingsExample105() = doTest(
         markdown = "Foo\nbar\n* * *\nbaz\n",
@@ -1323,6 +1373,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             +"bar"
         }
         hr()
@@ -1331,6 +1382,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSetextHeadingsExample106() = doTest(
         markdown = "Foo\nbar\n\\---\nbaz\n",
@@ -1338,10 +1394,13 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             +"bar"
             +"\n"
+            br()
             +"---"
             +"\n"
+            br()
             +"baz"
         }
     }
@@ -2475,6 +2534,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testHTMLBlocksExample187() = doTest(
         markdown = "Foo\n<a href=\"bar\">\nbaz\n",
@@ -2482,6 +2546,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a href=\"bar\">"
@@ -2835,6 +2900,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testLinkReferenceDefinitionsExample213() = doTest(
         markdown = "Foo\n[bar]: /baz\n\n[bar]\n",
@@ -2842,6 +2912,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"Foo"
             +"\n"
+            br()
             +"["
             +"bar"
             +"]"
@@ -2902,6 +2973,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testLinkReferenceDefinitionsExample217() = doTest(
         markdown = "[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n",
@@ -2914,6 +2990,7 @@ class TestReactElementGenerator : ReactTestSupport {
             }
             +","
             +"\n"
+            br()
             a {
                 href = "/bar-url"
                 title = "bar"
@@ -2921,6 +2998,7 @@ class TestReactElementGenerator : ReactTestSupport {
             }
             +","
             +"\n"
+            br()
             a {
                 href = "/baz-url"
                 +"baz"
@@ -2953,6 +3031,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testParagraphsExample220() = doTest(
         markdown = "aaa\nbbb\n\nccc\nddd\n",
@@ -2960,11 +3043,13 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"aaa"
             +"\n"
+            br()
             +"bbb"
         }
         p {
             +"ccc"
             +"\n"
+            br()
             +"ddd"
         }
     }
@@ -3007,6 +3092,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testParagraphsExample224() = doTest(
         markdown = "   aaa\nbbb\n",
@@ -3014,6 +3104,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"aaa"
             +"\n"
+            br()
             +"bbb"
         }
     }
@@ -3124,6 +3215,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testBlockQuotesExample232() = doTest(
         markdown = "> # Foo\n> bar\nbaz\n",
@@ -3135,6 +3231,7 @@ class TestReactElementGenerator : ReactTestSupport {
             p {
                 +"bar"
                 +"\n"
+                br()
                 +"baz"
             }
         }
@@ -3336,6 +3433,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testBlockQuotesExample247() = doTest(
         markdown = "> bar\nbaz\n",
@@ -3344,6 +3446,7 @@ class TestReactElementGenerator : ReactTestSupport {
             p {
                 +"bar"
                 +"\n"
+                br()
                 +"baz"
             }
         }
@@ -3377,6 +3480,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testBlockQuotesExample250() = doTest(
         markdown = "> > > foo\nbar\n",
@@ -3387,6 +3495,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     p {
                         +"foo"
                         +"\n"
+                        br()
                         +"bar"
                     }
                 }
@@ -3433,6 +3542,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testListItemsExample253() = doTest(
         markdown = "A paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n",
@@ -3440,6 +3554,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"A paragraph"
             +"\n"
+            br()
             +"with two lines."
         }
         pre {
@@ -4093,6 +4208,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testListItemsExample290() = doTest(
         markdown = "  1.  A paragraph\nwith two lines.\n\n          indented code\n\n      > A block quote.\n",
@@ -4102,6 +4222,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 p {
                     +"A paragraph"
                     +"\n"
+                    br()
                     +"with two lines."
                 }
                 pre {
@@ -4133,6 +4254,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testListItemsExample292() = doTest(
         markdown = "> 1. > Blockquote\ncontinued here.\n",
@@ -4144,6 +4270,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         p {
                             +"Blockquote"
                             +"\n"
+                            br()
                             +"continued here."
                         }
                     }
@@ -5565,6 +5692,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample383() = doTest(
         markdown = "__\nfoo bar__\n",
@@ -5573,6 +5705,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"_"
             +"_"
             +"\n"
+            br()
             +"foo bar"
             +"_"
             +"_"
@@ -5702,6 +5835,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample393() = doTest(
         markdown = "**Gomphocarpus (*Gomphocarpus physocarpus*, syn.\n*Asclepias physocarpa*)**\n",
@@ -5718,6 +5856,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +" "
                 +"syn."
                 +"\n"
+                br()
                 em {
                     +"Asclepias physocarpa"
                 }
@@ -5864,6 +6003,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample404() = doTest(
         markdown = "*foo\nbar*\n",
@@ -5872,6 +6016,7 @@ class TestReactElementGenerator : ReactTestSupport {
             em {
                 +"foo"
                 +"\n"
+                br()
                 +"bar"
             }
         }
@@ -6149,6 +6294,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample422() = doTest(
         markdown = "**foo\nbar**\n",
@@ -6157,6 +6307,7 @@ class TestReactElementGenerator : ReactTestSupport {
             strong {
                 +"foo"
                 +"\n"
+                br()
                 +"bar"
             }
         }
@@ -6288,6 +6439,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample431() = doTest(
         markdown = "**foo *bar **baz**\nbim* bop**\n",
@@ -6303,6 +6459,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"baz"
                     }
                     +"\n"
+                    br()
                     +"bim"
                 }
                 +" "
@@ -7081,6 +7238,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testLinksExample489() = doTest(
         markdown = "[link](foo\nbar)\n",
@@ -7092,6 +7254,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"("
             +"foo"
             +"\n"
+            br()
             +"bar"
             +")"
         }
@@ -7285,6 +7448,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testLinksExample504() = doTest(
         markdown = "[link](/url \"title\")\n[link](/url 'title')\n[link](/url (title))\n",
@@ -7296,12 +7464,14 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"link"
             }
             +"\n"
+            br()
             a {
                 href = "/url"
                 title = "title"
                 +"link"
             }
             +"\n"
+            br()
             a {
                 href = "/url"
                 title = "title"
@@ -9058,6 +9228,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testRawHTMLExample620() = doTest(
         markdown = "< a><\nfoo><bar/ >\n<foo bar=baz\nbim!bop />\n",
@@ -9069,6 +9244,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"&gt;"
             +"&lt;"
             +"\n"
+            br()
             +"foo"
             +"&gt;"
             +"&lt;"
@@ -9076,9 +9252,11 @@ class TestReactElementGenerator : ReactTestSupport {
             +" "
             +"&gt;"
             +"\n"
+            br()
             +"&lt;"
             +"foo bar=baz"
             +"\n"
+            br()
             +"bim"
             +"!"
             +"bop"
@@ -9473,6 +9651,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Overlapping with obsidian line breaking rule
+     * Related: [TestObsidianElement.testObsidianLineBreak1]
+     */
     @Test
     fun testSoftLineBreaksExample648() = doTest(
         markdown = "foo\nbaz\n",
@@ -9480,6 +9663,7 @@ class TestReactElementGenerator : ReactTestSupport {
         p {
             +"foo"
             +"\n"
+            br()
             +"baz"
         }
     }

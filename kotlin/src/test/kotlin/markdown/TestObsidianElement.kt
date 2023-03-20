@@ -3,6 +3,7 @@ package markdown
 import kotlin.test.Test
 import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
+import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.p
 
 class TestObsidianElement : ReactTestSupport {
@@ -17,6 +18,18 @@ class TestObsidianElement : ReactTestSupport {
                 title = "link"
                 +"link"
             }
+        }
+    }
+
+    @Test
+    fun testObsidianLineBreak1() = doTest(
+        "aaa\nbbb",
+    ) {
+        p {
+            +"aaa"
+            +"\n"
+            br()
+            +"bbb"
         }
     }
 }
