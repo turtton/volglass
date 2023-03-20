@@ -29,15 +29,15 @@ class ObsidianLineBreakParser : SequentialParser {
                 specialTokens.clear()
             } else if (iterator.type in
                 listOf(
-                        MarkdownElementTypes.ATX_1,
-                        MarkdownElementTypes.ATX_2,
-                        MarkdownElementTypes.ATX_3,
-                        MarkdownElementTypes.ATX_4,
-                        MarkdownElementTypes.ATX_5,
-                        MarkdownElementTypes.ATX_6,
-                        MarkdownTokenTypes.HARD_LINE_BREAK,
-                        MarkdownTokenTypes.HTML_TAG,
-                    )
+                    MarkdownElementTypes.ATX_1,
+                    MarkdownElementTypes.ATX_2,
+                    MarkdownElementTypes.ATX_3,
+                    MarkdownElementTypes.ATX_4,
+                    MarkdownElementTypes.ATX_5,
+                    MarkdownElementTypes.ATX_6,
+                    MarkdownTokenTypes.HARD_LINE_BREAK,
+                    MarkdownTokenTypes.HTML_TAG,
+                )
             ) {
                 isNormalLine = false
             } else if (iterator.type in listOf(MarkdownTokenTypes.BACKTICK)) {
