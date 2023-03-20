@@ -23,7 +23,7 @@ class ObsidianLinkParser : SequentialParser {
                 if (target != null) {
                     result = result.withNode(
                         SequentialParser.Node(
-                            // Target [[>>link<<]]
+                            // Target >>[[link]]<<
                             iterator.index - 1..target.iteratorPosition.index + 1,
                             ObsidianElementTypes.LINK,
                         ),
