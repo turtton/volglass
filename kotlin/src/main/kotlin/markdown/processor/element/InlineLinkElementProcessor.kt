@@ -1,5 +1,7 @@
 package markdown.processor.element
 
+import FileNameString
+import RoutableProps
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.findChildOfType
@@ -17,9 +19,10 @@ import react.dom.html.HTMLAttributes
  */
 class InlineLinkElementProcessor<Parent>(
     baseURI: URI?,
+    fileName: FileNameString,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, resolveAnchors)
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
+) : LinkElementProcessor<Parent>(baseURI, fileName, resolveAnchors)
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo? {
         val label = node.findChildOfType(MarkdownElementTypes.LINK_TEXT) ?: return null
         return LinkGeneratingProvider.RenderInfo(

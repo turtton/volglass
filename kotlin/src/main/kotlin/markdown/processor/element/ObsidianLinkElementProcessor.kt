@@ -1,5 +1,7 @@
 package markdown.processor.element
 
+import FileNameString
+import RoutableProps
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
@@ -11,9 +13,10 @@ import react.dom.html.HTMLAttributes
 
 class ObsidianLinkElementProcessor<Parent>(
     baseURI: URI?,
+    fileName: FileNameString,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, resolveAnchors)
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
+) : LinkElementProcessor<Parent>(baseURI, fileName, resolveAnchors)
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo {
         // listOf(link) or listOf(link, |, title)
         val textNodes = node.children.filter { it.type == MarkdownTokenTypes.TEXT }

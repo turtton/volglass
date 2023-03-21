@@ -2,19 +2,20 @@
 
 package markdown
 
+import FileNameString
+import RoutableProps
 import markdown.processor.element.createReactElementGeneratingProcessors
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.LinkMap
 import org.intellij.markdown.parser.MarkdownParser
 import react.FC
-import react.Props
 
 @JsExport
-fun convertMarkdownToReactElement(content: String): FC<Props> {
+fun convertMarkdownToReactElement(fileName: FileNameString, content: String): FC<RoutableProps> {
     val flavour = ObsidianMarkFlavourDescriptor()
     val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(content)
-    return ReactElementGenerator(content, parsedTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(parsedTree, content), null)).generateElement()
+    return ReactElementGenerator(content, parsedTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(parsedTree, content), null, fileName)).generateElement()
 }
 
 @JsExport
