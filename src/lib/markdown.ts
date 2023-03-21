@@ -1,20 +1,20 @@
 import { DirectoryTree } from "directory-tree";
 import { getRouterPath } from "./slug";
 
-export interface MdObject {
+export interface TreeData {
   name: string;
-  children: MdObject[];
+  children: TreeData[];
   id: string;
   routePath: string | null;
 }
 
-export function convertObject(thisObject: DirectoryTree): MdObject {
-  const children: MdObject[] = [];
+export function convertTreeData(thisObject: DirectoryTree): TreeData {
+  const children: TreeData[] = [];
 
   const objectName = thisObject.name;
   const routerPath = getRouterPath(objectName);
-  const newObject: MdObject = {
-    name: objectName.split(".")[0],
+  const newObject: TreeData = {
+    name: objectName.replace(".md", ""),
     children,
     id: objectName,
     routePath: routerPath,
@@ -22,7 +22,7 @@ export function convertObject(thisObject: DirectoryTree): MdObject {
 
   if (thisObject.children != null && thisObject.children.length > 0) {
     thisObject.children.forEach((aChild) => {
-      const newChild = convertObject(aChild);
+      const newChild = convertTreeData(aChild);
       children.push(newChild);
     });
     return newObject;
@@ -31,8 +31,8 @@ export function convertObject(thisObject: DirectoryTree): MdObject {
   }
 }
 
-function flat(array: MdObject[]): MdObject[] {
-  let result: MdObject[] = [];
+function flat(array: TreeData[]): TreeData[] {
+  let result: TreeData[] = [];
   array.forEach(function (a) {
     result.push(a);
     if (Array.isArray(a.children)) {
@@ -42,6 +42,6 @@ function flat(array: MdObject[]): MdObject[] {
   return result;
 }
 
-export function getFlattenArray(thisObject: MdObject): MdObject[] {
+export function getFlattenArray(thisObject: TreeData): TreeData[] {
   return flat(thisObject.children);
 }

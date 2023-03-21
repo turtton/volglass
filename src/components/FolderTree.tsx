@@ -5,7 +5,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import { useRouter } from "next/router";
 import { styled } from "@mui/material/styles";
-import { MdObject } from "../lib/markdown";
+import { TreeData } from "../lib/markdown";
 
 const TCTreeItem = styled(TreeItem)(() => ({
   "& .MuiTreeItem-content": {
@@ -21,10 +21,10 @@ const TCTreeItem = styled(TreeItem)(() => ({
 
 export default function FolderTree(props: {
   onNodeSelect?: () => void;
-  tree: MdObject;
-  flattenNodes: MdObject[];
+  tree: TreeData;
+  flattenNodes: TreeData[];
 }): JSX.Element {
-  const renderTree = (nodes: MdObject): JSX.Element => (
+  const renderTree = (nodes: TreeData): JSX.Element => (
     <TCTreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name} className="dark:text-gray-200">
       {nodes.children.map((node) => renderTree(node))}
     </TCTreeItem>

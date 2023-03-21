@@ -1,9 +1,10 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
 import { useRouter } from "next/router";
 import { CustomNode } from "../lib/graph";
 import Footer from "./Footer";
+import { RoutableProps } from "volglass-backend";
 
 function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
   return (
@@ -35,7 +36,7 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 }
 
 export interface MDContentData {
-  content: string[];
+  content: FunctionComponent<RoutableProps>;
   backLinks: CustomNode[];
 }
 
@@ -47,12 +48,18 @@ function MDContent({ content, backLinks }: MDContentData): JSX.Element {
   //     handleOpenNewContent(content)
   // }
 
-  useRouter();
+  const Content = content;
+
+  const router = useRouter();
 
   return (
     <div className="markdown-rendered">
       <div className="mt-4 overflow-hidden overflow-y-auto px-8">
-        <div dangerouslySetInnerHTML={{ __html: content.join("") }} />
+        <Content
+          push={(slug) => {
+            void router.push(slug);
+          }}
+        />
         {/* <button onClick={handleInternalLinkClick}>Click me</button> */}
         {/* <hr/> */}
         <div style={{ marginBottom: "3em" }}>

@@ -1,48 +1,90 @@
 import Head from "next/head";
 import Layout from "../components/Layout";
-import { Content, getAllSlugs, getDirectoryData, getSinglePost } from "../lib/slug";
+import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
 import { constructGraphData, CustomNode, getLocalGraphData, LocalGraphData } from "../lib/graph";
-import { getFlattenArray, MdObject } from "../lib/markdown";
-import RootContainer from "../components/RootContainer";
+import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
+import { getContent, initCache, RoutableProps, slugs, toFileName } from "volglass-backend";
+import { getMarkdownFolder, readFileSync } from "../lib/io";
+import dynamic from "next/dynamic";
+import MDContent from "../components/MDContentData";
+import FolderTree from "../components/FolderTree";
+import { SearchBar } from "../components/Search";
+import { FunctionComponent } from "react";
 
 // TODO make customizable
 // FIXME This should be a string field, but I don't know to avoid init error
 export function FIRST_PAGE(): string {
   return "README";
 }
+interface HomeElement extends HTMLElement {
+  checked: boolean;
+}
 
+const DynamicThemeSwitcher = dynamic(async () => await import("../components/ThemeSwitcher"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
+
+// This trick is to dynamically load component that interact with window object (browser only)
+const DynamicGraph = dynamic(async () => await import("../components/Graph"), {
+  loading: () => <p>Loading ...</p>,
+  ssr: false,
+});
 export interface Prop {
-  content: string[];
-  tree: MdObject;
-  flattenNodes: MdObject[];
+  title: string;
+  markdownComponent: FunctionComponent<RoutableProps>;
+  tree: TreeData;
+  flattenNodes: TreeData[];
   graphData: LocalGraphData;
   backLinks: CustomNode[];
   searchIndex: SearchData[];
 }
-interface InternalProp extends Prop {
-  note: Content;
-}
 
 export default function Home({
-  note,
+  title,
+  markdownComponent,
   backLinks,
   tree,
   flattenNodes,
   graphData,
   searchIndex,
-}: InternalProp): JSX.Element {
+}: Prop): JSX.Element {
+  const burgerId = "hamburger-input";
+  const closeBurger = (): void => {
+    const element = document.getElementById(burgerId) as HomeElement | null;
+    if (element !== null) {
+      element.checked = false;
+    }
+  };
+
   return (
     <Layout>
-      <Head>{<meta name="title" content={note.title} />}</Head>
-      <RootContainer
-        content={note.data}
-        tree={tree}
-        flattenNodes={flattenNodes}
-        graphData={graphData}
-        backLinks={backLinks}
-        searchIndex={searchIndex}
-      />
+      <Head>{<meta name="title" content={title} />}</Head>
+      <div className="fixed flex h-full w-full flex-row overflow-hidden">
+        <div className="burger-menu">
+          <input type="checkbox" id={burgerId} />
+          <label id="hamburger-menu" htmlFor="hamburger-input">
+            <span className="menu">
+              {" "}
+              <span className="hamburger"></span>{" "}
+            </span>
+          </label>
+          <nav>
+            <FolderTree tree={tree} flattenNodes={flattenNodes} onNodeSelect={closeBurger} />
+            <DynamicGraph graph={graphData} />
+          </nav>
+        </div>
+        <div>
+          <nav className="nav-bar">
+            <DynamicThemeSwitcher />
+            <SearchBar index={searchIndex} />
+            <FolderTree tree={tree} flattenNodes={flattenNodes} />
+          </nav>
+        </div>
+        <MDContent content={markdownComponent} backLinks={backLinks} />
+        <DynamicGraph graph={graphData} />
+      </div>
     </Layout>
   );
 }
@@ -51,8 +93,9 @@ export async function getStaticPaths(): Promise<{
   paths: Array<{ params: { id: string[] } }>;
   fallback: false;
 }> {
-  const allPostsData = getAllSlugs();
-  const paths = allPostsData.map((p) => ({ params: { id: p.replace("/", "").split("/") } }));
+  initCache(getAllContentFilePaths, getMarkdownFolder, toSlug, readFileSync);
+  // TODO allows to put in image files in `posts` directory
+  const paths = slugs.map((p) => ({ params: { id: p.replace("/", "").split("/") } }));
 
   return {
     paths,
@@ -62,12 +105,15 @@ export async function getStaticPaths(): Promise<{
 
 const { nodes, edges } = constructGraphData();
 
-export function getStaticProps({ params }: { params: { id: string[] } }): { props: InternalProp } {
-  const note = getSinglePost(`/${params.id.join("/")}`);
+export function getStaticProps({ params }: { params: { id: string[] } }): { props: Prop } {
+  const slugString = params.id.join("/");
+  const markdownComponent: FunctionComponent<RoutableProps> = getContent(slugString);
+  const fileName = toFileName(slugString);
+
   const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
 
-  const listOfEdges = edges.filter((anEdge) => anEdge.target === params.id.join("/"));
+  const listOfEdges = edges.filter((anEdge) => anEdge.target === slugString);
   const internalLinks = listOfEdges
     .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source) ?? null)
     .filter((element): element is CustomNode => element !== null);
@@ -76,11 +122,11 @@ export function getStaticProps({ params }: { params: { id: string[] } }): { prop
   const searchIndex = getSearchIndex();
   return {
     props: {
-      content: [],
-      note,
+      title: fileName,
+      markdownComponent,
       tree,
       flattenNodes,
-      backLinks: backLinks.filter((link) => link.slug !== params.id.join("/")),
+      backLinks: backLinks.filter((link) => link.slug !== slugString),
       graphData,
       searchIndex,
     },

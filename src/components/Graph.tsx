@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import CytoscapeComponent from "react-cytoscapejs";
 import { Core } from "cytoscape";
 import { LocalGraphData } from "../lib/graph";
-import { MdObject } from "../lib/markdown";
+import { TreeData } from "../lib/markdown";
 import { useCurrentTheme } from "./ThemeSwitcher";
 import { PaletteMode } from "@mui/material";
 
@@ -98,7 +98,7 @@ function Graph({ graph }: { graph: LocalGraphData }): JSX.Element {
               cy.fit();
               cy.on("tap", "node", (evt) => {
                 const node: Core = evt.target;
-                const { id }: MdObject = node.data();
+                const { id }: TreeData = node.data();
                 void router.push(`/${id}`);
               });
             }}
