@@ -18,8 +18,8 @@ import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.blockquote
-import react.dom.html.ReactHTML.body
 import react.dom.html.ReactHTML.br
+import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.em
 import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.h2
@@ -40,7 +40,7 @@ fun <Parent> createReactElementGeneratingProcessors(linkMap: LinkMap, baseURI: U
     mapOf(
         ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, filename, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
 
-        MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(body),
+        MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(div),
         MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),
         MarkdownTokenTypes.HTML_TAG to HtmlElementProcessor(),
         MarkdownElementTypes.BLOCK_QUOTE to SimpleElementNodeProcessor(blockquote),
