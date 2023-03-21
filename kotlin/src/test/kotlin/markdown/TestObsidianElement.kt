@@ -22,6 +22,20 @@ class TestObsidianElement : ReactTestSupport {
     }
 
     @Test
+    fun testObsidianLink2() = doTest(
+        "[[link | title]]",
+    ) {
+        p {
+            a {
+                // TODO FIX link
+                href = "link"
+                title = "title"
+                +"title"
+            }
+        }
+    }
+
+    @Test
     fun testObsidianLineBreak1() = doTest(
         "aaa\nbbb",
     ) {
