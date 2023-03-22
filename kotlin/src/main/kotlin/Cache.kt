@@ -52,29 +52,45 @@ fun initCache(getAllFiles: () -> Array<String>, getMarkdownFolder: () -> String,
     val nameCache = arrayListOf<String>()
     postFolder = getMarkdownFolder()
     getAllFiles().forEach { filePath ->
-        val fileName = filePath.toFileName(nameCache.toTypedArray())
+        val plainFileName = filePath.toPlainFileName()
+        if (nameCache.contains(plainFileName)) {
+            duplicatedFile += plainFileName
+            val duplicatedPath = fileNameToPath.remove(plainFileName) ?: error("DuplicatedName:$plainFileName is not found in fileNameToPath")
+            val duplicatedFileName = duplicatedPath.toFileName()
+            fileNameToPath[duplicatedFileName] = duplicatedPath
+            val duplicatedSlug = fileNameToSlug.remove(plainFileName)!!
+            fileNameToSlug[duplicatedFileName] = duplicatedSlug
+        }
+        val fileName = filePath.toFileName()
+
         fileNameToPath[fileName] = filePath
         val slug = toSlug(filePath)
         fileNameToSlug[fileName] = slug
 
+        nameCache += plainFileName
+    }
+
+    getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
         // Analyze Dependencies
-        convertMarkdownToReactElement(fileName, content)
-
-        nameCache += filePath
+        convertMarkdownToReactElement(filePath.toFileName(), content)
     }
 }
 
 @JsExport
-fun PathString.toFileName(nameCache: Array<String>? = null): FileNameString {
-    val plainFileName = split('/').last().removeMdExtension()
-    return if (nameCache?.contains(plainFileName) != true && !duplicatedFile.contains(plainFileName)) {
+fun PathString.toFileName(): FileNameString {
+    val plainFileName = toPlainFileName()
+    return if (!duplicatedFile.contains(plainFileName)) {
         plainFileName
     } else {
-        duplicatedFile += plainFileName
-        // /path/to/post/README.md -> /README.md -> README.md -> README
+        // /path/to/post/dir/README.md -> /dir/README.md -> dir/README.md -> dir/README
         return replace(postFolder, "").substring(1).removeMdExtension()
     }
+}
+
+private fun PathString.toPlainFileName(): FileNameString {
+    // /path/to/post/dir/README.md -> README.md -> README
+    return split('/').last().removeMdExtension()
 }
 
 @JsExport
