@@ -38,17 +38,18 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 export interface MDContentData {
   fileName: string;
   content: string;
+  cacheData;
   backLinks: CustomNode[];
 }
 
-function MDContent({ fileName, content, backLinks }: MDContentData): JSX.Element {
+function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): JSX.Element {
   // function handleInternalLinkClick() {
   //     //Processing fetching
   //     //pass result up to parent container
   //     //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
   //     handleOpenNewContent(content)
   // }
-  const Content = getContent(fileName, `# ${fileName}\n${content}`);
+  const  Content = getContent(fileName, `# ${fileName}\n${content}`, cacheData)
 
   const router = useRouter();
 

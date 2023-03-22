@@ -4,7 +4,7 @@ import { getAllContentFilePaths, getDirectoryData, toFilePath, toSlug } from "..
 import { constructGraphData, CustomNode, getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import { initCache, slugs, toFileName } from "volglass-backend";
+import { getCacheData, initCache, toFileName } from "volglass-backend";
 import { getMarkdownFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
@@ -33,6 +33,7 @@ const DynamicGraph = dynamic(async () => await import("../components/Graph"), {
 export interface Prop {
   fileName: string;
   markdownContent: string;
+  cacheData: string;
   tree: TreeData;
   flattenNodes: TreeData[];
   graphData: LocalGraphData;
@@ -43,6 +44,7 @@ export interface Prop {
 export default function Home({
   fileName,
   markdownContent,
+  cacheData,
   backLinks,
   tree,
   flattenNodes,
@@ -81,7 +83,7 @@ export default function Home({
             <FolderTree tree={tree} flattenNodes={flattenNodes} />
           </nav>
         </div>
-        <MDContent fileName={fileName} content={markdownContent} backLinks={backLinks} />
+        <MDContent fileName={fileName} content={markdownContent} cacheData={cacheData} backLinks={backLinks} />
         <DynamicGraph graph={graphData} />
       </div>
     </Layout>
@@ -92,7 +94,7 @@ export async function getStaticPaths(): Promise<{
   paths: Array<{ params: { id: string[] } }>;
   fallback: false;
 }> {
-  initCache(getAllContentFilePaths, getMarkdownFolder, toSlug, readFileSync);
+  const slugs = await initCache(getAllContentFilePaths, getMarkdownFolder, toSlug, readFileSync);
   // TODO allows to put in image files in `posts` directory
   const paths = slugs.map((p) => ({ params: { id: p.replace("/", "").split("/") } }));
 
@@ -104,9 +106,10 @@ export async function getStaticPaths(): Promise<{
 
 const { nodes, edges } = constructGraphData();
 
-export function getStaticProps({ params }: { params: { id: string[] } }): { props: Prop } {
+export async function getStaticProps({ params }: { params: { id: string[] } }): Promise<{ props: Prop }> {
+  const cacheData = await getCacheData();
   const slugString = params.id.join("/");
-  const fileName = toFileName(slugString);
+  const fileName = toFileName(slugString, getMarkdownFolder(), []);
   const filePath = toFilePath(`/${slugString}`);
   const markdownContent = readFileSync(filePath);
   const tree = getDirectoryData();
@@ -123,6 +126,7 @@ export function getStaticProps({ params }: { params: { id: string[] } }): { prop
     props: {
       fileName,
       markdownContent,
+      cacheData,
       tree,
       flattenNodes,
       backLinks: backLinks.filter((link) => link.slug !== slugString),

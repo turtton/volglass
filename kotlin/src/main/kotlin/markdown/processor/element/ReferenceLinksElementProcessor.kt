@@ -1,5 +1,7 @@
 package markdown.processor.element
 
+import DependencyData
+import FileNameInfo
 import FileNameString
 import RoutableProps
 import org.intellij.markdown.MarkdownElementTypes
@@ -21,8 +23,10 @@ class ReferenceLinksElementProcessor<Parent>(
     private val linkMap: LinkMap,
     baseURI: URI?,
     fileName: FileNameString,
+    dependencyData: DependencyData,
+    fileNameInfo: FileNameInfo,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, fileName, resolveAnchors)
+) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors)
     where Parent : HTMLAttributes<HTMLElement>,
           Parent : ChildrenBuilder,
           Parent : RoutableProps {

@@ -1,5 +1,16 @@
 @file:OptIn(ExperimentalJsExport::class)
 
+import io.github.xxfast.kstore.KStore
+import io.github.xxfast.kstore.storeOf
+import kotlin.js.Promise
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.promise
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import markdown.convertMarkdownToReactElement
 import react.FC
 
@@ -25,43 +36,35 @@ typealias SlugString = String
  */
 typealias FileNameString = String
 
-/**
- * This String should be plain file name
- *
- * Related: [toFileName]
- */
-private val duplicatedFile = mutableSetOf<String>()
+val backendCoroutine = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-val fileNameToPath = mutableMapOf<FileNameString, PathString>()
-val fileNameToSlug = mutableMapOf<FileNameString, SlugString>()
+val json = Json
 
-/**
- * key -> values
- */
-val dependingLinks = mutableMapOf<FileNameString, MutableList<FileNameString>>()
-
-/**
- * key <- values
- */
-val linkDependencies = mutableMapOf<FileNameString, MutableList<FileNameString>>()
-
-private lateinit var postFolder: String
+val cacheData: KStore<CacheData> = storeOf("backend.cache")
 
 @JsExport
-fun initCache(getAllFiles: () -> Array<String>, getMarkdownFolder: () -> String, toSlug: (String) -> String, readContent: (PathString) -> String) {
+fun initCache(
+    getAllFiles: () -> Array<String>,
+    getMarkdownFolder: () -> String,
+    toSlug: (String) -> String,
+    readContent: (PathString) -> String,
+): Promise<Array<String>> = backendCoroutine.promise {
+    val fileNameToSlug = mutableMapOf<FileNameString, PathString>()
+    val fileNameToPath = mutableMapOf<FileNameString, PathString>()
+    val duplicatedFile = mutableSetOf<String>()
     val nameCache = arrayListOf<String>()
-    postFolder = getMarkdownFolder()
+    val postFolder = getMarkdownFolder()
     getAllFiles().forEach { filePath ->
         val plainFileName = filePath.toPlainFileName()
         if (nameCache.contains(plainFileName)) {
             duplicatedFile += plainFileName
             val duplicatedPath = fileNameToPath.remove(plainFileName) ?: error("DuplicatedName:$plainFileName is not found in fileNameToPath")
-            val duplicatedFileName = duplicatedPath.toFileName()
+            val duplicatedFileName = duplicatedPath.toFileName(postFolder, nameCache.toTypedArray())
             fileNameToPath[duplicatedFileName] = duplicatedPath
             val duplicatedSlug = fileNameToSlug.remove(plainFileName)!!
             fileNameToSlug[duplicatedFileName] = duplicatedSlug
         }
-        val fileName = filePath.toFileName()
+        val fileName = filePath.toFileName(postFolder, nameCache.toTypedArray())
 
         fileNameToPath[fileName] = filePath
         val slug = toSlug(filePath)
@@ -70,21 +73,30 @@ fun initCache(getAllFiles: () -> Array<String>, getMarkdownFolder: () -> String,
         nameCache += plainFileName
     }
 
+    val dependencyData = DependencyData()
+    val fileNameInfo = FileNameInfo(postFolder, duplicatedFile, fileNameToPath, fileNameToSlug)
     getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
         // Analyze Dependencies
-        convertMarkdownToReactElement(filePath.toFileName(), content)
+        convertMarkdownToReactElement(filePath.toFileName(postFolder, nameCache.toTypedArray()), content, dependencyData, fileNameInfo)
     }
+
+    cacheData.set(CacheData(dependencyData, fileNameInfo))
+    return@promise fileNameToSlug.values.toTypedArray()
 }
 
 @JsExport
-fun PathString.toFileName(): FileNameString {
+fun PathString.toFileName(postFolder: String, duplicatedFile: Array<String>): FileNameString {
+    return toFileName(postFolder, duplicatedFile.toSet())
+}
+
+fun PathString.toFileName(postFolder: String, duplicatedFile: Set<String>): FileNameString {
     val plainFileName = toPlainFileName()
     return if (!duplicatedFile.contains(plainFileName)) {
         plainFileName
     } else {
         // /path/to/post/dir/README.md -> /dir/README.md -> dir/README.md -> dir/README
-        return replace(postFolder, "").substring(1).removeMdExtension()
+        replace(postFolder, "").substring(1).removeMdExtension()
     }
 }
 
@@ -94,11 +106,21 @@ private fun PathString.toPlainFileName(): FileNameString {
 }
 
 @JsExport
-fun getContent(fileNameString: FileNameString, content: String): FC<RoutableProps> {
-    return convertMarkdownToReactElement(fileNameString, content)
+fun getCacheData(): Promise<String> = backendCoroutine.promise {
+    serialize(cacheData.get()!!)
 }
 
 @JsExport
-val slugs get() = fileNameToSlug.values.toTypedArray()
+fun getContent(fileNameString: FileNameString, content: String, cacheData: String): FC<RoutableProps> {
+    val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
+    return convertMarkdownToReactElement(fileNameString, content, dependingLinks, fileNameInfo)
+}
 
 private fun String.removeMdExtension(): String = replace(".md", "")
+
+private inline fun <reified T : @Serializable Any> deserialize(jsonString: String): T = json.decodeFromString(jsonString)
+
+private inline fun <reified T : @Serializable Any> serialize(obj: T): String = json.encodeToString(obj)
+
+@Serializable
+data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileNameInfo)

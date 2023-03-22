@@ -1,11 +1,10 @@
 package markdown.processor.element
 
+import DependencyData
+import FileNameInfo
 import FileNameString
 import PushAction
 import RoutableProps
-import dependingLinks
-import fileNameToSlug
-import linkDependencies
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -30,6 +29,8 @@ import toFileName
 abstract class LinkElementProcessor<Parent>(
     val baseURI: URI?,
     val fileName: FileNameString,
+    val dependencyData: DependencyData,
+    val fileNameInfo: FileNameInfo,
     val resolveAnchors: Boolean = false,
 ) : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
@@ -46,14 +47,15 @@ abstract class LinkElementProcessor<Parent>(
             return Destination.RawLink(destination)
         }
         // TODO Check destination equals slug or not
-        val slug = fileNameToSlug[destination]
+        val slug = fileNameInfo.fileNameToSlug[destination]
         if (slug != null) {
-            val targetFile = slug.toFileName()
-            dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
-            linkDependencies.getOrPut(targetFile) { mutableListOf() }.add(fileName)
+            val targetFile = slug.toFileName(fileNameInfo.postFolderFullPath, fileNameInfo.duplicatedFile)
+            dependencyData.dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
+            dependencyData.linkDependencies.getOrPut(targetFile) { mutableListOf() }.add(fileName)
 
-            return Destination.Router {
-                it(slug)
+            return Destination.Router { route ->
+                println(route)
+                route(slug)
             }
         }
 
@@ -103,7 +105,7 @@ abstract class LinkElementProcessor<Parent>(
 
 fun <Parent> LinkElementProcessor<Parent>.makeXssSafe(useSafeLinks: Boolean = true): LinkElementProcessor<Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
     if (!useSafeLinks) return this
-    return object : LinkElementProcessor<Parent>(baseURI, fileName, resolveAnchors) {
+    return object : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors) {
         override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
             this@makeXssSafe.renderLink(visitor, markdownText, node, info)
         }

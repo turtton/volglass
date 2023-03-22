@@ -1,5 +1,7 @@
 package markdown.processor.element
 
+import DependencyData
+import FileNameInfo
 import FileNameString
 import RoutableProps
 import markdown.LeafVisitor
@@ -27,10 +29,12 @@ class ImageElementProcessor<Parent>(
     linkMap: LinkMap,
     baseURI: URI?,
     fileName: FileNameString,
-) : LinkElementProcessor<Parent>(baseURI, fileName)
+    dependencyData: DependencyData,
+    fileNameInfo: FileNameInfo,
+) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo)
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
-    protected val referenceLinkProcessor = ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, fileName)
-    protected val inlineLinkProcessor = InlineLinkElementProcessor<Parent>(baseURI, fileName)
+    protected val referenceLinkProcessor = ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, fileName, dependencyData, fileNameInfo)
+    protected val inlineLinkProcessor = InlineLinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo)
 
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo? {
         val inlineLinkNode = node.findChildOfType(MarkdownElementTypes.INLINE_LINK)

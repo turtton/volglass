@@ -1,5 +1,7 @@
 package markdown.processor.element
 
+import DependencyData
+import FileNameInfo
 import FileNameString
 import RoutableProps
 import org.intellij.markdown.MarkdownTokenTypes
@@ -14,8 +16,10 @@ import react.dom.html.HTMLAttributes
 class ObsidianLinkElementProcessor<Parent>(
     baseURI: URI?,
     fileName: FileNameString,
+    dependencyData: DependencyData,
+    fileNameInfo: FileNameInfo,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, fileName, resolveAnchors)
+) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors)
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo {
         // listOf(link) or listOf(link, |, title)
