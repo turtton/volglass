@@ -43,26 +43,13 @@ export interface MDContentData {
 }
 
 function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): JSX.Element {
-  // function handleInternalLinkClick() {
-  //     //Processing fetching
-  //     //pass result up to parent container
-  //     //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
-  //     handleOpenNewContent(content)
-  // }
-  const  Content = getContent(fileName, `# ${fileName}\n${content}`, cacheData)
-
   const router = useRouter();
 
+  const Content = getContent(fileName, `# ${fileName}\n${content}`, cacheData, router);
   return (
     <div className="markdown-rendered">
       <div className="mt-4 overflow-hidden overflow-y-auto px-8">
-        <Content
-          push={(slug) => {
-            void router.push(slug);
-          }}
-        />
-        {/* <button onClick={handleInternalLinkClick}>Click me</button> */}
-        {/* <hr/> */}
+        <Content />
         <div style={{ marginBottom: "3em" }}>
           <BackLinks linkList={backLinks} />
         </div>

@@ -3,7 +3,6 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
-import RoutableProps
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import org.intellij.markdown.MarkdownElementTypes
@@ -28,13 +27,14 @@ import react.dom.html.ReactHTML.img
 class ImageElementProcessor<Parent>(
     linkMap: LinkMap,
     baseURI: URI?,
+    router: dynamic,
     fileName: FileNameString,
     dependencyData: DependencyData,
     fileNameInfo: FileNameInfo,
-) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo)
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
-    protected val referenceLinkProcessor = ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, fileName, dependencyData, fileNameInfo)
-    protected val inlineLinkProcessor = InlineLinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo)
+) : LinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo)
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
+    protected val referenceLinkProcessor = ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, router, fileName, dependencyData, fileNameInfo)
+    protected val inlineLinkProcessor = InlineLinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo)
 
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo? {
         val inlineLinkNode = node.findChildOfType(MarkdownElementTypes.INLINE_LINK)

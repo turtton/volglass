@@ -13,6 +13,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import markdown.convertMarkdownToReactElement
 import react.FC
+import react.Props
 
 /**
  * Refers actual file
@@ -78,7 +79,7 @@ fun initCache(
     getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
         // Analyze Dependencies
-        convertMarkdownToReactElement(filePath.toFileName(postFolder, nameCache.toTypedArray()), content, dependencyData, fileNameInfo)
+        convertMarkdownToReactElement(filePath.toFileName(postFolder, nameCache.toTypedArray()), content, dependencyData, fileNameInfo, null)
     }
 
     cacheData.set(CacheData(dependencyData, fileNameInfo))
@@ -111,9 +112,9 @@ fun getCacheData(): Promise<String> = backendCoroutine.promise {
 }
 
 @JsExport
-fun getContent(fileNameString: FileNameString, content: String, cacheData: String): FC<RoutableProps> {
+fun getContent(fileNameString: FileNameString, content: String, cacheData: String, router: dynamic): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
-    return convertMarkdownToReactElement(fileNameString, content, dependingLinks, fileNameInfo)
+    return convertMarkdownToReactElement(fileNameString, content, dependingLinks, fileNameInfo, router)
 }
 
 private fun String.removeMdExtension(): String = replace(".md", "")

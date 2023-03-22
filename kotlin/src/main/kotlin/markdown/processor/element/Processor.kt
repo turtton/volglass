@@ -3,7 +3,6 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
-import RoutableProps
 import markdown.processor.EmptyNodeProcessor
 import markdown.processor.NodeProcessor
 import markdown.processor.TransparentInlineHolderNodeProcessor
@@ -41,14 +40,15 @@ fun <Parent> createReactElementGeneratingProcessors(
     linkMap: LinkMap,
     baseURI: URI?,
     filename: FileNameString,
+    router: dynamic = null,
     dependencyData: DependencyData = DependencyData(),
     fileNameInfo: FileNameInfo = FileNameInfo(),
     useSafeLinks: Boolean = true,
     absolutizeAnchorLinks: Boolean = false,
 ): Map<IElementType, NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>>
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps =
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =
     mapOf(
-        ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
 
         MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(div),
         MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),
@@ -76,12 +76,12 @@ fun <Parent> createReactElementGeneratingProcessors(
         MarkdownElementTypes.LINK_TEXT to TransparentInlineHolderNodeProcessor(),
         MarkdownElementTypes.LINK_TITLE to TransparentInlineHolderNodeProcessor(),
 
-        MarkdownElementTypes.INLINE_LINK to InlineLinkElementProcessor<Parent>(baseURI, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        MarkdownElementTypes.INLINE_LINK to InlineLinkElementProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
 
-        MarkdownElementTypes.FULL_REFERENCE_LINK to ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
-        MarkdownElementTypes.SHORT_REFERENCE_LINK to ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        MarkdownElementTypes.FULL_REFERENCE_LINK to ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        MarkdownElementTypes.SHORT_REFERENCE_LINK to ReferenceLinksElementProcessor<Parent>(linkMap, baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
 
-        MarkdownElementTypes.IMAGE to ImageElementProcessor<Parent>(linkMap, baseURI, filename, dependencyData, fileNameInfo).makeXssSafe(useSafeLinks),
+        MarkdownElementTypes.IMAGE to ImageElementProcessor<Parent>(linkMap, baseURI, router, filename, dependencyData, fileNameInfo).makeXssSafe(useSafeLinks),
 
         MarkdownElementTypes.LINK_DEFINITION to EmptyNodeProcessor(),
 

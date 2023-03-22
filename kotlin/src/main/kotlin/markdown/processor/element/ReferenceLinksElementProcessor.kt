@@ -3,7 +3,6 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
-import RoutableProps
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
@@ -22,14 +21,14 @@ import react.dom.html.HTMLAttributes
 class ReferenceLinksElementProcessor<Parent>(
     private val linkMap: LinkMap,
     baseURI: URI?,
+    router: dynamic,
     fileName: FileNameString,
     dependencyData: DependencyData,
     fileNameInfo: FileNameInfo,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors)
+) : LinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo, resolveAnchors)
     where Parent : HTMLAttributes<HTMLElement>,
-          Parent : ChildrenBuilder,
-          Parent : RoutableProps {
+          Parent : ChildrenBuilder {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo? {
         val label = node.children.firstOrNull { it.type == MarkdownElementTypes.LINK_LABEL } ?: return null
         val linkInfo = linkMap.getLinkInfo(label.getTextInNode(markdownText)) ?: return null

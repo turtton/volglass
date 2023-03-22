@@ -1,6 +1,5 @@
 package markdown
 
-import RoutableProps
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.ast.ASTNode
@@ -11,6 +10,7 @@ import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.ElementType
 import react.FC
+import react.Props
 import react.dom.html.HTMLAttributes
 
 class ReactElementGenerator<Parent>(
@@ -18,7 +18,7 @@ class ReactElementGenerator<Parent>(
     private val rootNode: ASTNode,
     private val providers: Map<IElementType, NodeProcessor<ElementType<HTMLAttributes<HTMLElement>>, Parent>>,
 ) where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
-    fun generateElement(): FC<RoutableProps> {
+    fun generateElement(): FC<Props> {
         return ReactElementGeneratingVisitor(providers, markdownText).let {
             it.visitNode(rootNode)
             it.result
@@ -31,7 +31,7 @@ class ReactElementGenerator<Parent>(
     ) : TagConsumer<ElementType<HTMLAttributes<HTMLElement>>, Parent>, Visitor, LeafVisitor where Parent : ChildrenBuilder, Parent : HTMLAttributes<HTMLElement> {
         private val elementLists = mutableListOf<MutableList<ChildrenBuilder.() -> Unit>>()
         private val tagStacker = mutableListOf<ElementType<HTMLAttributes<HTMLElement>>>()
-        val result: FC<RoutableProps> get() = elementLists.toList().let { results ->
+        val result: FC<Props> get() = elementLists.toList().let { results ->
             FC {
                 results.forEach { elements ->
                     elements.forEach {

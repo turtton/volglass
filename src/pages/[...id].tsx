@@ -83,7 +83,12 @@ export default function Home({
             <FolderTree tree={tree} flattenNodes={flattenNodes} />
           </nav>
         </div>
-        <MDContent fileName={fileName} content={markdownContent} cacheData={cacheData} backLinks={backLinks} />
+        <MDContent
+          fileName={fileName}
+          content={markdownContent}
+          cacheData={cacheData}
+          backLinks={backLinks}
+        />
         <DynamicGraph graph={graphData} />
       </div>
     </Layout>
@@ -106,7 +111,11 @@ export async function getStaticPaths(): Promise<{
 
 const { nodes, edges } = constructGraphData();
 
-export async function getStaticProps({ params }: { params: { id: string[] } }): Promise<{ props: Prop }> {
+export async function getStaticProps({
+  params,
+}: {
+  params: { id: string[] };
+}): Promise<{ props: Prop }> {
   const cacheData = await getCacheData();
   const slugString = params.id.join("/");
   const fileName = toFileName(slugString, getMarkdownFolder(), []);

@@ -3,7 +3,6 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
-import RoutableProps
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.findChildOfType
@@ -21,12 +20,13 @@ import react.dom.html.HTMLAttributes
  */
 class InlineLinkElementProcessor<Parent>(
     baseURI: URI?,
+    router: dynamic,
     fileName: FileNameString,
     dependencyData: DependencyData,
     fileNameInfo: FileNameInfo,
     resolveAnchors: Boolean = false,
-) : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors)
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
+) : LinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo, resolveAnchors)
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo? {
         val label = node.findChildOfType(MarkdownElementTypes.LINK_TEXT) ?: return null
         return LinkGeneratingProvider.RenderInfo(

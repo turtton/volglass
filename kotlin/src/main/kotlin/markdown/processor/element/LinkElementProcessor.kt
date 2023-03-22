@@ -3,8 +3,7 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
-import PushAction
-import RoutableProps
+import SlugString
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -28,12 +27,13 @@ import toFileName
  */
 abstract class LinkElementProcessor<Parent>(
     val baseURI: URI?,
+    val router: dynamic,
     val fileName: FileNameString,
     val dependencyData: DependencyData,
     val fileNameInfo: FileNameInfo,
     val resolveAnchors: Boolean = false,
 ) : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
-    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
+    where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     abstract fun getRenderInfo(markdownText: String, node: ASTNode): LinkGeneratingProvider.RenderInfo?
 
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
@@ -53,10 +53,7 @@ abstract class LinkElementProcessor<Parent>(
             dependencyData.dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
             dependencyData.linkDependencies.getOrPut(targetFile) { mutableListOf() }.add(fileName)
 
-            return Destination.Router { route ->
-                println(route)
-                route(slug)
-            }
+            return Destination.Router(slug)
         }
 
         return baseURI?.resolveToStringSafe(destination.toString())
@@ -76,7 +73,7 @@ abstract class LinkElementProcessor<Parent>(
         when (val destination = resolveUrl(info.destination)) {
             is Destination.Router -> visitor.consume {
                 onClick = {
-                    destination.routerAction(push)
+                    router?.push(destination.slug)
                 }
             }
 
@@ -103,9 +100,9 @@ abstract class LinkElementProcessor<Parent>(
     }
 }
 
-fun <Parent> LinkElementProcessor<Parent>.makeXssSafe(useSafeLinks: Boolean = true): LinkElementProcessor<Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder, Parent : RoutableProps {
+fun <Parent> LinkElementProcessor<Parent>.makeXssSafe(useSafeLinks: Boolean = true): LinkElementProcessor<Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     if (!useSafeLinks) return this
-    return object : LinkElementProcessor<Parent>(baseURI, fileName, dependencyData, fileNameInfo, resolveAnchors) {
+    return object : LinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo, resolveAnchors) {
         override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
             this@makeXssSafe.renderLink(visitor, markdownText, node, info)
         }
@@ -119,6 +116,6 @@ fun <Parent> LinkElementProcessor<Parent>.makeXssSafe(useSafeLinks: Boolean = tr
 }
 
 sealed interface Destination {
-    value class Router(val routerAction: (push: PushAction) -> Unit) : Destination
+    value class Router(val slug: SlugString) : Destination
     value class RawLink(val link: CharSequence) : Destination
 }
