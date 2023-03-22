@@ -1,16 +1,15 @@
 import Head from "next/head";
 import Layout from "../components/Layout";
-import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
+import { getAllContentFilePaths, getDirectoryData, toFilePath, toSlug } from "../lib/slug";
 import { constructGraphData, CustomNode, getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import { getContent, initCache, RoutableProps, slugs, toFileName } from "volglass-backend";
+import { initCache, slugs, toFileName } from "volglass-backend";
 import { getMarkdownFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
 import FolderTree from "../components/FolderTree";
 import { SearchBar } from "../components/Search";
-import { FunctionComponent } from "react";
 
 // TODO make customizable
 // FIXME This should be a string field, but I don't know to avoid init error
@@ -32,8 +31,8 @@ const DynamicGraph = dynamic(async () => await import("../components/Graph"), {
   ssr: false,
 });
 export interface Prop {
-  title: string;
-  markdownComponent: FunctionComponent<RoutableProps>;
+  fileName: string;
+  markdownContent: string;
   tree: TreeData;
   flattenNodes: TreeData[];
   graphData: LocalGraphData;
@@ -42,8 +41,8 @@ export interface Prop {
 }
 
 export default function Home({
-  title,
-  markdownComponent,
+  fileName,
+  markdownContent,
   backLinks,
   tree,
   flattenNodes,
@@ -60,7 +59,7 @@ export default function Home({
 
   return (
     <Layout>
-      <Head>{<meta name="title" content={title} />}</Head>
+      <Head>{<meta name="title" content={fileName} />}</Head>
       <div className="fixed flex h-full w-full flex-row overflow-hidden">
         <div className="burger-menu">
           <input type="checkbox" id={burgerId} />
@@ -82,7 +81,7 @@ export default function Home({
             <FolderTree tree={tree} flattenNodes={flattenNodes} />
           </nav>
         </div>
-        <MDContent content={markdownComponent} backLinks={backLinks} />
+        <MDContent fileName={fileName} content={markdownContent} backLinks={backLinks} />
         <DynamicGraph graph={graphData} />
       </div>
     </Layout>
@@ -107,9 +106,9 @@ const { nodes, edges } = constructGraphData();
 
 export function getStaticProps({ params }: { params: { id: string[] } }): { props: Prop } {
   const slugString = params.id.join("/");
-  const markdownComponent: FunctionComponent<RoutableProps> = getContent(slugString);
   const fileName = toFileName(slugString);
-
+  const filePath = toFilePath(`/${slugString}`);
+  const markdownContent = readFileSync(filePath);
   const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
 
@@ -122,8 +121,8 @@ export function getStaticProps({ params }: { params: { id: string[] } }): { prop
   const searchIndex = getSearchIndex();
   return {
     props: {
-      title: fileName,
-      markdownComponent,
+      fileName,
+      markdownContent,
       tree,
       flattenNodes,
       backLinks: backLinks.filter((link) => link.slug !== slugString),

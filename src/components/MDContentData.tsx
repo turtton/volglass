@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
-import { useRouter } from "next/router";
 import { CustomNode } from "../lib/graph";
 import Footer from "./Footer";
-import { RoutableProps } from "volglass-backend";
+import { useRouter } from "next/router";
+import { getContent } from "volglass-backend";
 
 function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
   return (
@@ -36,19 +36,19 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 }
 
 export interface MDContentData {
-  content: FunctionComponent<RoutableProps>;
+  fileName: string;
+  content: string;
   backLinks: CustomNode[];
 }
 
-function MDContent({ content, backLinks }: MDContentData): JSX.Element {
+function MDContent({ fileName, content, backLinks }: MDContentData): JSX.Element {
   // function handleInternalLinkClick() {
   //     //Processing fetching
   //     //pass result up to parent container
   //     //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
   //     handleOpenNewContent(content)
   // }
-
-  const Content = content;
+  const Content = getContent(fileName, `# ${fileName}\n${content}`);
 
   const router = useRouter();
 
