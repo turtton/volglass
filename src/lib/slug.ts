@@ -85,7 +85,7 @@ let treeDataCache: TreeData | undefined;
 export function getDirectoryData(): TreeData {
   if (treeDataCache === undefined) {
     const filteredDirectory = directoryTree(getMarkdownFolder(), {
-      extensions: /\.md/,
+      exclude: /.gitkeep/g,
     });
     treeDataCache = convertTreeData(filteredDirectory);
   }
