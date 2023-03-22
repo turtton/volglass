@@ -38,7 +38,7 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 export interface MDContentData {
   fileName: string;
   content: string;
-  cacheData;
+  cacheData: string;
   backLinks: CustomNode[];
 }
 

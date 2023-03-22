@@ -3,6 +3,7 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
+import external.NextRouter
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import org.intellij.markdown.MarkdownElementTypes
@@ -27,7 +28,7 @@ import react.dom.html.ReactHTML.img
 class ImageElementProcessor<Parent>(
     linkMap: LinkMap,
     baseURI: URI?,
-    router: dynamic,
+    router: NextRouter?,
     fileName: FileNameString,
     dependencyData: DependencyData,
     fileNameInfo: FileNameInfo,

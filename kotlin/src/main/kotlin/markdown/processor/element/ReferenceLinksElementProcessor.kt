@@ -3,6 +3,7 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
+import external.NextRouter
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
@@ -21,7 +22,7 @@ import react.dom.html.HTMLAttributes
 class ReferenceLinksElementProcessor<Parent>(
     private val linkMap: LinkMap,
     baseURI: URI?,
-    router: dynamic,
+    router: NextRouter?,
     fileName: FileNameString,
     dependencyData: DependencyData,
     fileNameInfo: FileNameInfo,

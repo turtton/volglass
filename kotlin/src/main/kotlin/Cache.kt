@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalJsExport::class)
 
+import external.NextRouter
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.storeOf
 import kotlin.js.Promise
@@ -112,7 +113,7 @@ fun getCacheData(): Promise<String> = backendCoroutine.promise {
 }
 
 @JsExport
-fun getContent(fileNameString: FileNameString, content: String, cacheData: String, router: dynamic): FC<Props> {
+fun getContent(fileNameString: FileNameString, content: String, cacheData: String, router: NextRouter?): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
     return convertMarkdownToReactElement(fileNameString, content, dependingLinks, fileNameInfo, router)
 }

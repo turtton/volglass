@@ -3,6 +3,7 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
+import external.NextRouter
 import markdown.processor.EmptyNodeProcessor
 import markdown.processor.NodeProcessor
 import markdown.processor.TransparentInlineHolderNodeProcessor
@@ -40,7 +41,7 @@ fun <Parent> createReactElementGeneratingProcessors(
     linkMap: LinkMap,
     baseURI: URI?,
     filename: FileNameString,
-    router: dynamic = null,
+    router: NextRouter? = null,
     dependencyData: DependencyData = DependencyData(),
     fileNameInfo: FileNameInfo = FileNameInfo(),
     useSafeLinks: Boolean = true,

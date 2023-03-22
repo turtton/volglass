@@ -4,6 +4,7 @@ import DependencyData
 import FileNameInfo
 import FileNameString
 import SlugString
+import external.NextRouter
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -27,7 +28,7 @@ import toFileName
  */
 abstract class LinkElementProcessor<Parent>(
     val baseURI: URI?,
-    val router: dynamic,
+    val router: NextRouter?,
     val fileName: FileNameString,
     val dependencyData: DependencyData,
     val fileNameInfo: FileNameInfo,
