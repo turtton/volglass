@@ -45,8 +45,6 @@ val dependingLinks = mutableMapOf<FileNameString, MutableList<FileNameString>>()
  */
 val linkDependencies = mutableMapOf<FileNameString, MutableList<FileNameString>>()
 
-val contents = mutableMapOf<FileNameString, FC<RoutableProps>>()
-
 private lateinit var postFolder: String
 
 @JsExport
@@ -56,11 +54,12 @@ fun initCache(getAllFiles: () -> Array<String>, getMarkdownFolder: () -> String,
     getAllFiles().forEach { filePath ->
         val fileName = filePath.toFileName(nameCache.toTypedArray())
         fileNameToPath[fileName] = filePath
-        val slug = toSlug(fileName)
+        val slug = toSlug(filePath)
         fileNameToSlug[fileName] = slug
 
         val content = readContent(filePath)
-        contents[fileName] = convertMarkdownToReactElement(fileName, "# $fileName\n$content")
+        // Analyze Dependencies
+        convertMarkdownToReactElement(fileName, content)
 
         nameCache += filePath
     }
@@ -79,7 +78,9 @@ fun PathString.toFileName(nameCache: Array<String>? = null): FileNameString {
 }
 
 @JsExport
-fun getContent(fileNameString: FileNameString): FC<RoutableProps>? = contents[fileNameString]
+fun getContent(fileNameString: FileNameString, content: String): FC<RoutableProps> {
+    return convertMarkdownToReactElement(fileNameString, content)
+}
 
 @JsExport
 val slugs get() = fileNameToSlug.values.toTypedArray()
