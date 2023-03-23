@@ -51,6 +51,7 @@ abstract class LinkElementProcessor<Parent>(
         val fileNameToSlug = fileNameInfo.fileNameToSlug
         val slug = if (!destination.startsWith("http")) {
             fileNameToSlug[FileNameString(expectedFileName)]
+                // path/to/target -> target
                 ?: fileNameToSlug[FileNameString(expectedFileName.split('/').last())]
         } else {
             null
