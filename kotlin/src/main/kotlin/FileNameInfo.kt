@@ -8,8 +8,6 @@ data class FileNameInfo(
     val postFolderFullPath: String = "",
     /**
      * This String should be plain file name
-     *
-     * Related: [toFileName]
      */
     val duplicatedFile: Set<String> = emptySet(),
     val fileNameToPath: Map<FileNameString, PathString> = emptyMap(),

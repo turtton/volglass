@@ -6,22 +6,21 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BackLink(
     val title: String,
-    val slug: SlugString,
+    val slug: String,
     val summary: String,
 )
 
 @JsExport
-fun getBackLinks(slugString: SlugString, cacheData: String, readContent: (PathString) -> String): String {
+fun getBackLinks(slug: String, cacheData: String, readContent: (String) -> String): String {
+    val slugString = SlugString(slug)
     val (dependencyData, fileNameInfo) = deserialize<CacheData>(cacheData)
-    val postFolder = fileNameInfo.postFolderFullPath
     val duplicatedFile = fileNameInfo.duplicatedFile
-    return dependencyData.linkDependencies[slugString.toFileName(postFolder, duplicatedFile)]
+    return dependencyData.linkDependencies[slugString.toFileName(duplicatedFile)]
         ?.map {
-            val title = it.toFileName(postFolder, duplicatedFile)
-            val slug = fileNameInfo.fileNameToSlug[it]!!
+            val targetSlug = fileNameInfo.fileNameToSlug[it]!!
             val targetDir = fileNameInfo.fileNameToPath[it]!!
-            val summary = readContent(targetDir).substring(0..60)
-            BackLink(title, slug, summary)
+            val summary = readContent(targetDir.path).substring(0..60)
+            BackLink(it.fileName, targetSlug.slug, summary)
         }?.let {
             serialize(it)
         }

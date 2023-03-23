@@ -22,27 +22,28 @@ data class GraphData(val nodes: Array<Node>, val edges: Array<Edge>) {
 }
 
 @JsExport
-data class Node(val id: SlugString, val label: String)
+data class Node(val id: String, val label: String)
 
 @JsExport
-data class Edge(val source: SlugString, val target: SlugString)
+data class Edge(val source: String, val target: String)
 
 @JsExport
-fun getRawGraphData(slugString: SlugString, cacheData: String): GraphData {
+fun getRawGraphData(slugString: String, cacheData: String): GraphData {
     val nodes = mutableSetOf<Node>()
     val edges = mutableSetOf<Edge>()
     val (dependencyData, fileNameInfo) = deserialize<CacheData>(cacheData)
-    val targetFileName = slugString.toFileName(fileNameInfo.postFolderFullPath, fileNameInfo.duplicatedFile)
-    nodes += Node(slugString, targetFileName)
+    val slug = SlugString(slugString)
+    val targetFileName = slug.toFileName(fileNameInfo.duplicatedFile)
+    nodes += Node(slugString, targetFileName.fileName)
     dependencyData.dependingLinks[targetFileName]?.forEach {
         val targetSlug = fileNameInfo.fileNameToSlug[it]!!
-        nodes += Node(targetSlug, it)
-        edges += Edge(slugString, targetSlug)
+        nodes += Node(targetSlug.slug, it.fileName)
+        edges += Edge(slugString, targetSlug.slug)
     }
     dependencyData.linkDependencies[targetFileName]?.forEach {
         val targetSlug = fileNameInfo.fileNameToSlug[it]!!
-        nodes += Node(targetSlug, it)
-        edges += Edge(targetSlug, slugString)
+        nodes += Node(targetSlug.slug, it.fileName)
+        edges += Edge(targetSlug.slug, slugString)
     }
     return GraphData(nodes.toTypedArray(), edges.toTypedArray())
 }

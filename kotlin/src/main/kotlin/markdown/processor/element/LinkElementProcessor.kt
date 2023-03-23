@@ -21,7 +21,7 @@ import react.IntrinsicType
 import react.dom.html.AnchorHTMLAttributes
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.a
-import toFileName
+import removeMdExtension
 
 /**
  * Related [LinkGeneratingProvider]
@@ -48,9 +48,9 @@ abstract class LinkElementProcessor<Parent>(
             return Destination.RawLink(destination)
         }
         // TODO Check destination equals slug or not
-        val slug = fileNameInfo.fileNameToSlug[destination]
+        val slug = fileNameInfo.fileNameToSlug[FileNameString(destination.toString().removeMdExtension())]
         if (slug != null) {
-            val targetFile = slug.toFileName(fileNameInfo.postFolderFullPath, fileNameInfo.duplicatedFile)
+            val targetFile = slug.toFileName(fileNameInfo.duplicatedFile)
             dependencyData.dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
             dependencyData.linkDependencies.getOrPut(targetFile) { mutableListOf() }.add(fileName)
 
@@ -74,7 +74,7 @@ abstract class LinkElementProcessor<Parent>(
         when (val destination = resolveUrl(info.destination)) {
             is Destination.Router -> visitor.consume {
                 onClick = {
-                    router?.push(destination.slug)
+                    router?.push(destination.slug.slug)
                 }
             }
 
