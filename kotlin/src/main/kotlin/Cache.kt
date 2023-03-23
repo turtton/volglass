@@ -108,6 +108,13 @@ private fun PathString.toPlainFileName(): FileNameString {
 }
 
 @JsExport
+fun SlugString.toFilePath(cacheData: String): PathString? {
+    val (_, fileNameInfo) = deserialize<CacheData>(cacheData)
+    val fileName = toFileName(fileNameInfo.postFolderFullPath, fileNameInfo.duplicatedFile)
+    return fileNameInfo.fileNameToPath[fileName]
+}
+
+@JsExport
 fun getCacheData(): Promise<String> = backendCoroutine.promise {
     serialize(cacheData.get()!!)
 }
