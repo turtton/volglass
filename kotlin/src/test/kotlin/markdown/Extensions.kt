@@ -1,5 +1,6 @@
 package markdown
 
+import FileNameString
 import kotlin.js.Json
 import kotlin.test.assertEquals
 import markdown.processor.element.createReactElementGeneratingProcessors
@@ -15,7 +16,7 @@ private val parser = MarkdownParser(descriptor)
 fun Json.serialize(): String = JSON.stringify(this)
 fun ReactTestSupport.doTest(markdown: String, expect: ChildrenBuilder.() -> Unit) {
     val markdownTree = parser.buildMarkdownTreeFromString(markdown)
-    val element = ReactElementGenerator(markdown, markdownTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(markdownTree, markdown), null, "")).generateElement()
+    val element = ReactElementGenerator(markdown, markdownTree, createReactElementGeneratingProcessors(LinkMap.buildLinkMap(markdownTree, markdown), null, FileNameString(""))).generateElement()
     val actualRender = render { element() }
     val expectRender = render { div(expect) }
     val expectJson = expectRender.toJSON().serialize()
