@@ -63,7 +63,7 @@ fun initCache(
     getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
         // Analyze Dependencies
-        convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, nameCache), content, dependencyData, fileNameInfo, null, null)
+        convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null)
     }
 
     cacheData.set(CacheData(dependencyData, fileNameInfo))

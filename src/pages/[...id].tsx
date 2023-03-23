@@ -4,7 +4,7 @@ import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
 import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import { getBackLinks, getCacheData, initCache, toFilePath } from "volglass-backend";
+import { getBackLinks, getCacheData, initCache, toFileName, toFilePath } from "volglass-backend";
 import { getMarkdownFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
@@ -116,7 +116,7 @@ export async function getStaticProps({
 }): Promise<{ props: Prop }> {
   const cacheData = await getCacheData();
   const slugString = `/${params.id.join("/")}`;
-  const fileName = params.id[params.id.length - 1];
+  const fileName = toFileName(slugString, cacheData);
   const filePath = toFilePath(slugString, cacheData);
   const markdownContent = readFileSync(filePath);
   const tree = getDirectoryData();

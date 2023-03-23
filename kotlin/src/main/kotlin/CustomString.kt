@@ -90,4 +90,10 @@ fun toFilePath(slug: String, cacheData: String): String? {
     return SlugString(slug).toFilePath(deserialize(cacheData))?.path
 }
 
+@JsExport
+fun toFileName(slug: String, cacheData: String): String {
+    val (_, fileNameInfo) = deserialize<CacheData>(cacheData)
+    return SlugString(slug).toFileName(fileNameInfo.duplicatedFile).fileName
+}
+
 fun String.removeMdExtension(): String = replace(".md", "")

@@ -17,8 +17,8 @@ fun getBackLinks(slug: String, cacheData: String, readContent: (String) -> Strin
     val duplicatedFile = fileNameInfo.duplicatedFile
     return dependencyData.linkDependencies[slugString.toFileName(duplicatedFile)]
         ?.map {
-            val targetSlug = fileNameInfo.fileNameToSlug[it]!!
-            val targetDir = fileNameInfo.fileNameToPath[it]!!
+            val targetSlug = fileNameInfo.fileNameToSlug[it] ?: error("failed to get slug. fileName:$it current: ${fileNameInfo.fileNameToSlug}")
+            val targetDir = fileNameInfo.fileNameToPath[it] ?: error("failed to get path. fileName:$it current: ${fileNameInfo.fileNameToPath}")
             val summary = readContent(targetDir.path).substring(0..60)
             BackLink(it.fileName, targetSlug.slug, summary)
         }?.let {
