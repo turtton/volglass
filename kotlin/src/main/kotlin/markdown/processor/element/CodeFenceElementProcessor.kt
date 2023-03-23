@@ -1,6 +1,8 @@
 package markdown.processor.element
 
 import csstype.ClassName
+import external.CodeEncoder
+import kotlinx.js.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -19,7 +21,8 @@ import react.dom.html.ReactHTML.pre
  * Related [org.intellij.markdown.html.CodeFenceGeneratingProvider]
  */
 @Suppress("KDocUnresolvedReference")
-class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
+class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?) :
+    NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val indentBefore = node.getTextInNode(markdownText).commonPrefixWith(" ".repeat(10)).length
         visitor.consumeTagOpen(node, pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
@@ -29,43 +32,46 @@ class CodeFenceElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
             childrenToConsider = childrenToConsider.subList(0, childrenToConsider.size - 1)
         }
 
-        var isCodeTagOpened = false
         var lastChildWasContent = false
+        val codes = mutableListOf<String>()
+        var language = ""
 
-        val configurations = arrayListOf<Parent.() -> Unit>()
         childrenToConsider.forEach { child ->
-            if (isCodeTagOpened && child.type in listOf(MarkdownTokenTypes.CODE_FENCE_CONTENT, MarkdownTokenTypes.EOL)) {
+            if (child.type in listOf(MarkdownTokenTypes.CODE_FENCE_CONTENT, MarkdownTokenTypes.EOL)) {
                 val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore)
-                visitor.consume {
-                    +code.toString()
-                }
+                codes += code.toString()
                 lastChildWasContent = child.type == MarkdownTokenTypes.CODE_FENCE_CONTENT
             }
-            if (!isCodeTagOpened && child.type == MarkdownTokenTypes.FENCE_LANG) {
-                configurations += {
-                    className = ClassName("language-${HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0]}")
-                }
-            }
-            if (!isCodeTagOpened && child.type == MarkdownTokenTypes.EOL) {
-                visitor.consumeTagOpen(node, code)
-                visitor.consume {
-                    configurations.forEach { it() }
-                }
-                isCodeTagOpened = true
-            }
-        }
-        if (!isCodeTagOpened) {
-            visitor.consumeTagOpen(node, code)
-            visitor.consume {
-                configurations.forEach { it() }
+            if (child.type == MarkdownTokenTypes.FENCE_LANG) {
+                language = HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0]
             }
         }
         if (lastChildWasContent) {
-            visitor.consume {
-                +"\n"
+            codes += "\n"
+        }
+        val html = encoder?.invoke(codes.joinToString(separator = "").removeSurrounding("\n"), language)
+            ?.split('\n')
+            ?.joinToString(separator = "\n") { "<span class=\"code-line\">$it</span>" }
+        visitor.consume {
+            if (html != null && language.isNotEmpty()) {
+                className = ClassName("language-$language")
+            }
+            code {
+                if (language.isNotEmpty()) {
+                    className = ClassName("language-$language")
+                }
+                if (html != null) {
+                    dangerouslySetInnerHTML = jso {
+                        __html = html
+                    }
+                } else {
+                    codes.removeFirstOrNull()
+                    codes.forEach {
+                        +it
+                    }
+                }
             }
         }
-        visitor.consumeTagClose(code)
         visitor.consumeTagClose(pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
     }
 }

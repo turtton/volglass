@@ -2,6 +2,8 @@ import React from "react";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
 import { deserializeBackLinks, getContent } from "volglass-backend";
+import { refractor } from "refractor/lib/all";
+import { toHtml } from "hast-util-to-html";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
   const linkList = deserializeBackLinks(backLink);
@@ -47,7 +49,13 @@ export interface MDContentData {
 function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): JSX.Element {
   const router = useRouter();
 
-  const Content = getContent(fileName, `# ${fileName}\n${content}`, cacheData, router);
+  const Content = getContent(
+    fileName,
+    `# ${fileName}\n${content}`,
+    cacheData,
+    router,
+    (code, language) => toHtml(refractor.highlight(code, language)),
+  );
   return (
     <div className="markdown-rendered">
       <div className="mt-4 overflow-hidden overflow-y-auto px-8">

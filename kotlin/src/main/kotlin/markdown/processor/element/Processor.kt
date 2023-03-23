@@ -3,6 +3,7 @@ package markdown.processor.element
 import DependencyData
 import FileNameInfo
 import FileNameString
+import external.CodeEncoder
 import external.NextRouter
 import markdown.processor.EmptyNodeProcessor
 import markdown.processor.NodeProcessor
@@ -42,6 +43,7 @@ fun <Parent> createReactElementGeneratingProcessors(
     baseURI: URI?,
     filename: FileNameString,
     router: NextRouter? = null,
+    encoder: CodeEncoder? = null,
     dependencyData: DependencyData = DependencyData(),
     fileNameInfo: FileNameInfo = FileNameInfo(),
     useSafeLinks: Boolean = true,
@@ -86,7 +88,7 @@ fun <Parent> createReactElementGeneratingProcessors(
 
         MarkdownElementTypes.LINK_DEFINITION to EmptyNodeProcessor(),
 
-        MarkdownElementTypes.CODE_FENCE to CodeFenceElementProcessor(),
+        MarkdownElementTypes.CODE_FENCE to CodeFenceElementProcessor(encoder),
         MarkdownElementTypes.CODE_BLOCK to CodeBlockElementProcessor(),
 
         MarkdownTokenTypes.HORIZONTAL_RULE to SingleElementProcessor(hr),

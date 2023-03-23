@@ -25,6 +25,10 @@ dependencies {
     implementation("org.jetbrains:markdown:0.4.1")
 
     implementation("io.github.xxfast:kstore:0.3.0")
+
+    // I'm waiting for supporting to ESM package support!!!!!!!!!!
+    // implementation(npm("refractor", "4.8.1"))
+    // implementation(npm("hast-util-to-html", "8.0.4"))
 }
 
 kotlin {

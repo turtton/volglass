@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalJsExport::class)
 
+import external.CodeEncoder
 import external.NextRouter
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.storeOf
@@ -62,7 +63,7 @@ fun initCache(
     getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
         // Analyze Dependencies
-        convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, nameCache), content, dependencyData, fileNameInfo, null)
+        convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, nameCache), content, dependencyData, fileNameInfo, null, null)
     }
 
     cacheData.set(CacheData(dependencyData, fileNameInfo))
@@ -75,9 +76,9 @@ fun getCacheData(): Promise<String> = cacheScope.promise {
 }
 
 @JsExport
-fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter?): FC<Props> {
+fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
-    return convertMarkdownToReactElement(FileNameString(fileNameString), content, dependingLinks, fileNameInfo, router)
+    return convertMarkdownToReactElement(FileNameString(fileNameString), content, dependingLinks, fileNameInfo, router, codeEncoder)
 }
 
 inline fun <reified T : @Serializable Any> deserialize(jsonString: String): T = json.decodeFromString(jsonString)
