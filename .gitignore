@@ -33,6 +33,5 @@ yarn-error.log*
 
 .vercel
 
-/graph-data.json
 /search-index.json
 /backend.cache
