@@ -52,8 +52,8 @@ abstract class LinkElementProcessor<Parent>(
         val slug = fileNameToSlug[FileNameString(expectedFileName)] ?: fileNameToSlug[FileNameString(expectedFileName.split('/').last())]
         if (slug != null) {
             val targetFile = slug.toFileName(fileNameInfo.duplicatedFile)
-            dependencyData.dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
-            dependencyData.linkDependencies.getOrPut(targetFile) { mutableListOf() }.add(fileName)
+            dependencyData.dependingLinks.getOrPut(fileName) { mutableSetOf() }.add(targetFile)
+            dependencyData.linkDependencies.getOrPut(targetFile) { mutableSetOf() }.add(fileName)
 
             return Destination.Router(slug)
         }

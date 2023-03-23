@@ -5,9 +5,9 @@ data class DependencyData(
     /**
      * key -> values
      */
-    val dependingLinks: MutableMap<FileNameString, MutableList<FileNameString>> = mutableMapOf(),
+    val dependingLinks: MutableMap<FileNameString, MutableSet<FileNameString>> = mutableMapOf(),
     /**
      * key <- values
      */
-    val linkDependencies: MutableMap<FileNameString, MutableList<FileNameString>> = mutableMapOf(),
+    val linkDependencies: MutableMap<FileNameString, MutableSet<FileNameString>> = mutableMapOf(),
 )
