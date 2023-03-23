@@ -1,10 +1,7 @@
-import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile, readFileSync } from "./io";
+import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile } from "./io";
 import directoryTree from "directory-tree";
-import markdown from "remark-parse";
-import { toString } from "mdast-util-to-string";
 import { convertTreeData, TreeData } from "./markdown";
 import { Transformer } from "./transformer";
-import unified from "unified";
 import { FIRST_PAGE } from "../pages/[...id]";
 
 interface SlugMap extends Map<string, string> {
@@ -12,12 +9,6 @@ interface SlugMap extends Map<string, string> {
 }
 
 const cachedSlugMap = getSlugHashMap();
-
-export interface Content {
-  id: string;
-  title: string;
-  data: string[];
-}
 
 export function toFilePath(slug: string): string {
   const result = cachedSlugMap.get(slug);
@@ -91,23 +82,6 @@ export function getDirectoryData(): TreeData {
   }
 
   return treeDataCache;
-}
-
-export function getContent(slug: string): string | null {
-  const currentFilePath = toFilePath(slug);
-  if (currentFilePath === undefined || currentFilePath == null) return null;
-  return readFileSync(currentFilePath);
-}
-
-export function getShortSummary(slug: string): string {
-  const content = getContent(slug);
-  if (content === null) {
-    return "";
-  }
-
-  const tree = unified().use(markdown).parse(content);
-  const plainText = toString(tree);
-  return plainText.split(" ").splice(0, 40).join(" ");
 }
 
 export function getRouterPath(fileName: string): string | null {

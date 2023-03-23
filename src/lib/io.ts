@@ -29,10 +29,6 @@ export function getMarkdownFolder(): string {
   return path.join(process.cwd(), "posts");
 }
 
-export function getFullPath(folderPath: string): string[] {
-  return fs.readdirSync(folderPath).map((fn) => path.join(folderPath, fn));
-}
-
 export function isFile(filename: PathLike): boolean {
   try {
     return fs.lstatSync(filename).isFile();
