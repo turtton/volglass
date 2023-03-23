@@ -14,7 +14,12 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
           <div className="backlink-container">
             {linkList.map((aLink) => (
               <a key={aLink.slug}>
-                <div className="backlink" onClick={() => {void router.push(aLink.slug);}}>
+                <div
+                  className="backlink"
+                  onClick={() => {
+                    void router.push(aLink.slug);
+                  }}
+                >
                   <p className="backlink-title">{aLink.title}</p>
                   <p className="backlink-preview">{aLink.summary} </p>
                 </div>
