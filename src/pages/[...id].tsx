@@ -123,7 +123,8 @@ export async function getStaticProps({
   const flattenNodes = getFlattenArray(tree);
   const backLinks = getBackLinks(slugString, cacheData, readFileSync);
 
-  const graphData = getLocalGraphData(params.id.join("/"));
+  const graphData = getLocalGraphData(`/${slugString}`, cacheData);
+
   const searchIndex = getSearchIndex();
   return {
     props: {
