@@ -47,8 +47,9 @@ abstract class LinkElementProcessor<Parent>(
         if (!resolveAnchors && destination.startsWith('#')) {
             return Destination.RawLink(destination)
         }
-        // TODO Check destination equals slug or not
-        val slug = fileNameInfo.fileNameToSlug[FileNameString(destination.toString().removePrefix("/").removeMdExtension())]
+        val expectedFileName = destination.toString().removePrefix("/").removeMdExtension()
+        val fileNameToSlug = fileNameInfo.fileNameToSlug
+        val slug = fileNameToSlug[FileNameString(expectedFileName)] ?: fileNameToSlug[FileNameString(expectedFileName.split('/').last())]
         if (slug != null) {
             val targetFile = slug.toFileName(fileNameInfo.duplicatedFile)
             dependencyData.dependingLinks.getOrPut(fileName) { mutableListOf() }.add(targetFile)
