@@ -1,12 +1,11 @@
 import React from "react";
-// import Alert from '@mui/material/Alert';
-// import AlertTitle from '@mui/material/AlertTitle';
-import { CustomNode } from "../lib/graph";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
-import { getContent } from "volglass-backend";
+import { deserializeBackLinks, getContent } from "volglass-backend";
 
-function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
+function BackLinks({ backLink }: { backLink: string }): JSX.Element {
+  const linkList = deserializeBackLinks(backLink);
+  const router = useRouter();
   return (
     <div className="note-footer">
       <h3 className="backlink-heading">Link to this note</h3>
@@ -14,14 +13,12 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
         <>
           <div className="backlink-container">
             {linkList.map((aLink) => (
-              <div key={aLink.slug} className="backlink">
-                {/* <Link href={aLink.slug}> */}
-                <a href={aLink.slug}>
+              <a key={aLink.slug}>
+                <div className="backlink" onClick={() => {void router.push(aLink.slug);}}>
                   <p className="backlink-title">{aLink.title}</p>
-                  <p className="backlink-preview">{aLink.shortSummary} </p>
-                </a>
-                {/* </Link> */}
-              </div>
+                  <p className="backlink-preview">{aLink.summary} </p>
+                </div>
+              </a>
             ))}
           </div>
         </>
@@ -39,7 +36,7 @@ export interface MDContentData {
   fileName: string;
   content: string;
   cacheData: string;
-  backLinks: CustomNode[];
+  backLinks: string;
 }
 
 function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): JSX.Element {
@@ -51,7 +48,7 @@ function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): 
       <div className="mt-4 overflow-hidden overflow-y-auto px-8">
         <Content />
         <div style={{ marginBottom: "3em" }}>
-          <BackLinks linkList={backLinks} />
+          <BackLinks backLink={backLinks} />
         </div>
       </div>
       <Footer />

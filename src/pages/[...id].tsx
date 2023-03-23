@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Layout from "../components/Layout";
 import { getAllContentFilePaths, getDirectoryData, toFilePath, toSlug } from "../lib/slug";
-import { constructGraphData, CustomNode, getLocalGraphData, LocalGraphData } from "../lib/graph";
+import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import { getCacheData, initCache, toFileName } from "volglass-backend";
+import { getBackLinks, getCacheData, initCache, toFileName } from "volglass-backend";
 import { getMarkdownFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
@@ -37,7 +37,7 @@ export interface Prop {
   tree: TreeData;
   flattenNodes: TreeData[];
   graphData: LocalGraphData;
-  backLinks: CustomNode[];
+  backLinks: string;
   searchIndex: SearchData[];
 }
 
@@ -109,8 +109,6 @@ export async function getStaticPaths(): Promise<{
   };
 }
 
-const { nodes, edges } = constructGraphData();
-
 export async function getStaticProps({
   params,
 }: {
@@ -123,12 +121,8 @@ export async function getStaticProps({
   const markdownContent = readFileSync(filePath);
   const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
+  const backLinks = getBackLinks(slugString, cacheData, readFileSync);
 
-  const listOfEdges = edges.filter((anEdge) => anEdge.target === slugString);
-  const internalLinks = listOfEdges
-    .map((anEdge) => nodes.find((aNode) => aNode.slug === anEdge.source) ?? null)
-    .filter((element): element is CustomNode => element !== null);
-  const backLinks = [...new Set(internalLinks)];
   const graphData = getLocalGraphData(params.id.join("/"));
   const searchIndex = getSearchIndex();
   return {
@@ -138,7 +132,7 @@ export async function getStaticProps({
       cacheData,
       tree,
       flattenNodes,
-      backLinks: backLinks.filter((link) => link.slug !== slugString),
+      backLinks,
       graphData,
       searchIndex,
     },

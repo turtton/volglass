@@ -120,9 +120,9 @@ fun getContent(fileNameString: FileNameString, content: String, cacheData: Strin
 
 private fun String.removeMdExtension(): String = replace(".md", "")
 
-private inline fun <reified T : @Serializable Any> deserialize(jsonString: String): T = json.decodeFromString(jsonString)
+inline fun <reified T : @Serializable Any> deserialize(jsonString: String): T = json.decodeFromString(jsonString)
 
-private inline fun <reified T : @Serializable Any> serialize(obj: T): String = json.encodeToString(obj)
+inline fun <reified T : @Serializable Any> serialize(obj: T): String = json.encodeToString(obj)
 
 @Serializable
 data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileNameInfo)
