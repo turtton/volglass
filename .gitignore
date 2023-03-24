@@ -19,6 +19,8 @@
 
 # production
 /build
+/posts
+!/posts/.gitkeep
 
 # misc
 .DS_Store
@@ -31,5 +33,5 @@ yarn-error.log*
 
 .vercel
 
-/graph-data.json
 /search-index.json
+/volglass.cache

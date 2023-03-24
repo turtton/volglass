@@ -1,11 +1,13 @@
 import React from "react";
-// import Alert from '@mui/material/Alert';
-// import AlertTitle from '@mui/material/AlertTitle';
-import { useRouter } from "next/router";
-import { CustomNode } from "../lib/graph";
 import Footer from "./Footer";
+import { useRouter } from "next/router";
+import { deserializeBackLinks, getContent } from "volglass-backend";
+import { refractor } from "refractor/lib/all";
+import { toHtml } from "hast-util-to-html";
 
-function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
+function BackLinks({ backLink }: { backLink: string }): JSX.Element {
+  const linkList = deserializeBackLinks(backLink);
+  const router = useRouter();
   return (
     <div className="note-footer">
       <h3 className="backlink-heading">Link to this note</h3>
@@ -13,14 +15,17 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
         <>
           <div className="backlink-container">
             {linkList.map((aLink) => (
-              <div key={aLink.slug} className="backlink">
-                {/* <Link href={aLink.slug}> */}
-                <a href={aLink.slug}>
+              <a key={aLink.slug}>
+                <div
+                  className="backlink"
+                  onClick={() => {
+                    void router.push(aLink.slug);
+                  }}
+                >
                   <p className="backlink-title">{aLink.title}</p>
-                  <p className="backlink-preview">{aLink.shortSummary} </p>
-                </a>
-                {/* </Link> */}
-              </div>
+                  <p className="backlink-preview">{aLink.summary} </p>
+                </div>
+              </a>
             ))}
           </div>
         </>
@@ -35,28 +40,28 @@ function BackLinks({ linkList }: { linkList: CustomNode[] }): JSX.Element {
 }
 
 export interface MDContentData {
-  content: string[];
-  backLinks: CustomNode[];
+  fileName: string;
+  content: string;
+  cacheData: string;
+  backLinks: string;
 }
 
-function MDContent({ content, backLinks }: MDContentData): JSX.Element {
-  // function handleInternalLinkClick() {
-  //     //Processing fetching
-  //     //pass result up to parent container
-  //     //TODO: handle clicking on internal link, go fetching md content from file then passing it up to parent
-  //     handleOpenNewContent(content)
-  // }
+function MDContent({ fileName, content, cacheData, backLinks }: MDContentData): JSX.Element {
+  const router = useRouter();
 
-  useRouter();
-
+  const Content = getContent(
+    fileName,
+    `# ${fileName}\n${content}`,
+    cacheData,
+    router,
+    (code, language) => toHtml(refractor.highlight(code, language)),
+  );
   return (
     <div className="markdown-rendered">
       <div className="mt-4 overflow-hidden overflow-y-auto px-8">
-        <div dangerouslySetInnerHTML={{ __html: content.join("") }} />
-        {/* <button onClick={handleInternalLinkClick}>Click me</button> */}
-        {/* <hr/> */}
+        <Content />
         <div style={{ marginBottom: "3em" }}>
-          <BackLinks linkList={backLinks} />
+          <BackLinks backLink={backLinks} />
         </div>
       </div>
       <Footer />

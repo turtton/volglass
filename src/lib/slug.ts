@@ -1,91 +1,14 @@
-import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile, readFileSync } from "./io";
+import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile } from "./io";
 import directoryTree from "directory-tree";
-import markdown from "remark-parse";
-import { toString } from "mdast-util-to-string";
-import { convertObject, MdObject } from "./markdown";
+import { convertTreeData, TreeData } from "./markdown";
 import { Transformer } from "./transformer";
-import unified from "unified";
 import { FIRST_PAGE } from "../pages/[...id]";
-
-type StringArrayProcessor = (line: string, index: number, array: string[]) => string;
 
 interface SlugMap extends Map<string, string> {
   index: string;
 }
 
 const cachedSlugMap = getSlugHashMap();
-
-export interface Content {
-  id: string;
-  title: string;
-  data: string[];
-}
-
-export function getSinglePost(slug: string): Content {
-  // List of filenames that will provide existing links to wikilink
-  const currentFilePath = toFilePath(slug);
-  // console.log("currentFilePath: ", currentFilePath)
-
-  const splitPath = currentFilePath.split("/") ?? [];
-  const fileNameWithExtension = splitPath.length !== 0 ? splitPath[splitPath.length - 1] : "";
-  const splitedFileName = fileNameWithExtension.split(".");
-  splitedFileName.pop();
-  const fileName = splitedFileName.join();
-
-  const fileContent = readFileSync(currentFilePath)
-    .split("\n")
-    // Fix Line breaks
-    .map(convertObsidianLineBreak())
-    .map(fixMarkdownLink)
-    .join("\n");
-
-  // console.log("===============\n\nFile is scanning: ", slug)
-  const htmlContent = Transformer.getHtmlContent(`# ${fileName}`);
-  htmlContent.push(...Transformer.getHtmlContent(fileContent));
-  // console.log("==================================")
-  // console.log("hrmlcontents and backlinks")
-  return {
-    id: slug,
-    title: fileName,
-    // ...currentFileFrontMatter,
-    data: htmlContent,
-  };
-}
-
-function convertObsidianLineBreak(): StringArrayProcessor {
-  let shouldBreakLine = true;
-  return (line, index, array) => {
-    const isCodeBlockInterval = line.startsWith("---") || line.startsWith("```");
-    const isHeading = !(line.startsWith("#") && line.includes(" ")) && line !== "";
-    if (isCodeBlockInterval) {
-      shouldBreakLine = !shouldBreakLine;
-      return line;
-    } else if (shouldBreakLine && isHeading) {
-      const next = array[index + 1];
-      if (next === undefined || next === "") {
-        return line;
-      }
-      return `${line}  `;
-    } else {
-      return line;
-    }
-  };
-}
-
-const fixMarkdownLink: StringArrayProcessor = line => {
-  const links = line.match(/]\(.*\.md\)/gi);
-  if (links === null || links.index === 0) return line;
-  links.forEach((target) => {
-    const title = target.replace("](", "").replace(")", "").split("/").pop()?.replace(".md", "");
-    if (!target.startsWith("](http") && title !== undefined) {
-      const file = toFilePath(title);
-      if (file !== "") {
-        line = line.replace(target, target.replace(".md", ""));
-      }
-    }
-  });
-  return line;
-};
 
 export function toFilePath(slug: string): string {
   const result = cachedSlugMap.get(slug);
@@ -118,6 +41,14 @@ export function getSlugHashMap(): Map<string, string> {
   return slugMap;
 }
 
+/**
+ * Converts filePath to Slug
+ *
+ * Examples:
+ * - posts/path/to/Content.md -> path/to/Content
+ * - posts/path/to/picture.jpg -> path/to/picture.jpg
+ * @param filePath
+ */
 export function toSlug(filePath: string): string {
   if (isFile(filePath) && filePath.includes(getMarkdownFolder())) {
     return filePath.replace(getMarkdownFolder(), "").replace(" ", "+").replace(".md", "");
@@ -127,37 +58,24 @@ export function toSlug(filePath: string): string {
   }
 }
 
+export function getAllContentFilePaths(): string[] {
+  return getFiles(getMarkdownFolder()).filter(
+    (f) => !(f.endsWith(FIRST_PAGE()) || f.endsWith("sidebar")),
+  );
+}
+
 export function getAllSlugs(): string[] {
   // console.log("\n\nAll Posts are scanning")
   // Get file names under /posts
-  const filePaths = getFiles(getMarkdownFolder()).filter(
-    (f) => !(f.endsWith(FIRST_PAGE()) || f.endsWith("sidebar")),
-  );
+  const filePaths = getAllContentFilePaths();
   return filePaths.map((f) => toSlug(f));
 }
 
-export function getDirectoryData(): MdObject {
+export function getDirectoryData(): TreeData {
   const filteredDirectory = directoryTree(getMarkdownFolder(), {
-    extensions: /\.md/,
+    exclude: /.gitkeep/g,
   });
-  return convertObject(filteredDirectory);
-}
-
-export function getContent(slug: string): string | null {
-  const currentFilePath = toFilePath(slug);
-  if (currentFilePath === undefined || currentFilePath == null) return null;
-  return readFileSync(currentFilePath);
-}
-
-export function getShortSummary(slug: string): string {
-  const content = getContent(slug);
-  if (content === null) {
-    return "";
-  }
-
-  const tree = unified().use(markdown).parse(content);
-  const plainText = toString(tree);
-  return plainText.split(" ").splice(0, 40).join(" ");
+  return convertTreeData(filteredDirectory);
 }
 
 export function getRouterPath(fileName: string): string | null {
