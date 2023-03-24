@@ -62,8 +62,10 @@ fun initCache(
     val fileNameInfo = FileNameInfo(postFolder, duplicatedFile, fileNameToPath, fileNameToSlug)
     getAllFiles().forEach { filePath ->
         val content = readContent(filePath)
-        // Analyze Dependencies
-        convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null)
+        if (filePath.contains("\\.md$".toRegex())) {
+            // Analyze Dependencies
+            convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null)
+        }
     }
 
     cacheData.set(CacheData(dependencyData, fileNameInfo))
@@ -71,6 +73,7 @@ fun initCache(
 }
 
 @JsExport
+
 fun getCacheData(): Promise<String> = cacheScope.promise {
     serialize(cacheData.get()!!)
 }
