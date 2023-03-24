@@ -83,6 +83,15 @@ value class FileNameString(val fileName: String) {
             "does not contain extension or contains `.md` fileName:$fileName"
         }
     }
+
+    val isMediaFile: Boolean
+        get() = isImageFile || isSoundFile
+
+    val isImageFile: Boolean
+        get() = fileName.contains("\\.(jpg|jpeg|png|gif|svg|webp)$".toRegex())
+
+    val isSoundFile: Boolean
+        get() = fileName.contains("\\.(mp3|ogg)$".toRegex())
 }
 
 @JsExport

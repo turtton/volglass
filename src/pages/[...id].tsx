@@ -5,7 +5,13 @@ import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
 import { getBackLinks, getCacheData, initCache, toFileName, toFilePath } from "volglass-backend";
-import { getMarkdownFolder, moveToPublicFolder, readFileSync } from "../lib/io";
+import {
+  clearPublicDir,
+  getMarkdownFolder,
+  getPublicFolder,
+  copyToPublicFolder,
+  readFileSync,
+} from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
 import FolderTree from "../components/FolderTree";
@@ -99,13 +105,16 @@ export async function getStaticPaths(): Promise<{
   paths: Array<{ params: { id: string[] } }>;
   fallback: false;
 }> {
+  clearPublicDir();
   const directoryData = getDirectoryData();
   const slugs = await initCache(
     JSON.stringify(directoryData),
     getAllContentFilePaths,
     getMarkdownFolder,
+    getPublicFolder,
     toSlug,
     readFileSync,
+    copyToPublicFolder,
   );
   // TODO allows to put in image files in `posts` directory
   const paths = slugs.map((p) => ({ params: { id: p.replace("/", "").split("/") } }));

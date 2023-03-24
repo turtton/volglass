@@ -12,4 +12,8 @@ data class FileNameInfo(
     val duplicatedFile: Set<String> = emptySet(),
     val fileNameToPath: Map<FileNameString, PathString> = emptyMap(),
     val fileNameToSlug: Map<FileNameString, SlugString> = emptyMap(),
+    /**
+     * Static data slugs that is in public folder
+     */
+    val fileNameToMediaSlug: Map<FileNameString, SlugString> = emptyMap(),
 )
