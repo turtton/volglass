@@ -39,7 +39,7 @@ class ObsidianLinkElementProcessor<Parent>(
         val lbracketNode = node.children[0]
         val rbracketNode = node.children.last()
 
-        // link|>>t<<ext or 0
+        // link|>>t<<itle or >>t<<itle
         val verticalLinePosition = rawTitle.indexOf('|') + 1
         val titleNode = LeafASTNode(titleTextNode.type, titleTextNode.startOffset + verticalLinePosition, titleTextNode.endOffset)
         val slimNode = object : ASTNode by node {
