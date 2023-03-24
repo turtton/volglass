@@ -21,13 +21,15 @@ val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
 val json = Json
 
-val cacheData: KStore<CacheData> = storeOf("backend.cache")
+// CacheData + DirectoryTreeData
+val cacheData: KStore<Pair<CacheData, String>> = storeOf("backend.cache")
 
 @Serializable
 data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileNameInfo)
 
 @JsExport
 fun initCache(
+    directoryTreeData: String,
     // -> filePath
     getAllFiles: () -> Array<String>,
     // -> markdownFolder path(`post directory`)
@@ -71,14 +73,14 @@ fun initCache(
         }
     }
 
-    cacheData.set(CacheData(dependencyData, fileNameInfo))
+    cacheData.set(CacheData(dependencyData, fileNameInfo) to directoryTreeData)
     return@promise fileNameToSlug.values.map { it.slug }.toTypedArray()
 }
 
 @JsExport
-
-fun getCacheData(): Promise<String> = cacheScope.promise {
-    serialize(cacheData.get()!!)
+fun getCacheData(): Promise<Array<String>> = cacheScope.promise {
+    val (cacheData, directoryTreeData) = cacheData.get()!!
+    arrayOf(serialize(cacheData), directoryTreeData)
 }
 
 @JsExport

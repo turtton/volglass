@@ -5,7 +5,7 @@ import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
 import { getBackLinks, getCacheData, initCache, toFileName, toFilePath } from "volglass-backend";
-import { getMarkdownFolder, readFileSync } from "../lib/io";
+import { getMarkdownFolder, moveToPublicFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
 import FolderTree from "../components/FolderTree";
@@ -99,7 +99,14 @@ export async function getStaticPaths(): Promise<{
   paths: Array<{ params: { id: string[] } }>;
   fallback: false;
 }> {
-  const slugs = await initCache(getAllContentFilePaths, getMarkdownFolder, toSlug, readFileSync);
+  const directoryData = getDirectoryData();
+  const slugs = await initCache(
+    JSON.stringify(directoryData),
+    getAllContentFilePaths,
+    getMarkdownFolder,
+    toSlug,
+    readFileSync,
+  );
   // TODO allows to put in image files in `posts` directory
   const paths = slugs.map((p) => ({ params: { id: p.replace("/", "").split("/") } }));
 
@@ -114,12 +121,12 @@ export async function getStaticProps({
 }: {
   params: { id: string[] };
 }): Promise<{ props: Prop }> {
-  const cacheData = await getCacheData();
+  const [cacheData, rawTreeData] = await getCacheData();
+  const tree: TreeData = JSON.parse(rawTreeData);
   const slugString = `/${params.id.join("/")}`;
   const fileName = toFileName(slugString, cacheData);
   const filePath = toFilePath(slugString, cacheData);
   const markdownContent = readFileSync(filePath);
-  const tree = getDirectoryData();
   const flattenNodes = getFlattenArray(tree);
   const backLinks = getBackLinks(slugString, cacheData, readFileSync);
 

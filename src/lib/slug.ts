@@ -71,17 +71,11 @@ export function getAllSlugs(): string[] {
   return filePaths.map((f) => toSlug(f));
 }
 
-let treeDataCache: TreeData | undefined;
-
 export function getDirectoryData(): TreeData {
-  if (treeDataCache === undefined) {
-    const filteredDirectory = directoryTree(getMarkdownFolder(), {
-      exclude: /.gitkeep/g,
-    });
-    treeDataCache = convertTreeData(filteredDirectory);
-  }
-
-  return treeDataCache;
+  const filteredDirectory = directoryTree(getMarkdownFolder(), {
+    exclude: /.gitkeep/g,
+  });
+  return convertTreeData(filteredDirectory);
 }
 
 export function getRouterPath(fileName: string): string | null {
