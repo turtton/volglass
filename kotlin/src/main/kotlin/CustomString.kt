@@ -39,7 +39,7 @@ value class SlugString(val slug: String) {
         require(slug.startsWith('/')) {
             "does not start with `/`. slug:$slug"
         }
-        require(!slug.contains(".md")) {
+        require(!slug.contains("\\.md$".toRegex())) {
             "contains `.md`. slug:$slug"
         }
     }
@@ -79,7 +79,7 @@ value class FileNameString(val fileName: String) {
         require(!fileName.startsWith('/')) {
             "starts with `/`. fileName:$fileName"
         }
-        require(fileName.contains("\\.[a-zA-Z0-9]*^".toRegex()) || !fileName.contains(".md")) {
+        require(fileName.contains("\\.[a-zA-Z0-9]*^".toRegex()) || !fileName.contains("\\.md$".toRegex())) {
             "does not contain extension or contains `.md` fileName:$fileName"
         }
     }
@@ -96,4 +96,4 @@ fun toFileName(slug: String, cacheData: String): String {
     return SlugString(slug).toFileName(fileNameInfo.duplicatedFile).fileName
 }
 
-fun String.removeMdExtension(): String = replace(".md", "")
+fun String.removeMdExtension(): String = replace("\\.md$".toRegex(), "")
