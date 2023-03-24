@@ -28,9 +28,12 @@ data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileN
 
 @JsExport
 fun initCache(
+    // -> filePath
     getAllFiles: () -> Array<String>,
+    // -> markdownFolder path(`post directory`)
     getMarkdownFolder: () -> String,
     toSlug: (String) -> String,
+    // target file path -> content
     readContent: (String) -> String,
 ): Promise<Array<String>> = cacheScope.promise {
     val fileNameToSlug = mutableMapOf<FileNameString, SlugString>()
