@@ -34,4 +34,4 @@ yarn-error.log*
 .vercel
 
 /search-index.json
-/backend.cache
+/volglass.cache

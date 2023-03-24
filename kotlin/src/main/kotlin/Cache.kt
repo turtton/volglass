@@ -24,7 +24,7 @@ val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 val json = Json
 
 // CacheData + DirectoryTreeData
-val cacheData: KStore<Pair<CacheData, String>> = storeOf("backend.cache")
+val cacheData: KStore<Pair<CacheData, String>> = storeOf("volglass.cache")
 
 @Serializable
 data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileNameInfo)
