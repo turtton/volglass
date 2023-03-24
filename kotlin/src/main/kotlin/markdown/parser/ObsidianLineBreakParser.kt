@@ -40,8 +40,9 @@ class ObsidianLineBreakParser : SequentialParser {
                 )
             ) {
                 isNormalLine = false
-            } else if (iterator.type in listOf(MarkdownTokenTypes.BACKTICK)) {
-                if (specialTokens.contains(iterator.type)) {
+            } else if (iterator.type == MarkdownTokenTypes.BACKTICK && iterator.length == 3) {
+                // detects code block(```)
+                if (specialTokens.remove(iterator.type)) {
                     isNormalLine = false
                 } else {
                     specialTokens.add(iterator.type!!)

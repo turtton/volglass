@@ -4,6 +4,7 @@ import kotlin.test.Test
 import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
+import react.dom.html.ReactHTML.code
 import react.dom.html.ReactHTML.p
 
 class TestObsidianElement : ReactTestSupport {
@@ -58,6 +59,22 @@ class TestObsidianElement : ReactTestSupport {
             +"\n"
             br()
             +"bbb"
+        }
+    }
+
+    @Test
+    fun testObsidianLineBreak2() = doTest(
+        "`line1`\n`line2`",
+    ) {
+        p {
+            code {
+                +"line1"
+            }
+            +"\n"
+            br()
+            code {
+                +"line2"
+            }
         }
     }
 }
