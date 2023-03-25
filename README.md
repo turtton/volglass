@@ -11,6 +11,7 @@ https://volglass.turtton.net
 
 - **Search** documents
 - **Dark** Theme
+- **Mermaid** Support
 
 Also, I fixed many issues that the original has.
 
