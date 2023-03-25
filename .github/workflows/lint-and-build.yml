@@ -73,7 +73,7 @@ jobs:
         run: pnpm install
 
       - name: Lint
-        run: pnpm eslint .
+        run: pnpm run lint
 
       - name: Download template contents
         run: |
