@@ -21,6 +21,8 @@
 /build
 /posts
 !/posts/.gitkeep
+/public
+!/public/favicon.ico
 
 # misc
 .DS_Store
