@@ -2,6 +2,7 @@
 
 import csstype.ClassName
 import external.CodeEncoder
+import external.MermaidRender
 import external.NextRouter
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.storeOf
@@ -80,7 +81,7 @@ fun initCache(
         val content = readContent(filePath)
         if (filePath.contains("\\.md$".toRegex())) {
             // Analyze Dependencies
-            convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null)
+            convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null, null)
         }
     }
 
@@ -95,7 +96,7 @@ fun getCacheData(): Promise<Array<String>> = cacheScope.promise {
 }
 
 @JsExport
-fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder): FC<Props> {
+fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder, mermaidRender: MermaidRender): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
     val fileName = FileNameString(fileNameString)
     return if (fileName.isImageFile) {
@@ -108,7 +109,7 @@ fun getContent(fileNameString: String, content: String, cacheData: String, route
             }
         }
     } else {
-        convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder)
+        convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender)
     }
 }
 

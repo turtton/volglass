@@ -2,6 +2,7 @@ package markdown.processor.element
 
 import csstype.ClassName
 import external.CodeEncoder
+import external.MermaidRender
 import kotlinx.js.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
@@ -12,16 +13,22 @@ import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.html.HtmlGenerator
 import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
+import react.FC
 import react.IntrinsicType
+import react.Props
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.code
+import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.pre
+import react.useEffect
+import react.useState
+import restoreReplacements
 
 /**
  * Related [org.intellij.markdown.html.CodeFenceGeneratingProvider]
  */
 @Suppress("KDocUnresolvedReference")
-class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?) :
+class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, private val mermaidRender: MermaidRender?) :
     NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         val indentBefore = node.getTextInNode(markdownText).commonPrefixWith(" ".repeat(10)).length
@@ -52,26 +59,48 @@ class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?) :
         val html = encoder?.invoke(codes.joinToString(separator = "").removeSurrounding("\n"), language)
             ?.split('\n')
             ?.joinToString(separator = "\n") { "<span class=\"code-line\">$it</span>" }
+        // remove line break
+        codes.removeFirstOrNull()
+
+        val codeElement = if (language == "mermaid" && mermaidRender != null) {
+            FC {
+                val content = codes.joinToString(separator = "").restoreReplacements()
+                val (mermaidHtml, htmlSetter) = useState("")
+                useEffect(content) {
+                    mermaidRender.invoke(content) { htmlSetter(it) }
+                }
+                div {
+                    dangerouslySetInnerHTML = jso {
+                        __html = mermaidHtml
+                    }
+                }
+            }
+        } else {
+            generateCodeBlock(codes, html, language)
+        }
         visitor.consume {
             if (html != null && language.isNotEmpty()) {
                 className = ClassName("language-$language")
             }
-            code {
-                if (language.isNotEmpty()) {
-                    className = ClassName("language-$language")
+            codeElement()
+        }
+        visitor.consumeTagClose(pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
+    }
+
+    private fun generateCodeBlock(codes: List<String>, html: String?, language: String): FC<Props> = FC {
+        code {
+            if (language.isNotEmpty()) {
+                className = ClassName("language-$language")
+            }
+            if (html != null) {
+                dangerouslySetInnerHTML = jso {
+                    __html = html
                 }
-                if (html != null) {
-                    dangerouslySetInnerHTML = jso {
-                        __html = html
-                    }
-                } else {
-                    codes.removeFirstOrNull()
-                    codes.forEach {
-                        +it
-                    }
+            } else {
+                codes.forEach {
+                    +it
                 }
             }
         }
-        visitor.consumeTagClose(pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
     }
 }
