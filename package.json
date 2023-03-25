@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "next dev",
+    "dev": "pnpm run build:kotlin && next dev",
     "build": "pnpm run build:kotlin && pnpm run build:next",
     "build:next": "next build",
     "build:kotlin": "cd kotlin && ./gradlew build --stacktrace",
