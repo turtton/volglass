@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalJsExport::class)
 
 import kotlinx.serialization.Serializable
+import org.intellij.markdown.html.entities.EntityConverter
 
 /**
  * Refers actual file
@@ -106,3 +107,12 @@ fun toFileName(slug: String, cacheData: String): String {
 }
 
 fun String.removeMdExtension(): String = replace("\\.md$".toRegex(), "")
+
+/**
+ * Restores [EntityConverter.replacements]
+ */
+fun String.restoreReplacements(): String =
+    replace("&quot;", "\"")
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")

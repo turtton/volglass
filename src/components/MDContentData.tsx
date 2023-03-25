@@ -1,9 +1,12 @@
-import React from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
 import { deserializeBackLinks, getContent } from "volglass-backend";
 import { refractor } from "refractor/lib/all";
 import { toHtml } from "hast-util-to-html";
+import dynamic from "next/dynamic";
+import mermaid from "mermaid";
+import { useCurrentTheme } from "./ThemeSwitcher";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -41,6 +44,22 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	);
 }
 
+let currentId = 0;
+const createUuid = () => `mermaid-${currentId++}`;
+const renderMermaid =
+	(isDark: boolean) => (content: string, setter: (string) => void) => {
+		mermaid.initialize({ theme: isDark ? "dark" : "light" });
+		mermaid
+			.render(createUuid(), content)
+			.then((result) => setter(result.svg))
+			.catch((e) => {
+				setter(
+					"<p class='text-red-600 dark:text-red-400'>Mermaid: Syntax error in graph</p>",
+				);
+				console.error(e);
+			});
+	};
+
 export interface MDContentData {
 	fileName: string;
 	content: string;
@@ -55,13 +74,13 @@ function MDContent({
 	backLinks,
 }: MDContentData): JSX.Element {
 	const router = useRouter();
-
 	const Content = getContent(
 		fileName,
 		`# ${fileName}\n${content}`,
 		cacheData,
 		router,
 		(code, language) => toHtml(refractor.highlight(code, language)),
+		renderMermaid(useCurrentTheme() === "dark"),
 	);
 	return (
 		<div className="markdown-rendered">
