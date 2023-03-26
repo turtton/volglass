@@ -106,6 +106,9 @@ fun toFileName(slug: String, cacheData: String): String {
     return SlugString(slug).toFileName(fileNameInfo.duplicatedFile).fileName
 }
 
+@JsExport
+fun isMediaFile(fileName: String): Boolean = FileNameString(fileName).isMediaFile
+
 fun String.removeMdExtension(): String = replace("\\.md$".toRegex(), "")
 
 /**
