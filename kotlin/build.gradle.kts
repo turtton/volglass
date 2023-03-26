@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("io.github.mysticfall:kotlin-react-test:18.2.0-pre.346+build.17")
+    testImplementation("io.github.mysticfall:kotlin-react-test:18.2.0-pre.522+build.19")
 
     implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.522"))
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
