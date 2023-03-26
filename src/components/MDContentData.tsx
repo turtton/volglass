@@ -54,7 +54,7 @@ const renderMermaid =
 				setter(
 					"<p class='text-red-600 dark:text-red-400'>Mermaid: Syntax error in graph</p>",
 				);
-				console.error(e);
+				console.error(`Error occurred by Mermaid.\nContent:\n${content}\n`, e);
 			});
 	};
 
