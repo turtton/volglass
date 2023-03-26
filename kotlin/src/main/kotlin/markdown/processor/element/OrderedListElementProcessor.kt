@@ -7,12 +7,12 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.findChildOfType
 import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLOListElement
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.OlHTMLAttributes
 import react.dom.html.ReactHTML.ol
+import web.html.HTMLElement
+import web.html.HTMLOListElement
 
 /**
  * Related [CommonMarkFlavourDescriptor]:L63-76(MarkdownElementTypes.ORDERED_LIST)

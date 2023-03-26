@@ -17,7 +17,6 @@ import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.URI
 import org.intellij.markdown.parser.LinkMap
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
@@ -34,6 +33,7 @@ import react.dom.html.ReactHTML.h6
 import react.dom.html.ReactHTML.hr
 import react.dom.html.ReactHTML.strong
 import react.dom.html.ReactHTML.ul
+import web.html.HTMLElement
 
 /**
  * Related [CommonMarkFlavourDescriptor.createHtmlGeneratingProviders]

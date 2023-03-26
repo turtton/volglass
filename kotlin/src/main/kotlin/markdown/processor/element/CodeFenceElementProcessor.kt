@@ -3,7 +3,7 @@ package markdown.processor.element
 import csstype.ClassName
 import external.CodeEncoder
 import external.MermaidRender
-import kotlinx.js.jso
+import js.core.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -11,7 +11,6 @@ import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.html.HtmlGenerator
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.FC
 import react.IntrinsicType
@@ -23,6 +22,7 @@ import react.dom.html.ReactHTML.pre
 import react.useEffect
 import react.useState
 import restoreReplacements
+import web.html.HTMLElement
 
 /**
  * Related [org.intellij.markdown.html.CodeFenceGeneratingProvider]

@@ -43,7 +43,7 @@
     "@types/babel__core": "^7.20.0",
     "@types/cytoscape": "^3.19.9",
     "@types/d3": "^7.0.0",
-    "@types/eslint": "8.4.10",
+    "@types/eslint": "8.21.3",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
     "@types/react-cytoscapejs": "^1.2.2",
@@ -57,5 +57,5 @@
     "tailwindcss": "^3.2.4",
     "typescript": "^5.0.0"
   },
-  "packageManager": "pnpm@7.25.0"
+  "packageManager": "pnpm@7.30.3"
 }

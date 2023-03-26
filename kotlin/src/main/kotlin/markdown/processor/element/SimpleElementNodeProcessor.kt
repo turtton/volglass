@@ -4,9 +4,9 @@ import markdown.TagConsumer
 import markdown.processor.SandwichNodeProcessor
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.html.SimpleTagProvider
-import org.w3c.dom.HTMLElement
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
+import web.html.HTMLElement
 
 /**
  * Related [SimpleTagProvider]

@@ -9,13 +9,13 @@ import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.entities.EntityConverter
 import org.intellij.markdown.html.makeXssSafeDestination
 import org.intellij.markdown.parser.LinkMap
-import org.w3c.dom.HTMLAnchorElement
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.AnchorHTMLAttributes
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.a
+import web.html.HTMLAnchorElement
+import web.html.HTMLElement
 
 /**
  * Related [CommonMarkFlavourDescriptor]:L92-108(MarkdownElementTypes.AUTOLINK)

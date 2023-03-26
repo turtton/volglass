@@ -1,17 +1,17 @@
 package markdown.processor.element
 
-import kotlinx.js.jso
+import js.core.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.div
+import web.html.HTMLElement
 
 /**
  * Related [org.intellij.markdown.html.HtmlBlockGeneratingProvider]

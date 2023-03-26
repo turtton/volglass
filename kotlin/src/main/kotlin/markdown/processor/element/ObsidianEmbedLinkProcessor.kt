@@ -15,7 +15,6 @@ import markdown.convertMarkdownToReactElement
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.html.LinkGeneratingProvider
 import org.intellij.markdown.html.URI
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
@@ -23,6 +22,7 @@ import react.dom.html.ReactHTML.audio
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.img
 import react.dom.html.ReactHTML.strong
+import web.html.HTMLElement
 
 /**
  * See [Official Help about EmbeddingLink](https://help.obsidian.md/Linking+notes+and+files/Embedding+files)

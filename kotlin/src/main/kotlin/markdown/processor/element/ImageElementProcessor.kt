@@ -14,13 +14,13 @@ import org.intellij.markdown.html.ImageGeneratingProvider
 import org.intellij.markdown.html.LinkGeneratingProvider
 import org.intellij.markdown.html.URI
 import org.intellij.markdown.parser.LinkMap
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLImageElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ImgHTMLAttributes
 import react.dom.html.ReactHTML.img
+import web.html.HTMLElement
+import web.html.HTMLImageElement
 
 /**
  * Related [ImageGeneratingProvider]

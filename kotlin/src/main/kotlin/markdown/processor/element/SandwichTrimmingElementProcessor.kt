@@ -3,9 +3,9 @@ package markdown.processor.element
 import markdown.TagConsumer
 import markdown.processor.TrimmingInlineHolderNodeProcessor
 import org.intellij.markdown.ast.ASTNode
-import org.w3c.dom.HTMLElement
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
+import web.html.HTMLElement
 
 class SandwichTrimmingElementProcessor<
     Element : HTMLElement,

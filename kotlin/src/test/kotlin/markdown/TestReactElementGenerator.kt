@@ -1,9 +1,9 @@
 package markdown
 
 import csstype.ClassName
+import js.core.jso
 import kotlin.test.Ignore
 import kotlin.test.Test
-import kotlinx.js.jso
 import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.blockquote
