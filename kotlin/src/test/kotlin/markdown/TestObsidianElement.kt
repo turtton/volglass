@@ -1,11 +1,13 @@
 package markdown
 
+import csstype.ClassName
 import kotlin.test.Test
 import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.code
 import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.strong
 
 class TestObsidianElement : ReactTestSupport {
     @Test
@@ -74,6 +76,21 @@ class TestObsidianElement : ReactTestSupport {
             br()
             code {
                 +"line2"
+            }
+        }
+    }
+
+    @Test
+    fun testObsidianEmbedLink1() = doTest(
+        "![[link]]",
+    ) {
+        div {
+            div {
+                className = ClassName("border-l-2 px-4 border-gray-300 dark:border-gray-600")
+                strong {
+                    +"link"
+                }
+                div()
             }
         }
     }

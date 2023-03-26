@@ -36,8 +36,8 @@ class ObsidianLinkElementProcessor<Parent>(
         // title or {link|title -> listOf(link, title) -> title}
         val title = rawTitle.split('|').last()
 
-        val lbracketNode = node.children[0]
-        val rbracketNode = node.children.last()
+        val lbracketNode = node.children.first { it.type == MarkdownTokenTypes.LBRACKET }
+        val rbracketNode = node.children.first { it.type == MarkdownTokenTypes.RBRACKET }
 
         // link|>>t<<itle or >>t<<itle
         val verticalLinePosition = rawTitle.indexOf('|') + 1

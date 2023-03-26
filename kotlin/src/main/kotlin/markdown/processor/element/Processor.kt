@@ -53,6 +53,7 @@ fun <Parent> createReactElementGeneratingProcessors(
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =
     mapOf(
         ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        ObsidianElementTypes.EMBED_LINK to ObsidianEmbedLinkProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, encoder, mermaidRender, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
 
         MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(div),
         MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),
