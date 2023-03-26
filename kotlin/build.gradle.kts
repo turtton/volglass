@@ -15,10 +15,12 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.github.mysticfall:kotlin-react-test:18.2.0-pre.346+build.17")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.522")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.522")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.10.6-pre.522")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:6.9.0-pre.522")
+
+    implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.522"))
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
