@@ -1,12 +1,6 @@
 import { ElementDefinition } from "cytoscape";
 import { getRawGraphData } from "volglass-backend";
 
-export interface CustomNode {
-	title: string | null;
-	slug: string;
-	shortSummary: string;
-}
-
 export interface LocalGraphData {
 	nodes: ElementDefinition[];
 	edges: ElementDefinition[];
