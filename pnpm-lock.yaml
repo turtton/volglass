@@ -31,7 +31,7 @@ specifiers:
   path: ^0.12.7
   postcss: ^8.4.21
   react: ^18.2.0
-  react-cytoscapejs: ^1.2.1
+  react-cytoscapejs: ^2.0.0
   react-dom: ^18.2.0
   refractor: ^4.8.1
   rome: ^11.0.0
@@ -59,7 +59,7 @@ dependencies:
   next: 12.3.4_biqbaboplfbrettd7655fr4n2y
   path: 0.12.7
   react: 18.2.0
-  react-cytoscapejs: 1.2.1_biqbaboplfbrettd7655fr4n2y
+  react-cytoscapejs: 2.0.0_bwu3tuwxqgbhqogdmspjd7bfae
   react-dom: 18.2.0_react@18.2.0
   refractor: 4.8.1
   ts-pattern: 4.1.4
@@ -2240,17 +2240,15 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /react-cytoscapejs/1.2.1_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-8exVCetpzyGCAKuRjXPWGjFCnb22boZ3SXUPpPB/+wQI8Q8BwkT1URN3A7J1Czvj1qAbShh5QQ514mBUp7i7kw==}
-    engines: {node: '>=8.11.3'}
+  /react-cytoscapejs/2.0.0_bwu3tuwxqgbhqogdmspjd7bfae:
+    resolution: {integrity: sha512-t3SSl1DQy7+JQjN+8QHi1anEJlM3i3aAeydHTsJwmjo/isyKK7Rs7oCvU6kZsB9NwZidzZQR21Vm2PcBLG/Tjg==}
     peerDependencies:
+      cytoscape: ^3.2.19
       react: '>=15.0.0'
-      react-dom: '>=15.0.0'
     dependencies:
       cytoscape: 3.23.0
       prop-types: 15.8.1
       react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-dom/18.2.0_react@18.2.0:
