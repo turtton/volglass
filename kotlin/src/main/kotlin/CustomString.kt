@@ -93,6 +93,9 @@ value class FileNameString(val fileName: String) {
 
     val isSoundFile: Boolean
         get() = fileName.contains("\\.(mp3|ogg)$".toRegex())
+
+    val isCanvasFile: Boolean
+        get() = fileName.contains("\\.canvas$".toRegex())
 }
 
 @JsExport
