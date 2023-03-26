@@ -1,10 +1,8 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
 import { deserializeBackLinks, getContent } from "volglass-backend";
 import { refractor } from "refractor/lib/all";
 import { toHtml } from "hast-util-to-html";
-import dynamic from "next/dynamic";
 import mermaid from "mermaid";
 import { useCurrentTheme } from "./ThemeSwitcher";
 
