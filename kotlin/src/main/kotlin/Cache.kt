@@ -24,6 +24,9 @@ val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
 val json = Json
 
+// only available on initializing cache
+var embedTargets: MutableSet<FileNameString>? = null
+
 // CacheData + DirectoryTreeData
 val cacheData: KStore<Pair<CacheData, String>> = storeOf("volglass.cache")
 
@@ -75,6 +78,7 @@ fun initCache(
         nameCache += plainFileName.fileName
     }
 
+    embedTargets = mutableSetOf()
     val dependencyData = DependencyData()
     val fileNameInfo = FileNameInfo(postFolder, duplicatedFile, fileNameToPath, fileNameToSlug, fileNameToMediaSlug)
     getAllFiles().forEach { filePath ->
@@ -83,6 +87,10 @@ fun initCache(
             // Analyze Dependencies
             convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null, null)
         }
+    }
+    embedTargets!!.forEach {
+        val path = fileNameToPath[it]!!
+        dependencyData.embedContents[it] = readContent(path.path)
     }
 
     cacheData.set(CacheData(dependencyData, fileNameInfo) to directoryTreeData)

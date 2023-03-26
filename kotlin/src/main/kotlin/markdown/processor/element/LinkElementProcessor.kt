@@ -49,19 +49,20 @@ abstract class LinkElementProcessor<Parent>(
         }
         val expectedFileName = destination.toString().removePrefix("/").removeMdExtension()
         val fileNameToSlug = fileNameInfo.fileNameToSlug
-        val slug = if (!destination.startsWith("http")) {
-            fileNameToSlug[FileNameString(expectedFileName)]
-                // path/to/target -> target
-                ?: fileNameToSlug[FileNameString(expectedFileName.split('/').last())]
+        val fileNameToMediaSlug = fileNameInfo.fileNameToMediaSlug
+        val duplicatedFile = fileNameInfo.duplicatedFile
+        val (mediaSlug, slug) = if (!destination.startsWith("http")) {
+            val expectedFileNameString = SlugString("/$expectedFileName").toFileName(duplicatedFile)
+            fileNameToMediaSlug[expectedFileNameString] to fileNameToSlug[expectedFileNameString]
         } else {
-            null
+            null to null
         }
         if (slug != null) {
-            val targetFile = slug.toFileName(fileNameInfo.duplicatedFile)
+            val targetFile = slug.toFileName(duplicatedFile)
             dependencyData.dependingLinks.getOrPut(fileName) { mutableSetOf() }.add(targetFile)
             dependencyData.linkDependencies.getOrPut(targetFile) { mutableSetOf() }.add(fileName)
 
-            return Destination.Router(slug)
+            return Destination.Router(mediaSlug ?: slug)
         }
 
         return baseURI?.resolveToStringSafe(destination.toString())

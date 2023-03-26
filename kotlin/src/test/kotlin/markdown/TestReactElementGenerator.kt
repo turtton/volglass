@@ -21,7 +21,6 @@ import react.dom.html.ReactHTML.hr
 import react.dom.html.ReactHTML.img
 import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.ol
-import react.dom.html.ReactHTML.p
 import react.dom.html.ReactHTML.pre
 import react.dom.html.ReactHTML.strong
 import react.dom.html.ReactHTML.table
@@ -69,10 +68,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testTabsExample4() = doTest("  - foo\n\n\tbar\n") {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
-                p {
+                div {
                     +"bar"
                 }
             }
@@ -84,7 +83,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testTabsExample5() = doTest("- foo\n\n\t\tbar\n") {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
                 pre {
@@ -169,7 +168,7 @@ class TestReactElementGenerator : ReactTestSupport {
     @Test
     fun testBackslashEscapesExample12() =
         doTest("\\!\\\"\\#\\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n") {
-            p {
+            div {
                 +"!&quot;#\$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
                 +"`"
                 +"{|}~"
@@ -178,7 +177,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample13() = doTest("\\\t\\A\\a\\ \\3\\φ\\«\n") {
-        p {
+        div {
             +"\\"
             +"\t"
             +"\\A\\a\\"
@@ -195,7 +194,7 @@ class TestReactElementGenerator : ReactTestSupport {
     @Test
     fun testBackslashEscapesExample14() =
         doTest("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity\n") {
-            p {
+            div {
                 +"*not emphasized"
                 +"*"
                 +"\n"
@@ -252,7 +251,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample15() = doTest("\\\\*emphasis*\n") {
-        p {
+        div {
             +"\\"
             em {
                 +"emphasis"
@@ -262,7 +261,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample16() = doTest("foo\\\nbar\n") {
-        p {
+        div {
             +"foo"
             br()
             +"\n"
@@ -272,7 +271,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample17() = doTest("`` \\[\\` ``\n") {
-        p {
+        div {
             code {
                 +"\\[\\`"
             }
@@ -301,7 +300,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample20() = doTest("<http://example.com?find=\\*>\n") {
-        p {
+        div {
             a {
                 href = "http://example.com?find=%5C*"
                 +"http://example.com?find=\\*"
@@ -320,7 +319,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample22() = doTest("[foo](/bar\\* \"ti\\*tle\")\n") {
-        p {
+        div {
             a {
                 href = "/bar*"
                 title = "ti*tle"
@@ -331,7 +330,7 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testBackslashEscapesExample23() = doTest("[foo]\n\n[foo]: /bar\\* \"ti\\*tle\"\n") {
-        p {
+        div {
             a {
                 href = "/bar*"
                 title = "ti*tle"
@@ -355,7 +354,7 @@ class TestReactElementGenerator : ReactTestSupport {
     @Ignore
     fun testEntityAndNumericCharacterReferencesExample25() =
         doTest("&nbsp; &amp; &copy; &AElig; &Dcaron;\n&frac34; &HilbertSpace; &DifferentialD;\n&ClockwiseContourIntegral; &ngE;\n") {
-            p {
+            div {
                 +"  &amp; © Æ Ď\n¾ ℋ ⅆ\n∲ ≧̸"
             }
         }
@@ -363,14 +362,14 @@ class TestReactElementGenerator : ReactTestSupport {
     @Test
     @Ignore
     fun testEntityAndNumericCharacterReferencesExample26() = doTest("&#35; &#1234; &#992; &#0;\n") {
-        p {
+        div {
             +"# Ӓ Ϡ �"
         }
     }
 
     @Test
     fun testEntityAndNumericCharacterReferencesExample27() = doTest("&#X22; &#XD06; &#xcab;\n") {
-        p {
+        div {
             +"&quot;"
             +" "
             +"ആ"
@@ -384,7 +383,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample28() = doTest(
         "&nbsp &x; &#; &#x;\n&#87654321;\n&#abcdef0;\n&ThisIsNotDefined; &hi?;\n",
     ) {
-        p {
+        div {
             +"&amp;nbsp &amp;x; &amp;#; &amp;#x;\n&amp;#87654321;\n&amp;#abcdef0;\n&amp;ThisIsNotDefined; &amp;hi?;"
         }
     }
@@ -393,14 +392,14 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample29() = doTest(
         markdown = "&copy\n",
     ) {
-        p {
+        div {
             +"&amp;copy"
         }
     }
 
     @Test
     fun testEntityAndNumericCharacterReferencesExample30() = doTest(markdown = "&MadeUpEntity;\n") {
-        p {
+        div {
             +"&amp;MadeUpEntity;"
         }
     }
@@ -420,7 +419,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample32() = doTest(
         markdown = "[foo](/f&ouml;&ouml; \"f&ouml;&ouml;\")\n",
     ) {
-        p {
+        div {
             a {
                 href = "/f%C3%B6%C3%B6"
                 title = "föö"
@@ -433,7 +432,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample33() = doTest(
         markdown = "[foo]\n\n[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/f%C3%B6%C3%B6"
                 title = "föö"
@@ -459,7 +458,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample35() = doTest(
         markdown = "`f&ouml;&ouml;`\n",
     ) {
-        p {
+        div {
             code {
                 +"f&amp;ouml;&amp;ouml;"
             }
@@ -487,7 +486,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample37() = doTest(
         markdown = "&#42;foo&#42;\n*foo*\n",
     ) {
-        p {
+        div {
             +"*foo*"
             +"\n"
             br()
@@ -501,7 +500,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample38() = doTest(
         markdown = "&#42; foo\n\n* foo\n",
     ) {
-        p {
+        div {
             +"*"
             +" "
             +"foo"
@@ -517,7 +516,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample39() = doTest(
         markdown = "foo&#10;&#10;bar\n",
     ) {
-        p {
+        div {
             +"foo\n\nbar"
         }
     }
@@ -526,7 +525,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample40() = doTest(
         markdown = "&#9;foo\n",
     ) {
-        p {
+        div {
             +"\tfoo"
         }
     }
@@ -535,7 +534,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEntityAndNumericCharacterReferencesExample41() = doTest(
         markdown = "[a](url &quot;tit&quot;)\n",
     ) {
-        p {
+        div {
             +"["
             +"a"
             +"]"
@@ -576,7 +575,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample44() = doTest(
         markdown = "+++\n",
     ) {
-        p {
+        div {
             +"+++"
         }
     }
@@ -585,7 +584,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample45() = doTest(
         markdown = "===\n",
     ) {
-        p {
+        div {
             +"==="
         }
     }
@@ -599,7 +598,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample46() = doTest(
         markdown = "--\n**\n__\n",
     ) {
-        p {
+        div {
             +"--"
             +"\n"
             br()
@@ -638,7 +637,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample49() = doTest(
         markdown = "Foo\n    ***\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             +"***"
@@ -684,16 +683,16 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample55() = doTest(
         markdown = "_ _ _ _ a\n\na------\n\n---a---\n",
     ) {
-        p {
+        div {
             +"_"
             +" _ "
             +"_"
             +" _ a"
         }
-        p {
+        div {
             +"a------"
         }
-        p {
+        div {
             +"---a---"
         }
     }
@@ -702,7 +701,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample56() = doTest(
         markdown = " *-*\n",
     ) {
-        p {
+        div {
             em {
                 +"-"
             }
@@ -730,11 +729,11 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testThematicBreaksExample58() = doTest(
         markdown = "Foo\n***\nbar\n",
     ) {
-        p {
+        div {
             +"Foo"
         }
         hr()
-        p {
+        div {
             +"bar"
         }
     }
@@ -746,7 +745,7 @@ class TestReactElementGenerator : ReactTestSupport {
         h2 {
             +"Foo"
         }
-        p {
+        div {
             +"bar"
         }
     }
@@ -810,7 +809,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testATXHeadingsExample63() = doTest(
         markdown = "####### foo\n",
     ) {
-        p {
+        div {
             +"#######"
             +" "
             +"foo"
@@ -821,10 +820,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testATXHeadingsExample64() = doTest(
         markdown = "#5 bolt\n\n#hashtag\n",
     ) {
-        p {
+        div {
             +"#5 bolt"
         }
-        p {
+        div {
             +"#hashtag"
         }
     }
@@ -833,7 +832,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testATXHeadingsExample65() = doTest(
         markdown = "\\## foo\n",
     ) {
-        p {
+        div {
             +"##"
             +" "
             +"foo"
@@ -896,7 +895,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testATXHeadingsExample70() = doTest(
         markdown = "foo\n    # bar\n",
     ) {
-        p {
+        div {
             +"foo\n# bar"
         }
     }
@@ -992,13 +991,13 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testATXHeadingsExample78() = doTest(
         markdown = "Foo bar\n# baz\nBar foo\n",
     ) {
-        p {
+        div {
             +"Foo bar"
         }
         h1 {
             +"baz"
         }
-        p {
+        div {
             +"Bar foo"
         }
     }
@@ -1117,7 +1116,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample87() = doTest(
         markdown = "Foo\n    ---\n",
     ) {
-        p {
+        div {
             +"Foo\n---"
         }
     }
@@ -1131,7 +1130,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample88() = doTest(
         markdown = "Foo\n= =\n\nFoo\n--- -\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
@@ -1139,7 +1138,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +" "
             +"="
         }
-        p {
+        div {
             +"Foo"
         }
         hr()
@@ -1171,7 +1170,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"`"
             +"Foo"
         }
-        p {
+        div {
             +"`"
         }
         h2 {
@@ -1180,7 +1179,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"&quot;"
             +"a lot"
         }
-        p {
+        div {
             +"of dashes"
             +"&quot;"
             +"/"
@@ -1193,7 +1192,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> Foo\n---\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"Foo"
             }
         }
@@ -1210,7 +1209,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\nbar\n===\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
                 +"\n"
                 br()
@@ -1255,7 +1254,7 @@ class TestReactElementGenerator : ReactTestSupport {
         h2 {
             +"Bar"
         }
-        p {
+        div {
             +"Baz"
         }
     }
@@ -1264,7 +1263,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample97() = doTest(
         markdown = "\n====\n",
     ) {
-        p {
+        div {
             +"===="
         }
     }
@@ -1307,7 +1306,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n-----\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
         }
@@ -1329,13 +1328,13 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample103() = doTest(
         markdown = "Foo\n\nbar\n---\nbaz\n",
     ) {
-        p {
+        div {
             +"Foo"
         }
         h2 {
             +"bar"
         }
-        p {
+        div {
             +"baz"
         }
     }
@@ -1349,14 +1348,14 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample104() = doTest(
         markdown = "Foo\nbar\n\n---\n\nbaz\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
             +"bar"
         }
         hr()
-        p {
+        div {
             +"baz"
         }
     }
@@ -1370,14 +1369,14 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample105() = doTest(
         markdown = "Foo\nbar\n* * *\nbaz\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
             +"bar"
         }
         hr()
-        p {
+        div {
             +"baz"
         }
     }
@@ -1391,7 +1390,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSetextHeadingsExample106() = doTest(
         markdown = "Foo\nbar\n\\---\nbaz\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
@@ -1425,10 +1424,10 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
-                p {
+                div {
                     +"bar"
                 }
             }
@@ -1441,7 +1440,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"foo"
                 }
                 ul {
@@ -1511,7 +1510,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testIndentedCodeBlocksExample113() = doTest(
         markdown = "Foo\n    bar\n\n",
     ) {
-        p {
+        div {
             +"Foo\nbar"
         }
     }
@@ -1526,7 +1525,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"bar"
         }
     }
@@ -1626,7 +1625,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testFencedCodeBlocksExample121() = doTest(
         markdown = "``\nfoo\n``\n",
     ) {
-        p {
+        div {
             code {
                 +"foo"
             }
@@ -1725,7 +1724,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 }
             }
         }
-        p {
+        div {
             +"bbb"
         }
     }
@@ -1857,7 +1856,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testFencedCodeBlocksExample138() = doTest(
         markdown = "``` ```\naaa\n",
     ) {
-        p {
+        div {
             code()
             +"\naaa"
         }
@@ -1881,7 +1880,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testFencedCodeBlocksExample140() = doTest(
         markdown = "foo\n```\nbar\n```\nbaz\n",
     ) {
-        p {
+        div {
             +"foo"
         }
         pre {
@@ -1890,7 +1889,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"baz"
         }
     }
@@ -1962,7 +1961,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testFencedCodeBlocksExample145() = doTest(
         markdown = "``` aa ```\nfoo\n",
     ) {
-        p {
+        div {
             code {
                 +"aa"
             }
@@ -2007,7 +2006,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     pre {
                         +"**Hello**,"
                     }
-                    p {
+                    div {
                         em {
                             +"world"
                         }
@@ -2027,7 +2026,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 __html = "<table>\n  <tr>\n    <td>\n           hi\n    </td>\n  </tr>\n</table>"
             }
         }
-        p {
+        div {
             +"okay."
         }
     }
@@ -2270,7 +2269,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHTMLBlocksExample168() = doTest(
         markdown = "<del>*foo*</del>\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<p><del><em>foo</em></del></p>\n"
@@ -2289,7 +2288,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     "<pre language=\"haskell\"><code>\nimport Text.HTML.TagSoup\n\nmain :: IO ()\nmain = print \$ parseTags tags\n</code></pre>"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2304,7 +2303,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     "<script type=\"text/javascript\">\n// JavaScript example\n\ndocument.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";\n</script>"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2323,14 +2322,14 @@ class TestReactElementGenerator : ReactTestSupport {
 
     @Test
     fun testHTMLBlocksExample172() = doTest(
-        markdown = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\np {color:blue;}\n</style>\nokay\n",
+        markdown = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\ndiv {color:blue;}\n</style>\nokay\n",
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\np {color:blue;}\n</style>"
+                __html = "<style\n  type=\"text/css\">\nh1 {color:red;}\n\ndiv {color:blue;}\n</style>"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2357,7 +2356,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 }
             }
         }
-        p {
+        div {
             +"bar"
         }
     }
@@ -2389,7 +2388,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 __html = "<style>p{color:red;}</style>"
             }
         }
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -2405,7 +2404,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 __html = "<!-- foo -->*bar*"
             }
         }
-        p {
+        div {
             em {
                 +"baz"
             }
@@ -2432,7 +2431,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 __html = "<!-- Foo\n\nbar\n   baz -->"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2446,7 +2445,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 __html = "<?php\n\n  echo '>';\n\n?>"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2472,7 +2471,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     "<![CDATA[\nfunction matchwo(a,b)\n{\n  if (a < b && a < 0) then {\n    return 1;\n\n  } else {\n\n    return 0;\n  }\n}\n]]>"
             }
         }
-        p {
+        div {
             +"okay"
         }
     }
@@ -2513,7 +2512,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHTMLBlocksExample185() = doTest(
         markdown = "Foo\n<div>\nbar\n</div>\n",
     ) {
-        p {
+        div {
             +"Foo"
         }
         div {
@@ -2543,7 +2542,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHTMLBlocksExample187() = doTest(
         markdown = "Foo\n<a href=\"bar\">\nbaz\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
@@ -2617,7 +2616,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample192() = doTest(
         markdown = "[foo]: /url \"title\"\n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -2630,7 +2629,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample193() = doTest(
         markdown = "   [foo]: \n      /url  \n           'the title'  \n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "the title"
@@ -2643,7 +2642,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample194() = doTest(
         markdown = "[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n",
     ) {
-        p {
+        div {
             a {
                 href = "my_(url)"
                 title = "title (with parens)"
@@ -2659,7 +2658,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample195() = doTest(
         markdown = "[Foo bar]:\n<my url>\n'title'\n\n[Foo bar]\n",
     ) {
-        p {
+        div {
             a {
                 href = "my%20url"
                 title = "title"
@@ -2672,7 +2671,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample196() = doTest(
         markdown = "[foo]: /url '\ntitle\nline1\nline2\n'\n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "\ntitle\nline1\nline2\n"
@@ -2685,7 +2684,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample197() = doTest(
         markdown = "[foo]: /url 'title\n\nwith blank line'\n\n[foo]\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2696,11 +2695,11 @@ class TestReactElementGenerator : ReactTestSupport {
             +"'"
             +"title"
         }
-        p {
+        div {
             +"with blank line"
             +"'"
         }
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2711,7 +2710,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample198() = doTest(
         markdown = "[foo]:\n/url\n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 +"foo"
@@ -2723,13 +2722,13 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample199() = doTest(
         markdown = "[foo]:\n\n[foo]\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
             +":"
         }
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2740,7 +2739,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample200() = doTest(
         markdown = "[foo]: <>\n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = ""
                 +"foo"
@@ -2753,7 +2752,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample201() = doTest(
         markdown = "[foo]: <bar>(baz)\n\n[foo]\n",
     ) {
-        p {
+        div {
             +"[foo]: <bar>(baz)</p>\\n<p>[foo]"
         }
     }
@@ -2762,7 +2761,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample202() = doTest(
         markdown = "[foo]: /url\\bar\\*baz \"foo\\\"bar\\baz\"\n\n[foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url%5Cbar*baz"
                 title = "foo&quot;bar\\baz"
@@ -2775,7 +2774,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample203() = doTest(
         markdown = "[foo]\n\n[foo]: url\n",
     ) {
-        p {
+        div {
             a {
                 href = "url"
                 +"foo"
@@ -2787,7 +2786,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample204() = doTest(
         markdown = "[foo]\n\n[foo]: first\n[foo]: second\n",
     ) {
-        p {
+        div {
             a {
                 href = "first"
                 +"foo"
@@ -2799,7 +2798,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample205() = doTest(
         markdown = "[FOO]: /url\n\n[Foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 +"Foo"
@@ -2811,7 +2810,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample206() = doTest(
         markdown = "[ΑΓΩ]: /φου\n\n[αγω]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/%CF%86%CE%BF%CF%85"
                 +"αγω"
@@ -2828,7 +2827,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample208() = doTest(
         markdown = "[\nfoo\n]: /url\nbar\n",
     ) {
-        p {
+        div {
             +"bar"
         }
     }
@@ -2837,7 +2836,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample209() = doTest(
         markdown = "[foo]: /url \"title\" ok\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2857,7 +2856,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample210() = doTest(
         markdown = "[foo]: /url\n\"title\" ok\n",
     ) {
-        p {
+        div {
             +"&quot;"
             +"title"
             +"&quot;"
@@ -2876,7 +2875,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2893,7 +2892,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -2909,7 +2908,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample213() = doTest(
         markdown = "Foo\n[bar]: /baz\n\n[bar]\n",
     ) {
-        p {
+        div {
             +"Foo"
             +"\n"
             br()
@@ -2920,7 +2919,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +" "
             +"/baz"
         }
-        p {
+        div {
             +"["
             +"bar"
             +"]"
@@ -2938,7 +2937,7 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
         blockquote {
-            p {
+            div {
                 +"bar"
             }
         }
@@ -2951,7 +2950,7 @@ class TestReactElementGenerator : ReactTestSupport {
         h1 {
             +"bar"
         }
-        p {
+        div {
             a {
                 href = "/url"
                 +"foo"
@@ -2964,7 +2963,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample216() = doTest(
         markdown = "[foo]: /url\n===\n[foo]\n",
     ) {
-        p {
+        div {
             +"==="
             a {
                 href = "/url"
@@ -2982,7 +2981,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample217() = doTest(
         markdown = "[foo]: /foo-url \"foo\"\n[bar]: /bar-url\n  \"bar\"\n[baz]: /baz-url\n\n[foo],\n[bar],\n[baz]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/foo-url"
                 title = "foo"
@@ -3010,7 +3009,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinkReferenceDefinitionsExample218() = doTest(
         markdown = "[foo]\n\n> [foo]: /url\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 +"foo"
@@ -3023,10 +3022,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample219() = doTest(
         markdown = "aaa\n\nbbb\n",
     ) {
-        p {
+        div {
             +"aaa"
         }
-        p {
+        div {
             +"bbb"
         }
     }
@@ -3040,13 +3039,13 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample220() = doTest(
         markdown = "aaa\nbbb\n\nccc\nddd\n",
     ) {
-        p {
+        div {
             +"aaa"
             +"\n"
             br()
             +"bbb"
         }
-        p {
+        div {
             +"ccc"
             +"\n"
             br()
@@ -3058,10 +3057,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample221() = doTest(
         markdown = "aaa\n\n\nbbb\n",
     ) {
-        p {
+        div {
             +"aaa"
         }
-        p {
+        div {
             +"bbb"
         }
     }
@@ -3071,7 +3070,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample222() = doTest(
         markdown = "  aaa\n bbb\n",
     ) {
-        p {
+        div {
             +"aaa"
             +"\n"
             +"bbb"
@@ -3083,7 +3082,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample223() = doTest(
         markdown = "aaa\n             bbb\n                                       ccc\n",
     ) {
-        p {
+        div {
             +"aaa"
             +"\n"
             +"bbb"
@@ -3101,7 +3100,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample224() = doTest(
         markdown = "   aaa\nbbb\n",
     ) {
-        p {
+        div {
             +"aaa"
             +"\n"
             br()
@@ -3119,7 +3118,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"bbb"
         }
     }
@@ -3128,7 +3127,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testParagraphsExample226() = doTest(
         markdown = "aaa     \nbbb     \n",
     ) {
-        p {
+        div {
             +"aaa"
             br()
             +"\n"
@@ -3140,7 +3139,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testBlankLinesExample227() = doTest(
         markdown = "  \n\naaa\n  \n\n# aaa\n\n  \n",
     ) {
-        p {
+        div {
             +"aaa"
         }
         h1 {
@@ -3157,7 +3156,7 @@ class TestReactElementGenerator : ReactTestSupport {
             h1 {
                 +"Foo"
             }
-            p {
+            div {
                 +"bar"
                 +"\n"
                 +"baz"
@@ -3174,7 +3173,7 @@ class TestReactElementGenerator : ReactTestSupport {
             h1 {
                 +"Foo"
             }
-            p {
+            div {
                 +"bar"
                 +"\n"
                 +"baz"
@@ -3191,7 +3190,7 @@ class TestReactElementGenerator : ReactTestSupport {
             h1 {
                 +"Foo"
             }
-            p {
+            div {
                 +"bar"
                 +"\n"
                 +"baz"
@@ -3228,7 +3227,7 @@ class TestReactElementGenerator : ReactTestSupport {
             h1 {
                 +"Foo"
             }
-            p {
+            div {
                 +"bar"
                 +"\n"
                 br()
@@ -3243,7 +3242,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> bar\nbaz\n> foo\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"bar"
                 +"\n"
                 +"baz"
@@ -3258,7 +3257,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n---\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
         }
@@ -3312,7 +3311,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 code()
             }
         }
-        p {
+        div {
             +"foo"
         }
         pre {
@@ -3326,7 +3325,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n    - bar\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo\n- bar"
             }
         }
@@ -3351,7 +3350,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = ">\n> foo\n>  \n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
         }
@@ -3362,12 +3361,12 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n\n> bar\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
         }
         blockquote {
-            p {
+            div {
                 +"bar"
             }
         }
@@ -3379,10 +3378,10 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n> bar\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
-            p {
+            div {
                 +"bar"
             }
         }
@@ -3393,10 +3392,10 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> foo\n>\n> bar\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"foo"
             }
-            p {
+            div {
                 +"bar"
             }
         }
@@ -3406,11 +3405,11 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testBlockQuotesExample245() = doTest(
         markdown = "foo\n> bar\n",
     ) {
-        p {
+        div {
             +"foo"
         }
         blockquote {
-            p {
+            div {
                 +"bar"
             }
         }
@@ -3421,13 +3420,13 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> aaa\n***\n> bbb\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"aaa"
             }
         }
         hr()
         blockquote {
-            p {
+            div {
                 +"bbb"
             }
         }
@@ -3443,7 +3442,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> bar\nbaz\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"bar"
                 +"\n"
                 br()
@@ -3457,11 +3456,11 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> bar\n\nbaz\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"bar"
             }
         }
-        p {
+        div {
             +"baz"
         }
     }
@@ -3471,11 +3470,11 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "> bar\n>\nbaz\n",
     ) {
         blockquote {
-            p {
+            div {
                 +"bar"
             }
         }
-        p {
+        div {
             +"baz"
         }
     }
@@ -3492,7 +3491,7 @@ class TestReactElementGenerator : ReactTestSupport {
         blockquote {
             blockquote {
                 blockquote {
-                    p {
+                    div {
                         +"foo"
                         +"\n"
                         br()
@@ -3511,7 +3510,7 @@ class TestReactElementGenerator : ReactTestSupport {
         blockquote {
             blockquote {
                 blockquote {
-                    p {
+                    div {
                         +"foo"
                         +"\n"
                         +"bar"
@@ -3536,7 +3535,7 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
         blockquote {
-            p {
+            div {
                 +"not code"
             }
         }
@@ -3551,7 +3550,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample253() = doTest(
         markdown = "A paragraph\nwith two lines.\n\n    indented code\n\n> A block quote.\n",
     ) {
-        p {
+        div {
             +"A paragraph"
             +"\n"
             br()
@@ -3564,7 +3563,7 @@ class TestReactElementGenerator : ReactTestSupport {
             }
         }
         blockquote {
-            p {
+            div {
                 +"A block quote."
             }
         }
@@ -3577,7 +3576,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"A paragraph"
                     +"\n"
                     +"with no lines."
@@ -3589,7 +3588,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 blockquote {
-                    p {
+                    div {
                         +"A block quote."
                     }
                 }
@@ -3606,7 +3605,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"one"
             }
         }
-        p {
+        div {
             +"two"
         }
     }
@@ -3617,10 +3616,10 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"one"
                 }
-                p {
+                div {
                     +"two"
                 }
             }
@@ -3650,10 +3649,10 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"one"
                 }
-                p {
+                div {
                     +"two"
                 }
             }
@@ -3668,10 +3667,10 @@ class TestReactElementGenerator : ReactTestSupport {
             blockquote {
                 ol {
                     li {
-                        p {
+                        div {
                             +"one"
                         }
-                        p {
+                        div {
                             +"two"
                         }
                     }
@@ -3691,7 +3690,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"one"
                     }
                 }
-                p {
+                div {
                     +"two"
                 }
             }
@@ -3702,10 +3701,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample261() = doTest(
         markdown = "-one\n\n2.two\n",
     ) {
-        p {
+        div {
             +"-one"
         }
-        p {
+        div {
             +"2.two"
         }
     }
@@ -3717,10 +3716,10 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
-                p {
+                div {
                     +"bar"
                 }
             }
@@ -3733,7 +3732,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"foo"
                 }
                 pre {
@@ -3742,11 +3741,11 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"\n"
                     }
                 }
-                p {
+                div {
                     +"baz"
                 }
                 blockquote {
-                    p {
+                    div {
                         +"bam"
                     }
                 }
@@ -3760,7 +3759,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"Foo"
                 }
                 pre {
@@ -3793,7 +3792,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample266() = doTest(
         markdown = "1234567890. not ok\n",
     ) {
-        p {
+        div {
             +"1234567890."
             +" "
             +"not ok"
@@ -3828,7 +3827,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample269() = doTest(
         markdown = "-1. not ok\n",
     ) {
-        p {
+        div {
             +"-1."
             +" "
             +"not ok"
@@ -3841,7 +3840,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
                 pre {
@@ -3861,7 +3860,7 @@ class TestReactElementGenerator : ReactTestSupport {
         ol {
             start = 10
             li {
-                p {
+                div {
                     +"foo"
                 }
                 pre {
@@ -3884,7 +3883,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"\n"
             }
         }
-        p {
+        div {
             +"paragraph"
         }
         pre {
@@ -3907,7 +3906,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"\n"
                     }
                 }
-                p {
+                div {
                     +"paragraph"
                 }
                 pre {
@@ -3932,7 +3931,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"\n"
                     }
                 }
-                p {
+                div {
                     +"paragraph"
                 }
                 pre {
@@ -3949,10 +3948,10 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample275() = doTest(
         markdown = "   foo\n\nbar\n",
     ) {
-        p {
+        div {
             +"foo"
         }
-        p {
+        div {
             +"bar"
         }
     }
@@ -3966,7 +3965,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"foo"
             }
         }
-        p {
+        div {
             +"bar"
         }
     }
@@ -3977,10 +3976,10 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
-                p {
+                div {
                     +"bar"
                 }
             }
@@ -4033,7 +4032,7 @@ class TestReactElementGenerator : ReactTestSupport {
         ul {
             li()
         }
-        p {
+        div {
             +"foo"
         }
     }
@@ -4097,12 +4096,12 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListItemsExample285() = doTest(
         markdown = "foo\n*\n\nfoo\n1.\n",
     ) {
-        p {
+        div {
             +"foo"
             +"\n"
             +"*"
         }
-        p {
+        div {
             +"foo"
             +"\n"
             +"1."
@@ -4116,7 +4115,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"A paragraph"
                     +"\n"
                     +"with two lines"
@@ -4127,7 +4126,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 blockquote {
-                    p {
+                    div {
                         +"A block quote."
                     }
                 }
@@ -4142,7 +4141,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"A parapraph"
                     +"\n"
                     +"with two lines."
@@ -4153,7 +4152,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 blockquote {
-                    p {
+                    div {
                         +"A block quote."
                     }
                 }
@@ -4168,7 +4167,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"A paragraph"
                     +"\n"
                     +"with two lines."
@@ -4180,7 +4179,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 blockquote {
-                    p {
+                    div {
                         +"A block quote."
                     }
                 }
@@ -4219,7 +4218,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"A paragraph"
                     +"\n"
                     br()
@@ -4232,7 +4231,7 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 blockquote {
-                    p {
+                    div {
                         +"A block quote."
                     }
                 }
@@ -4267,7 +4266,7 @@ class TestReactElementGenerator : ReactTestSupport {
             ol {
                 li {
                     blockquote {
-                        p {
+                        div {
                             +"Blockquote"
                             +"\n"
                             br()
@@ -4288,7 +4287,7 @@ class TestReactElementGenerator : ReactTestSupport {
             ol {
                 li {
                     blockquote {
-                        p {
+                        div {
                             +"Blockquote"
                             +"\n"
                             +"continued here."
@@ -4476,7 +4475,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListsExample303() = doTest(
         markdown = "Foo\n- bar\n- baz\n",
     ) {
-        p {
+        div {
             +"Foo"
         }
         ul {
@@ -4494,7 +4493,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListsExample304() = doTest(
         markdown = "The number of windows in my house is\n14.  The number of doors is 6.\n",
     ) {
-        p {
+        div {
             +"The number of windows in my house is"
             +"\n"
             +"14.  The number of doors is 6."
@@ -4505,7 +4504,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testListsExample305() = doTest(
         markdown = "The number of windows in my house is\n1.  The number of doors is 6.\n",
     ) {
-        p {
+        div {
             +"The number of windows in my house is"
         }
         ol {
@@ -4522,17 +4521,17 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
             }
             li {
-                p {
+                div {
                     +"bar"
                 }
             }
             li {
-                p {
+                div {
                     +"baz"
                 }
             }
@@ -4552,10 +4551,10 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"bar\n"
                         ul {
                             li {
-                                p {
+                                div {
                                     +"baz"
                                 }
-                                p {
+                                div {
                                     +"bim"
                                 }
                             }
@@ -4599,15 +4598,15 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
-                p {
+                div {
                     +"notcode"
                 }
             }
             li {
-                p {
+                div {
                     +"foo"
                 }
             }
@@ -4660,17 +4659,17 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li {
-                p {
+                div {
                     +"b"
                 }
             }
             li {
-                p {
+                div {
                     +"c"
                 }
             }
@@ -4705,12 +4704,12 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ol {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li {
-                p {
+                div {
                     +"b"
                 }
             }
@@ -4729,17 +4728,17 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li {
-                p {
+                div {
                     +"b"
                 }
             }
             li {
-                p {
+                div {
                     +"c"
                 }
             }
@@ -4752,13 +4751,13 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li()
             li {
-                p {
+                div {
                     +"c"
                 }
             }
@@ -4771,20 +4770,20 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li {
-                p {
+                div {
                     +"b"
                 }
-                p {
+                div {
                     +"c"
                 }
             }
             li {
-                p {
+                div {
                     +"d"
                 }
             }
@@ -4797,17 +4796,17 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"a"
                 }
             }
             li {
-                p {
+                div {
                     +"b"
                 }
             }
             li {
-                p {
+                div {
                     +"d"
                 }
             }
@@ -4847,10 +4846,10 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"a"
                 ul {
                     li {
-                        p {
+                        div {
                             +"b"
                         }
-                        p {
+                        div {
                             +"c"
                         }
                     }
@@ -4870,7 +4869,7 @@ class TestReactElementGenerator : ReactTestSupport {
             li {
                 +"a"
                 blockquote {
-                    p {
+                    div {
                         +"b"
                     }
                 }
@@ -4889,7 +4888,7 @@ class TestReactElementGenerator : ReactTestSupport {
             li {
                 +"a"
                 blockquote {
-                    p {
+                    div {
                         +"b"
                     }
                 }
@@ -4945,7 +4944,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"\n"
                     }
                 }
-                p {
+                div {
                     +"bar"
                 }
             }
@@ -4958,7 +4957,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"foo"
                 }
                 ul {
@@ -4966,7 +4965,7 @@ class TestReactElementGenerator : ReactTestSupport {
                         +"bar"
                     }
                 }
-                p {
+                div {
                     +"baz"
                 }
             }
@@ -4979,7 +4978,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         ul {
             li {
-                p {
+                div {
                     +"a"
                 }
                 ul {
@@ -4992,7 +4991,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 }
             }
             li {
-                p {
+                div {
                     +"d"
                 }
                 ul {
@@ -5011,7 +5010,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testInlinesExample327() = doTest(
         markdown = "`hi`lo`\n",
     ) {
-        p {
+        div {
             code {
                 +"hi"
             }
@@ -5024,7 +5023,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample328() = doTest(
         markdown = "`foo`\n",
     ) {
-        p {
+        div {
             code {
                 +"foo"
             }
@@ -5035,7 +5034,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample329() = doTest(
         markdown = "`` foo ` bar ``\n",
     ) {
-        p {
+        div {
             code {
                 +"foo ` bar"
             }
@@ -5046,7 +5045,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample330() = doTest(
         markdown = "` `` `\n",
     ) {
-        p {
+        div {
             code {
                 +"``"
             }
@@ -5058,7 +5057,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample331() = doTest(
         markdown = "`  ``  `\n",
     ) {
-        p {
+        div {
             code {
                 +" `` "
             }
@@ -5070,7 +5069,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample332() = doTest(
         markdown = "` a`\n",
     ) {
-        p {
+        div {
             code {
                 +" a"
             }
@@ -5082,7 +5081,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample333() = doTest(
         markdown = "` b `\n",
     ) {
-        p {
+        div {
             code {
                 +" b "
             }
@@ -5094,7 +5093,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample334() = doTest(
         markdown = "` `\n`  `\n",
     ) {
-        p {
+        div {
             code {
                 +" "
             }
@@ -5109,7 +5108,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample335() = doTest(
         markdown = "``\nfoo\nbar  \nbaz\n``\n",
     ) {
-        p {
+        div {
             code {
                 +"foo bar   baz"
             }
@@ -5121,7 +5120,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample336() = doTest(
         markdown = "``\nfoo \n``\n",
     ) {
-        p {
+        div {
             code {
                 +"foo "
             }
@@ -5133,7 +5132,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample337() = doTest(
         markdown = "`foo   bar \nbaz`\n",
     ) {
-        p {
+        div {
             code {
                 +"foo   bar  baz"
             }
@@ -5145,7 +5144,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample338() = doTest(
         markdown = "`foo\\`bar`\n",
     ) {
-        p {
+        div {
             code {
                 +"foo\\"
             }
@@ -5157,7 +5156,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample339() = doTest(
         markdown = "``foo`bar``\n",
     ) {
-        p {
+        div {
             code {
                 +"foo`bar"
             }
@@ -5168,7 +5167,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample340() = doTest(
         markdown = "` foo `` bar `\n",
     ) {
-        p {
+        div {
             code {
                 +"foo `` bar"
             }
@@ -5179,7 +5178,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample341() = doTest(
         markdown = "*foo`*`\n",
     ) {
-        p {
+        div {
             +"*"
             +"foo"
             code {
@@ -5192,7 +5191,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample342() = doTest(
         markdown = "[not a `link](/foo`)\n",
     ) {
-        p {
+        div {
             +"["
             +"not a"
             +" "
@@ -5208,7 +5207,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample343() = doTest(
         markdown = "`<a href=\"`\">`\n",
     ) {
-        p {
+        div {
             code {
                 +"&lt;a href=&quot;"
             }
@@ -5220,7 +5219,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample344() = doTest(
         markdown = "<a href=\"`\">`\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a href=\"`\">"
@@ -5235,7 +5234,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample345() = doTest(
         markdown = "`<http://foo.bar.`baz>`\n",
     ) {
-        p {
+        div {
             code {
                 +"&lt;http://foo.bar."
             }
@@ -5247,7 +5246,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample346() = doTest(
         markdown = "<http://foo.bar.`baz>`\n",
     ) {
-        p {
+        div {
             a {
                 href = "http://foo.bar.%60baz"
                 +"http://foo.bar.`baz"
@@ -5260,7 +5259,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample347() = doTest(
         markdown = "```foo``\n",
     ) {
-        p {
+        div {
             +"```"
             +"foo"
             +"``"
@@ -5271,7 +5270,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample348() = doTest(
         markdown = "`foo\n",
     ) {
-        p {
+        div {
             +"`"
             +"foo"
         }
@@ -5281,7 +5280,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testCodeSpansExample349() = doTest(
         markdown = "`foo``bar``\n",
     ) {
-        p {
+        div {
             +"`"
             +"foo"
             code {
@@ -5294,7 +5293,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample350() = doTest(
         markdown = "*foo bar*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo bar"
             }
@@ -5305,7 +5304,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample351() = doTest(
         markdown = "a * foo bar*\n",
     ) {
-        p {
+        div {
             +"a * foo bar"
             +"*"
         }
@@ -5315,7 +5314,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample352() = doTest(
         markdown = "a*\"foo\"*\n",
     ) {
-        p {
+        div {
             +"a"
             +"*"
             +"&quot;"
@@ -5329,7 +5328,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample353() = doTest(
         markdown = "* a *\n",
     ) {
-        p {
+        div {
             +"*"
             +" a "
             +"*"
@@ -5340,7 +5339,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample354() = doTest(
         markdown = "foo*bar*\n",
     ) {
-        p {
+        div {
             +"foo"
             em {
                 +"bar"
@@ -5352,7 +5351,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample355() = doTest(
         markdown = "5*6*78\n",
     ) {
-        p {
+        div {
             +"5"
             em {
                 +"6"
@@ -5365,7 +5364,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample356() = doTest(
         markdown = "_foo bar_\n",
     ) {
-        p {
+        div {
             em {
                 +"foo bar"
             }
@@ -5376,7 +5375,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample357() = doTest(
         markdown = "_ foo bar_\n",
     ) {
-        p {
+        div {
             +"_"
             +" "
             +"foo bar"
@@ -5388,7 +5387,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample358() = doTest(
         markdown = "a_\"foo\"_\n",
     ) {
-        p {
+        div {
             +"a"
             +"_"
             +"&quot;"
@@ -5402,7 +5401,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample359() = doTest(
         markdown = "foo_bar_\n",
     ) {
-        p {
+        div {
             +"foo_bar"
             +"_"
         }
@@ -5412,7 +5411,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample360() = doTest(
         markdown = "5_6_78\n",
     ) {
-        p {
+        div {
             +"5_6_78"
         }
     }
@@ -5421,7 +5420,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample361() = doTest(
         markdown = "пристаням_стремятся_\n",
     ) {
-        p {
+        div {
             +"пристаням_стремятся"
             +"_"
         }
@@ -5431,7 +5430,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample362() = doTest(
         markdown = "aa_\"bb\"_cc\n",
     ) {
-        p {
+        div {
             +"aa"
             +"_"
             +"&quot;"
@@ -5446,7 +5445,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample363() = doTest(
         markdown = "foo-_(bar)_\n",
     ) {
-        p {
+        div {
             +"foo-"
             em {
                 +"("
@@ -5460,7 +5459,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample364() = doTest(
         markdown = "_foo*\n",
     ) {
-        p {
+        div {
             +"_"
             +"foo"
             +"*"
@@ -5471,7 +5470,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample365() = doTest(
         markdown = "*foo bar *\n",
     ) {
-        p {
+        div {
             +"*"
             +"foo bar"
             +" "
@@ -5484,7 +5483,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample366() = doTest(
         markdown = "*foo bar\n*\n",
     ) {
-        p {
+        div {
             +"*foo bar\n*"
         }
     }
@@ -5493,7 +5492,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample367() = doTest(
         markdown = "*(*foo)\n",
     ) {
-        p {
+        div {
             +"*"
             +"("
             +"*"
@@ -5506,7 +5505,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample368() = doTest(
         markdown = "*(*foo*)*\n",
     ) {
-        p {
+        div {
             em {
                 +"("
                 em {
@@ -5521,7 +5520,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample369() = doTest(
         markdown = "*foo*bar\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -5533,7 +5532,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample370() = doTest(
         markdown = "_foo bar _\n",
     ) {
-        p {
+        div {
             +"_"
             +"foo bar"
             +" "
@@ -5545,7 +5544,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample371() = doTest(
         markdown = "_(_foo)\n",
     ) {
-        p {
+        div {
             +"_"
             +"("
             +"_"
@@ -5558,7 +5557,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample372() = doTest(
         markdown = "_(_foo_)_\n",
     ) {
-        p {
+        div {
             em {
                 +"("
                 em {
@@ -5573,7 +5572,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample373() = doTest(
         markdown = "_foo_bar\n",
     ) {
-        p {
+        div {
             +"_"
             +"foo_bar"
         }
@@ -5583,7 +5582,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample374() = doTest(
         markdown = "_пристаням_стремятся\n",
     ) {
-        p {
+        div {
             +"_"
             +"пристаням_стремятся"
         }
@@ -5593,7 +5592,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample375() = doTest(
         markdown = "_foo_bar_baz_\n",
     ) {
-        p {
+        div {
             em {
                 +"foo_bar_baz"
             }
@@ -5604,7 +5603,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample376() = doTest(
         markdown = "_(bar)_.\n",
     ) {
-        p {
+        div {
             em {
                 +"("
                 +"bar"
@@ -5618,7 +5617,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample377() = doTest(
         markdown = "**foo bar**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo bar"
             }
@@ -5629,7 +5628,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample378() = doTest(
         markdown = "** foo bar**\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +" "
@@ -5643,7 +5642,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample379() = doTest(
         markdown = "a**\"foo\"**\n",
     ) {
-        p {
+        div {
             +"a"
             +"*"
             +"*"
@@ -5659,7 +5658,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample380() = doTest(
         markdown = "foo**bar**\n",
     ) {
-        p {
+        div {
             +"foo"
             strong {
                 +"bar"
@@ -5671,7 +5670,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample381() = doTest(
         markdown = "__foo bar__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo bar"
             }
@@ -5682,7 +5681,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample382() = doTest(
         markdown = "__ foo bar__\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +" "
@@ -5701,7 +5700,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample383() = doTest(
         markdown = "__\nfoo bar__\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"\n"
@@ -5716,7 +5715,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample384() = doTest(
         markdown = "a__\"foo\"__\n",
     ) {
-        p {
+        div {
             +"a"
             +"_"
             +"_"
@@ -5732,7 +5731,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample385() = doTest(
         markdown = "foo__bar__\n",
     ) {
-        p {
+        div {
             +"foo__bar"
             +"_"
             +"_"
@@ -5743,7 +5742,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample386() = doTest(
         markdown = "5__6__78\n",
     ) {
-        p {
+        div {
             +"5__6__78"
         }
     }
@@ -5752,7 +5751,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample387() = doTest(
         markdown = "пристаням__стремятся__\n",
     ) {
-        p {
+        div {
             +"пристаням__стремятся"
             +"_"
             +"_"
@@ -5763,7 +5762,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample388() = doTest(
         markdown = "__foo, __bar__, baz__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo,"
                 +" "
@@ -5781,7 +5780,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample389() = doTest(
         markdown = "foo-__(bar)__\n",
     ) {
-        p {
+        div {
             +"foo-"
             strong {
                 +"("
@@ -5795,7 +5794,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample390() = doTest(
         markdown = "**foo bar **\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"foo bar"
@@ -5809,7 +5808,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample391() = doTest(
         markdown = "**(**foo)\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"("
@@ -5824,7 +5823,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample392() = doTest(
         markdown = "*(**foo**)*\n",
     ) {
-        p {
+        div {
             em {
                 +"("
                 strong {
@@ -5844,7 +5843,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample393() = doTest(
         markdown = "**Gomphocarpus (*Gomphocarpus physocarpus*, syn.\n*Asclepias physocarpa*)**\n",
     ) {
-        p {
+        div {
             strong {
                 +"Gomphocarpus"
                 +" "
@@ -5869,7 +5868,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample394() = doTest(
         markdown = "**foo \"*bar*\" foo**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -5888,7 +5887,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample395() = doTest(
         markdown = "**foo**bar\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
             }
@@ -5900,7 +5899,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample396() = doTest(
         markdown = "__foo bar __\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"foo bar"
@@ -5914,7 +5913,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample397() = doTest(
         markdown = "__(__foo)\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"("
@@ -5929,7 +5928,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample398() = doTest(
         markdown = "_(__foo__)_\n",
     ) {
-        p {
+        div {
             em {
                 +"("
                 strong {
@@ -5944,7 +5943,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample399() = doTest(
         markdown = "__foo__bar\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"foo__bar"
@@ -5955,7 +5954,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample400() = doTest(
         markdown = "__пристаням__стремятся\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"пристаням__стремятся"
@@ -5966,7 +5965,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample401() = doTest(
         markdown = "__foo__bar__baz__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo__bar__baz"
             }
@@ -5977,7 +5976,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample402() = doTest(
         markdown = "__(bar)__.\n",
     ) {
-        p {
+        div {
             strong {
                 +"("
                 +"bar"
@@ -5991,7 +5990,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample403() = doTest(
         markdown = "*foo [bar](/url)*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6012,7 +6011,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample404() = doTest(
         markdown = "*foo\nbar*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +"\n"
@@ -6026,7 +6025,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample405() = doTest(
         markdown = "_foo __bar__ baz_\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6043,7 +6042,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample406() = doTest(
         markdown = "_foo _bar_ baz_\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6060,7 +6059,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample407() = doTest(
         markdown = "__foo_ bar_\n",
     ) {
-        p {
+        div {
             em {
                 em {
                     +"foo"
@@ -6075,7 +6074,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample408() = doTest(
         markdown = "*foo *bar**\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6090,7 +6089,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample409() = doTest(
         markdown = "*foo **bar** baz*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6107,7 +6106,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample410() = doTest(
         markdown = "*foo**bar**baz*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 strong {
@@ -6122,7 +6121,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample411() = doTest(
         markdown = "*foo**bar*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +"*"
@@ -6136,7 +6135,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample412() = doTest(
         markdown = "***foo** bar*\n",
     ) {
-        p {
+        div {
             em {
                 strong {
                     +"foo"
@@ -6151,7 +6150,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample413() = doTest(
         markdown = "*foo **bar***\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6166,7 +6165,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample414() = doTest(
         markdown = "*foo**bar***\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 strong {
@@ -6180,7 +6179,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample415() = doTest(
         markdown = "foo***bar***baz\n",
     ) {
-        p {
+        div {
             +"foo"
             em {
                 strong {
@@ -6195,7 +6194,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample416() = doTest(
         markdown = "foo******bar*********baz\n",
     ) {
-        p {
+        div {
             +"foo"
             strong {
                 strong {
@@ -6215,7 +6214,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample417() = doTest(
         markdown = "*foo **bar *baz* bim** bop*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6238,7 +6237,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample418() = doTest(
         markdown = "*foo [*bar*](/url)*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6256,7 +6255,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample419() = doTest(
         markdown = "** is not an empty emphasis\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +" "
@@ -6268,7 +6267,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample420() = doTest(
         markdown = "**** is not an empty strong emphasis\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"*"
@@ -6282,7 +6281,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample421() = doTest(
         markdown = "**foo [bar](/url)**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6303,7 +6302,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample422() = doTest(
         markdown = "**foo\nbar**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +"\n"
@@ -6317,7 +6316,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample423() = doTest(
         markdown = "__foo _bar_ baz__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6334,7 +6333,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample424() = doTest(
         markdown = "__foo __bar__ baz__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6351,7 +6350,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample425() = doTest(
         markdown = "____foo__ bar__\n",
     ) {
-        p {
+        div {
             strong {
                 strong {
                     +"foo"
@@ -6366,7 +6365,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample426() = doTest(
         markdown = "**foo **bar****\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6381,7 +6380,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample427() = doTest(
         markdown = "**foo *bar* baz**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6398,7 +6397,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample428() = doTest(
         markdown = "**foo*bar*baz**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 em {
@@ -6413,7 +6412,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample429() = doTest(
         markdown = "***foo* bar**\n",
     ) {
-        p {
+        div {
             strong {
                 em {
                     +"foo"
@@ -6428,7 +6427,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample430() = doTest(
         markdown = "**foo *bar***\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6448,7 +6447,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample431() = doTest(
         markdown = "**foo *bar **baz**\nbim* bop**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6472,7 +6471,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample432() = doTest(
         markdown = "**foo [*bar*](/url)**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
                 +" "
@@ -6490,7 +6489,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample433() = doTest(
         markdown = "__ is not an empty emphasis\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +" "
@@ -6502,7 +6501,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample434() = doTest(
         markdown = "____ is not an empty strong emphasis\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"_"
@@ -6516,7 +6515,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample435() = doTest(
         markdown = "foo ***\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"*"
@@ -6530,7 +6529,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample436() = doTest(
         markdown = "foo *\\**\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             em {
@@ -6543,7 +6542,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample437() = doTest(
         markdown = "foo *_*\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             em {
@@ -6556,7 +6555,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample438() = doTest(
         markdown = "foo *****\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"*"
@@ -6572,7 +6571,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample439() = doTest(
         markdown = "foo **\\***\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             strong {
@@ -6585,7 +6584,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample440() = doTest(
         markdown = "foo **_**\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             strong {
@@ -6598,7 +6597,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample441() = doTest(
         markdown = "**foo*\n",
     ) {
-        p {
+        div {
             +"*"
             em {
                 +"foo"
@@ -6610,7 +6609,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample442() = doTest(
         markdown = "*foo**\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -6622,7 +6621,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample443() = doTest(
         markdown = "***foo**\n",
     ) {
-        p {
+        div {
             +"*"
             strong {
                 +"foo"
@@ -6634,7 +6633,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample444() = doTest(
         markdown = "****foo*\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"*"
@@ -6648,7 +6647,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample445() = doTest(
         markdown = "**foo***\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
             }
@@ -6660,7 +6659,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample446() = doTest(
         markdown = "*foo****\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -6674,7 +6673,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample447() = doTest(
         markdown = "foo ___\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"_"
@@ -6688,7 +6687,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample448() = doTest(
         markdown = "foo _\\__\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             em {
@@ -6701,7 +6700,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample449() = doTest(
         markdown = "foo _*_\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             em {
@@ -6714,7 +6713,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample450() = doTest(
         markdown = "foo _____\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"_"
@@ -6730,7 +6729,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample451() = doTest(
         markdown = "foo __\\___\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             strong {
@@ -6743,7 +6742,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample452() = doTest(
         markdown = "foo __*__\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             strong {
@@ -6756,7 +6755,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample453() = doTest(
         markdown = "__foo_\n",
     ) {
-        p {
+        div {
             +"_"
             em {
                 +"foo"
@@ -6768,7 +6767,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample454() = doTest(
         markdown = "_foo__\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -6780,7 +6779,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample455() = doTest(
         markdown = "___foo__\n",
     ) {
-        p {
+        div {
             +"_"
             strong {
                 +"foo"
@@ -6792,7 +6791,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample456() = doTest(
         markdown = "____foo_\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"_"
@@ -6806,7 +6805,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample457() = doTest(
         markdown = "__foo___\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
             }
@@ -6818,7 +6817,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample458() = doTest(
         markdown = "_foo____\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
             }
@@ -6832,7 +6831,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample459() = doTest(
         markdown = "**foo**\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
             }
@@ -6843,7 +6842,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample460() = doTest(
         markdown = "*_foo_*\n",
     ) {
-        p {
+        div {
             em {
                 em {
                     +"foo"
@@ -6856,7 +6855,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample461() = doTest(
         markdown = "__foo__\n",
     ) {
-        p {
+        div {
             strong {
                 +"foo"
             }
@@ -6867,7 +6866,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample462() = doTest(
         markdown = "_*foo*_\n",
     ) {
-        p {
+        div {
             em {
                 em {
                     +"foo"
@@ -6880,7 +6879,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample463() = doTest(
         markdown = "****foo****\n",
     ) {
-        p {
+        div {
             strong {
                 strong {
                     +"foo"
@@ -6893,7 +6892,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample464() = doTest(
         markdown = "____foo____\n",
     ) {
-        p {
+        div {
             strong {
                 strong {
                     +"foo"
@@ -6906,7 +6905,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample465() = doTest(
         markdown = "******foo******\n",
     ) {
-        p {
+        div {
             strong {
                 strong {
                     strong {
@@ -6921,7 +6920,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample466() = doTest(
         markdown = "***foo***\n",
     ) {
-        p {
+        div {
             em {
                 strong {
                     +"foo"
@@ -6934,7 +6933,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample467() = doTest(
         markdown = "_____foo_____\n",
     ) {
-        p {
+        div {
             em {
                 strong {
                     strong {
@@ -6949,7 +6948,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample468() = doTest(
         markdown = "*foo _bar* baz_\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6966,7 +6965,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample469() = doTest(
         markdown = "*foo __bar *baz bim__ bam*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -6986,7 +6985,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample470() = doTest(
         markdown = "**foo **bar baz**\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"foo"
@@ -7001,7 +7000,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample471() = doTest(
         markdown = "*foo *bar baz*\n",
     ) {
-        p {
+        div {
             +"*"
             +"foo"
             +" "
@@ -7015,7 +7014,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample472() = doTest(
         markdown = "*[bar*](/url)\n",
     ) {
-        p {
+        div {
             +"*"
             a {
                 href = "/url"
@@ -7029,7 +7028,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample473() = doTest(
         markdown = "_foo [bar_](/url)\n",
     ) {
-        p {
+        div {
             +"_"
             +"foo"
             +" "
@@ -7045,7 +7044,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample474() = doTest(
         markdown = "*<img src=\"foo\" title=\"*\"/>\n",
     ) {
-        p {
+        div {
             +"*"
             div {
                 dangerouslySetInnerHTML = jso {
@@ -7059,7 +7058,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample475() = doTest(
         markdown = "**<a href=\"**\">\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             div {
@@ -7074,7 +7073,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample476() = doTest(
         markdown = "__<a href=\"__\">\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             div {
@@ -7089,7 +7088,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample477() = doTest(
         markdown = "*a `*`*\n",
     ) {
-        p {
+        div {
             em {
                 +"a"
                 +" "
@@ -7104,7 +7103,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample478() = doTest(
         markdown = "_a `_`_\n",
     ) {
-        p {
+        div {
             em {
                 +"a"
                 +" "
@@ -7119,7 +7118,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample479() = doTest(
         markdown = "**a<http://foo.bar/?q=**>\n",
     ) {
-        p {
+        div {
             +"*"
             +"*"
             +"a"
@@ -7134,7 +7133,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testEmphasisAndStrongEmphasisExample480() = doTest(
         markdown = "__a<http://foo.bar/?q=__>\n",
     ) {
-        p {
+        div {
             +"_"
             +"_"
             +"a"
@@ -7149,7 +7148,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample481() = doTest(
         markdown = "[link](/uri \"title\")\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 title = "title"
@@ -7162,7 +7161,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample482() = doTest(
         markdown = "[link](/uri)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7174,7 +7173,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample483() = doTest(
         markdown = "[](./target.md)\n",
     ) {
-        p {
+        div {
             a {
                 href = "./target.md"
             }
@@ -7185,7 +7184,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample484() = doTest(
         markdown = "[link]()\n",
     ) {
-        p {
+        div {
             a {
                 href = ""
                 +"link"
@@ -7197,7 +7196,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample485() = doTest(
         markdown = "[link](<>)\n",
     ) {
-        p {
+        div {
             a {
                 href = ""
                 +"link"
@@ -7209,7 +7208,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample486() = doTest(
         markdown = "[]()\n",
     ) {
-        p {
+        div {
             a {
                 href = ""
             }
@@ -7221,7 +7220,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample487() = doTest(
         markdown = "[link](/my uri)\n",
     ) {
-        p {
+        div {
             +"[link](/my uri)"
         }
     }
@@ -7230,7 +7229,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample488() = doTest(
         markdown = "[link](</my uri>)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/my%20uri"
                 +"link"
@@ -7247,7 +7246,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample489() = doTest(
         markdown = "[link](foo\nbar)\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7265,7 +7264,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample490() = doTest(
         markdown = "[link](<foo\nbar>)\n",
     ) {
-        p {
+        div {
             +"[link](<foo\nbar>)"
         }
     }
@@ -7274,7 +7273,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample491() = doTest(
         markdown = "[a](<b)c>)\n",
     ) {
-        p {
+        div {
             a {
                 href = "b)c"
                 +"a"
@@ -7286,7 +7285,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample492() = doTest(
         markdown = "[link](<foo\\>)\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7302,7 +7301,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample493() = doTest(
         markdown = "[a](<b)c\n[a](<b)c>\n[a](<b>c)\n",
     ) {
-        p {
+        div {
             +"[a](&lt;b)c\n[a](&lt;b)c&gt;\n[a](<b>c)"
         }
     }
@@ -7311,7 +7310,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample494() = doTest(
         markdown = "[link](\\(foo\\))\n",
     ) {
-        p {
+        div {
             a {
                 href = "(foo)"
                 +"link"
@@ -7324,7 +7323,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample495() = doTest(
         markdown = "[link](foo(and(bar)))\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo(and(bar))"
                 +"link"
@@ -7336,7 +7335,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample496() = doTest(
         markdown = "[link](foo(and(bar))\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7355,7 +7354,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample497() = doTest(
         markdown = "[link](foo\\(and\\(bar\\))\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo(and(bar)"
                 +"link"
@@ -7367,7 +7366,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample498() = doTest(
         markdown = "[link](<foo(and(bar)>)\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo(and(bar)"
                 +"link"
@@ -7379,7 +7378,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample499() = doTest(
         markdown = "[link](foo\\)\\:)\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo):"
                 +"link"
@@ -7391,19 +7390,19 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample500() = doTest(
         markdown = "[link](#fragment)\n\n[link](http://example.com#fragment)\n\n[link](http://example.com?foo=3#frag)\n",
     ) {
-        p {
+        div {
             a {
                 href = "#fragment"
                 +"link"
             }
         }
-        p {
+        div {
             a {
                 href = "http://example.com#fragment"
                 +"link"
             }
         }
-        p {
+        div {
             a {
                 href = "http://example.com?foo=3#frag"
                 +"link"
@@ -7415,7 +7414,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample501() = doTest(
         markdown = "[link](foo\\bar)\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo%5Cbar"
                 +"link"
@@ -7427,7 +7426,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample502() = doTest(
         markdown = "[link](foo%20b&auml;)\n",
     ) {
-        p {
+        div {
             a {
                 href = "foo%20b%C3%A4"
                 +"link"
@@ -7440,7 +7439,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample503() = doTest(
         markdown = "[link](\"title\")\n",
     ) {
-        p {
+        div {
             a {
                 href = "%22title%22"
                 +"link"
@@ -7457,7 +7456,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample504() = doTest(
         markdown = "[link](/url \"title\")\n[link](/url 'title')\n[link](/url (title))\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -7484,7 +7483,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample505() = doTest(
         markdown = "[link](/url \"title \\\"&quot;\")\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title &quot;&quot;"
@@ -7498,7 +7497,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample506() = doTest(
         markdown = "[link](/url \"title\")\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url%C2%A0%22title%22"
                 +"link"
@@ -7510,7 +7509,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample507() = doTest(
         markdown = "[link](/url \"title \"and\" title\")\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7534,7 +7533,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample508() = doTest(
         markdown = "[link](/url 'title \"and\" title')\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title &quot;and&quot; title"
@@ -7547,7 +7546,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample509() = doTest(
         markdown = "[link](   /uri\n  \"title\"  )\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 title = "title"
@@ -7560,7 +7559,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample510() = doTest(
         markdown = "[link] (/uri)\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7575,7 +7574,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample511() = doTest(
         markdown = "[link [foo [bar]]](/uri)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7595,7 +7594,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample512() = doTest(
         markdown = "[link] bar](/uri)\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +"]"
@@ -7612,7 +7611,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample513() = doTest(
         markdown = "[link [bar](/uri)\n",
     ) {
-        p {
+        div {
             +"["
             +"link"
             +" "
@@ -7627,7 +7626,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample514() = doTest(
         markdown = "[link \\[bar](/uri)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7641,7 +7640,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample515() = doTest(
         markdown = "[link *foo **bar** `#`*](/uri)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7665,7 +7664,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample516() = doTest(
         markdown = "[![moon](moon.jpg)](/uri)\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 img {
@@ -7681,7 +7680,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample517() = doTest(
         markdown = "[foo [bar](/uri)](/uri)\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -7702,7 +7701,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample518() = doTest(
         markdown = "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -7731,7 +7730,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample519() = doTest(
         markdown = "![[[foo](uri1)](uri2)](uri3)\n",
     ) {
-        p {
+        div {
             img {
                 src = "uri3"
                 alt = "[foo](uri2)"
@@ -7743,7 +7742,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample520() = doTest(
         markdown = "*[foo*](/uri)\n",
     ) {
-        p {
+        div {
             +"*"
             a {
                 href = "/uri"
@@ -7757,7 +7756,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample521() = doTest(
         markdown = "[foo *bar](baz*)\n",
     ) {
-        p {
+        div {
             a {
                 href = "baz*"
                 +"foo"
@@ -7773,7 +7772,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample522() = doTest(
         markdown = "*foo [bar* baz]\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 +" "
@@ -7790,7 +7789,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample523() = doTest(
         markdown = "[foo <bar attr=\"](baz)\">\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -7807,7 +7806,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample524() = doTest(
         markdown = "[foo`](/uri)`\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             code {
@@ -7821,7 +7820,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample525() = doTest(
         markdown = "[foo<http://example.com/?search=](uri)>\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             a {
@@ -7835,7 +7834,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample526() = doTest(
         markdown = "[foo][bar]\n\n[bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -7848,7 +7847,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample527() = doTest(
         markdown = "[link [foo [bar]]][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7868,7 +7867,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample528() = doTest(
         markdown = "[link \\[bar][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7882,7 +7881,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample529() = doTest(
         markdown = "[link *foo **bar** `#`*][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"link"
@@ -7906,7 +7905,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample530() = doTest(
         markdown = "[![moon](moon.jpg)][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 img {
@@ -7922,7 +7921,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample531() = doTest(
         markdown = "[foo [bar](/uri)][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -7943,7 +7942,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample532() = doTest(
         markdown = "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -7967,7 +7966,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample533() = doTest(
         markdown = "*[foo*][ref]\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"*"
             a {
                 href = "/uri"
@@ -7981,7 +7980,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample534() = doTest(
         markdown = "[foo *bar][ref]*\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"foo"
@@ -7997,7 +7996,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample535() = doTest(
         markdown = "[foo <bar attr=\"][ref]\">\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +" "
@@ -8013,7 +8012,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample536() = doTest(
         markdown = "[foo`][ref]`\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             code {
@@ -8027,7 +8026,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample537() = doTest(
         markdown = "[foo<http://example.com/?search=][ref]>\n\n[ref]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             a {
@@ -8041,7 +8040,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample538() = doTest(
         markdown = "[foo][BaR]\n\n[bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8055,7 +8054,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample539() = doTest(
         markdown = "[ẞ]\n\n[SS]: /url\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"ẞ"
@@ -8067,7 +8066,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample540() = doTest(
         markdown = "[Foo\n  bar]: /url\n\n[Baz][Foo bar]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 +"Baz"
@@ -8080,7 +8079,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample541() = doTest(
         markdown = "[foo] [bar]\n\n[bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8097,7 +8096,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample542() = doTest(
         markdown = "[foo]\n[bar]\n\n[bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8114,7 +8113,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample543() = doTest(
         markdown = "[foo]: /url1\n\n[foo]: /url2\n\n[bar][foo]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url1"
                 +"bar"
@@ -8126,7 +8125,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample544() = doTest(
         markdown = "[bar][foo\\!]\n\n[foo!]: /url\n",
     ) {
-        p {
+        div {
             +"["
             +"bar"
             +"]"
@@ -8140,7 +8139,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample545() = doTest(
         markdown = "[foo][ref[]\n\n[ref[]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8149,7 +8148,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"["
             +"]"
         }
-        p {
+        div {
             +"["
             +"ref"
             +"["
@@ -8164,7 +8163,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample546() = doTest(
         markdown = "[foo][ref[bar]]\n\n[ref[bar]]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8175,7 +8174,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"]"
             +"]"
         }
-        p {
+        div {
             +"["
             +"ref"
             +"["
@@ -8192,7 +8191,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample547() = doTest(
         markdown = "[[[foo]]]\n\n[[[foo]]]: /url\n",
     ) {
-        p {
+        div {
             +"["
             +"["
             +"["
@@ -8201,7 +8200,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"]"
             +"]"
         }
-        p {
+        div {
             +"["
             +"["
             +"["
@@ -8219,7 +8218,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample548() = doTest(
         markdown = "[foo][ref\\[]\n\n[ref\\[]: /uri\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"foo"
@@ -8231,7 +8230,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample549() = doTest(
         markdown = "[bar\\\\]: /uri\n\n[bar\\\\]\n",
     ) {
-        p {
+        div {
             a {
                 href = "/uri"
                 +"bar\\"
@@ -8243,11 +8242,11 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample550() = doTest(
         markdown = "[]\n\n[]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"]"
         }
-        p {
+        div {
             +"["
             +"]"
             +":"
@@ -8261,12 +8260,12 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample551() = doTest(
         markdown = "[\n ]\n\n[\n ]: /uri\n",
     ) {
-        p {
+        div {
             +"["
             +"\n"
             +"]"
         }
-        p {
+        div {
             +"["
             +"\n"
             +"]"
@@ -8280,7 +8279,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample552() = doTest(
         markdown = "[foo][]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8293,7 +8292,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample553() = doTest(
         markdown = "[*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8310,7 +8309,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample554() = doTest(
         markdown = "[Foo][]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8324,7 +8323,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample555() = doTest(
         markdown = "[foo] \n[]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8339,7 +8338,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample556() = doTest(
         markdown = "[foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8352,7 +8351,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample557() = doTest(
         markdown = "[*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8369,7 +8368,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample558() = doTest(
         markdown = "[[*foo* bar]]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"["
             a {
                 href = "/url"
@@ -8388,7 +8387,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample559() = doTest(
         markdown = "[[bar [foo]\n\n[foo]: /url\n",
     ) {
-        p {
+        div {
             +"["
             +"["
             +"bar"
@@ -8404,7 +8403,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample560() = doTest(
         markdown = "[Foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 title = "title"
@@ -8417,7 +8416,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample561() = doTest(
         markdown = "[foo] bar\n\n[foo]: /url\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url"
                 +"foo"
@@ -8431,7 +8430,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample562() = doTest(
         markdown = "\\[foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"[foo"
             +"]"
         }
@@ -8441,7 +8440,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample563() = doTest(
         markdown = "[foo*]: /url\n\n*[foo*]\n",
     ) {
-        p {
+        div {
             +"*"
             a {
                 href = "/url"
@@ -8455,7 +8454,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample564() = doTest(
         markdown = "[foo][bar]\n\n[foo]: /url1\n[bar]: /url2\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url2"
                 +"foo"
@@ -8467,7 +8466,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample565() = doTest(
         markdown = "[foo][]\n\n[foo]: /url1\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url1"
                 +"foo"
@@ -8479,7 +8478,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample566() = doTest(
         markdown = "[foo]()\n\n[foo]: /url1\n",
     ) {
-        p {
+        div {
             a {
                 href = ""
                 +"foo"
@@ -8492,7 +8491,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample567() = doTest(
         markdown = "[foo](not a link)\n\n[foo]: /url1\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url1"
                 +"foo"
@@ -8508,7 +8507,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample568() = doTest(
         markdown = "[foo][bar][baz]\n\n[baz]: /url\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8523,7 +8522,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample569() = doTest(
         markdown = "[foo][bar][baz]\n\n[baz]: /url1\n[bar]: /url2\n",
     ) {
-        p {
+        div {
             a {
                 href = "/url2"
                 +"foo"
@@ -8540,7 +8539,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testLinksExample570() = doTest(
         markdown = "[foo][bar][baz]\n\n[baz]: /url1\n[foo]: /url2\n",
     ) {
-        p {
+        div {
             +"["
             +"foo"
             +"]"
@@ -8555,7 +8554,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample571() = doTest(
         markdown = "![foo](/url \"title\")\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8568,7 +8567,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample572() = doTest(
         markdown = "![foo *bar*]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "train.jpg"
                 alt = "foo bar"
@@ -8582,7 +8581,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample573() = doTest(
         markdown = "![foo ![bar](/url)](/url2)\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url2"
                 alt = "foo bar"
@@ -8595,7 +8594,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample574() = doTest(
         markdown = "![foo [bar](/url)](/url2)\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url2"
                 alt = "foo bar"
@@ -8607,7 +8606,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample575() = doTest(
         markdown = "![foo *bar*][]\n\n[foo *bar*]: train.jpg \"train & tracks\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "train.jpg"
                 alt = "foo bar"
@@ -8620,7 +8619,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample576() = doTest(
         markdown = "![foo *bar*][foobar]\n\n[FOOBAR]: train.jpg \"train & tracks\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "train.jpg"
                 alt = "foo bar"
@@ -8633,7 +8632,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample577() = doTest(
         markdown = "![foo](train.jpg)\n",
     ) {
-        p {
+        div {
             img {
                 src = "train.jpg"
                 alt = "foo"
@@ -8645,7 +8644,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample578() = doTest(
         markdown = "My ![foo bar](/path/to/train.jpg  \"title\"   )\n",
     ) {
-        p {
+        div {
             +"My"
             +" "
             img {
@@ -8660,7 +8659,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample579() = doTest(
         markdown = "![foo](<url>)\n",
     ) {
-        p {
+        div {
             img {
                 src = "url"
                 alt = "foo"
@@ -8672,7 +8671,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample580() = doTest(
         markdown = "![](/url)\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = ""
@@ -8684,7 +8683,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample581() = doTest(
         markdown = "![foo][bar]\n\n[bar]: /url\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8696,7 +8695,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample582() = doTest(
         markdown = "![foo][bar]\n\n[BAR]: /url\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8708,7 +8707,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample583() = doTest(
         markdown = "![foo][]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8721,7 +8720,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample584() = doTest(
         markdown = "![*foo* bar][]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo bar"
@@ -8734,7 +8733,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample585() = doTest(
         markdown = "![Foo][]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "Foo"
@@ -8748,7 +8747,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample586() = doTest(
         markdown = "![foo] \n[]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8762,7 +8761,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample587() = doTest(
         markdown = "![foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo"
@@ -8775,7 +8774,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample588() = doTest(
         markdown = "![*foo* bar]\n\n[*foo* bar]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "foo bar"
@@ -8794,7 +8793,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample589() = doTest(
         markdown = "![[foo]]\n\n[[foo]]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"!"
             +"["
             +"["
@@ -8802,7 +8801,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"]"
             +"]"
         }
-        p {
+        div {
             +"["
             +"["
             +"foo"
@@ -8822,7 +8821,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample590() = doTest(
         markdown = "![Foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             img {
                 src = "/url"
                 alt = "Foo"
@@ -8835,7 +8834,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample591() = doTest(
         markdown = "!\\[foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"!"
             +"[foo"
             +"]"
@@ -8846,7 +8845,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testImagesExample592() = doTest(
         markdown = "\\![foo]\n\n[foo]: /url \"title\"\n",
     ) {
-        p {
+        div {
             +"!"
             a {
                 href = "/url"
@@ -8860,7 +8859,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample593() = doTest(
         markdown = "<http://foo.bar.baz>\n",
     ) {
-        p {
+        div {
             a {
                 href = "http://foo.bar.baz"
                 +"http://foo.bar.baz"
@@ -8872,7 +8871,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample594() = doTest(
         markdown = "<http://foo.bar.baz/test?q=hello&id=22&boolean>\n",
     ) {
-        p {
+        div {
             a {
                 href = "http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean"
                 +"http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean"
@@ -8884,7 +8883,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample595() = doTest(
         markdown = "<irc://foo.bar:2233/baz>\n",
     ) {
-        p {
+        div {
             a {
                 href = "irc://foo.bar:2233/baz"
                 +"irc://foo.bar:2233/baz"
@@ -8896,7 +8895,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample596() = doTest(
         markdown = "<MAILTO:FOO@BAR.BAZ>\n",
     ) {
-        p {
+        div {
             a {
                 href = "MAILTO:FOO@BAR.BAZ"
                 +"MAILTO:FOO@BAR.BAZ"
@@ -8909,7 +8908,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample597() = doTest(
         markdown = "<a+b+c:d>\n",
     ) {
-        p {
+        div {
             a {
                 href = "a+b+c:d"
                 +"a+b+c:d"
@@ -8922,7 +8921,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample598() = doTest(
         markdown = "<made-up-scheme://foo,bar>\n",
     ) {
-        p {
+        div {
             a {
                 href = "made-up-scheme://foo,bar"
                 +"made-up-scheme://foo,bar"
@@ -8934,7 +8933,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample599() = doTest(
         markdown = "<http://../>\n",
     ) {
-        p {
+        div {
             a {
                 href = "http://../"
                 +"http://../"
@@ -8946,7 +8945,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample600() = doTest(
         markdown = "<localhost:5001/foo>\n",
     ) {
-        p {
+        div {
             a {
                 href = "localhost:5001/foo"
                 +"localhost:5001/foo"
@@ -8958,7 +8957,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample601() = doTest(
         markdown = "<http://foo.bar/baz bim>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"http"
             +":"
@@ -8972,7 +8971,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample602() = doTest(
         markdown = "<http://example.com/\\[\\>\n",
     ) {
-        p {
+        div {
             a {
                 href = "http://example.com/%5C%5B%5C"
                 +"http://example.com/\\[\\"
@@ -8985,7 +8984,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample603() = doTest(
         markdown = "<foo@bar.example.com>\n",
     ) {
-        p {
+        div {
             a {
                 href = "mailto:foo@bar.example.com"
                 +"foo@bar.example.com"
@@ -8998,7 +8997,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample604() = doTest(
         markdown = "<foo+special@Bar.baz-bar0.com>\n",
     ) {
-        p {
+        div {
             a {
                 href = "mailto:foo+special@Bar.baz-bar0.com"
                 +"foo+special@Bar.baz-bar0.com"
@@ -9010,7 +9009,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample605() = doTest(
         markdown = "<foo\\+@bar.example.com>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"foo+@bar.example.com"
             +"&gt;"
@@ -9021,7 +9020,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample606() = doTest(
         markdown = "<>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"&gt;"
         }
@@ -9031,7 +9030,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample607() = doTest(
         markdown = "< http://foo.bar >\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +" "
             +"http"
@@ -9047,7 +9046,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample608() = doTest(
         markdown = "<m:abc>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"m"
             +":"
@@ -9060,7 +9059,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample609() = doTest(
         markdown = "<foo.bar.baz>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"foo.bar.baz"
             +"&gt;"
@@ -9071,7 +9070,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample610() = doTest(
         markdown = "http://example.com\n",
     ) {
-        p {
+        div {
             +"http"
             +":"
             +"//example.com"
@@ -9082,7 +9081,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testAutolinksExample611() = doTest(
         markdown = "foo@bar.example.com\n",
     ) {
-        p {
+        div {
             +"foo@bar.example.com"
         }
     }
@@ -9091,7 +9090,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample612() = doTest(
         markdown = "<a><bab><c2c>\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a>"
@@ -9114,7 +9113,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample613() = doTest(
         markdown = "<a/><b2/>\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a/>"
@@ -9133,7 +9132,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample614() = doTest(
         markdown = "<a  /><b2\ndata=\"foo\" >\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a />"
@@ -9152,7 +9151,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample615() = doTest(
         markdown = "<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a foo=\"bar\" bam = 'baz <em>\"</em>'\n_boolean zoop:33=zoop:33 />"
@@ -9166,7 +9165,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample616() = doTest(
         markdown = "Foo <responsive-image src=\"foo.jpg\" />\n",
     ) {
-        p {
+        div {
             +"Foo"
             +" "
             div {
@@ -9181,7 +9180,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample617() = doTest(
         markdown = "<33> <__>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"33"
             +"&gt;"
@@ -9197,7 +9196,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample618() = doTest(
         markdown = "<a h*#ref=\"hi\">\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"a h"
             +"*"
@@ -9213,7 +9212,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample619() = doTest(
         markdown = "<a href=\"hi'> <a href=hi'>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"a href="
             +"&quot;"
@@ -9237,7 +9236,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample620() = doTest(
         markdown = "< a><\nfoo><bar/ >\n<foo bar=baz\nbim!bop />\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +" "
             +"a"
@@ -9270,7 +9269,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample621() = doTest(
         markdown = "<a href='bar'title=title>\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"a href="
             +"'"
@@ -9285,7 +9284,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample622() = doTest(
         markdown = "</a></foo >\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "</a>"
@@ -9303,7 +9302,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample623() = doTest(
         markdown = "</a href=\"foo\">\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"/a href="
             +"&quot;"
@@ -9317,7 +9316,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample624() = doTest(
         markdown = "foo <!-- this is a\ncomment - with hyphen -->\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9332,7 +9331,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample625() = doTest(
         markdown = "foo <!-- not a comment -- two hyphens -->\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"&lt;"
@@ -9355,7 +9354,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample626() = doTest(
         markdown = "foo <!--> foo -->\n\nfoo <!-- foo--->\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             +"&lt;"
@@ -9368,7 +9367,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"--"
             +"&gt;"
         }
-        p {
+        div {
             +"foo"
             +" "
             +"&lt;"
@@ -9385,7 +9384,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample627() = doTest(
         markdown = "foo <?php echo \$a; ?>\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9401,7 +9400,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample628() = doTest(
         markdown = "foo <!ELEMENT br EMPTY>\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9416,7 +9415,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample629() = doTest(
         markdown = "foo <![CDATA[>&<]]>\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9431,7 +9430,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample630() = doTest(
         markdown = "foo <a href=\"&ouml;\">\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9446,7 +9445,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample631() = doTest(
         markdown = "foo <a href=\"\\*\">\n",
     ) {
-        p {
+        div {
             +"foo"
             +" "
             div {
@@ -9462,7 +9461,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testRawHTMLExample632() = doTest(
         markdown = "<a href=\"\\\"\">\n",
     ) {
-        p {
+        div {
             +"&lt;"
             +"a"
             +" "
@@ -9478,7 +9477,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample633() = doTest(
         markdown = "foo  \nbaz\n",
     ) {
-        p {
+        div {
             +"foo"
             br()
             +"\n"
@@ -9490,7 +9489,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample634() = doTest(
         markdown = "foo\\\nbaz\n",
     ) {
-        p {
+        div {
             +"foo"
             br()
             +"\n"
@@ -9502,7 +9501,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample635() = doTest(
         markdown = "foo       \nbaz\n",
     ) {
-        p {
+        div {
             +"foo"
             br()
             +"\n"
@@ -9515,7 +9514,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample636() = doTest(
         markdown = "foo  \n     bar\n",
     ) {
-        p {
+        div {
             +"foo"
             br()
             +"bar"
@@ -9527,7 +9526,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample637() = doTest(
         markdown = "foo\\\n     bar\n",
     ) {
-        p {
+        div {
             +"foo"
             br()
             +"\n"
@@ -9539,7 +9538,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample638() = doTest(
         markdown = "*foo  \nbar*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 br()
@@ -9553,7 +9552,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample639() = doTest(
         markdown = "*foo\\\nbar*\n",
     ) {
-        p {
+        div {
             em {
                 +"foo"
                 br()
@@ -9568,7 +9567,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample640() = doTest(
         markdown = "`code  \nspan`\n",
     ) {
-        p {
+        div {
             code {
                 +"code   span"
             }
@@ -9580,7 +9579,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample641() = doTest(
         markdown = "`code\\\nspan`\n",
     ) {
-        p {
+        div {
             code {
                 +"code\\ span"
             }
@@ -9592,7 +9591,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample642() = doTest(
         markdown = "<a href=\"foo  \nbar\">\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a href=\"foo  \nbar\">"
@@ -9606,7 +9605,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample643() = doTest(
         markdown = "<a href=\"foo\\\nbar\">\n",
     ) {
-        p {
+        div {
             div {
                 dangerouslySetInnerHTML = jso {
                     __html = "<a href=\"foo\\\nbar\">"
@@ -9619,7 +9618,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample644() = doTest(
         markdown = "foo\\\n",
     ) {
-        p {
+        div {
             +"foo\\"
         }
     }
@@ -9628,7 +9627,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testHardLineBreaksExample645() = doTest(
         markdown = "foo  \n",
     ) {
-        p {
+        div {
             +"foo"
         }
     }
@@ -9660,7 +9659,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSoftLineBreaksExample648() = doTest(
         markdown = "foo\nbaz\n",
     ) {
-        p {
+        div {
             +"foo"
             +"\n"
             br()
@@ -9673,7 +9672,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testSoftLineBreaksExample649() = doTest(
         markdown = "foo \n baz\n",
     ) {
-        p {
+        div {
             +"foo"
             +"\n"
             +"baz"
@@ -9684,7 +9683,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testTextualContentExample650() = doTest(
         markdown = "hello \$.;'there\n",
     ) {
-        p {
+        div {
             +"hello"
             +" "
             +"\$.;"
@@ -9697,7 +9696,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testTextualContentExample651() = doTest(
         markdown = "Foo χρῆν\n",
     ) {
-        p {
+        div {
             +"Foo χρῆν"
         }
     }
@@ -9706,7 +9705,7 @@ class TestReactElementGenerator : ReactTestSupport {
     fun testTextualContentExample652() = doTest(
         markdown = "Multiple     spaces\n",
     ) {
-        p {
+        div {
             +"Multiple     spaces"
         }
     }
