@@ -26,27 +26,24 @@ data class Canvas(val nodes: Array<CanvasNode>, val edges: Array<CanvasEdge>) {
     }
 }
 
-
 @JsExport
 @Serializable(CanvasNodeSerializer::class)
 data class CanvasNode(val id: String, val x: Int, val y: Int, val width: Int, val height: Int, val nodeData: NodeData)
-
 
 @JsExport
 @Serializable(CanvasEdgeSerializer::class)
 data class CanvasEdge(val id: String, val fromNode: String, val fromSide: NodeSide, val toNode: String, val toSide: NodeSide)
 
-
 @JsExport
 sealed interface NodeData
 
 @JsExport
-data class NodeText(val text: String): NodeData
+data class NodeText(val text: String) : NodeData
 
 @JsExport
-data class NodeFile(val file: String): NodeData
+data class NodeFile(val file: String) : NodeData
 
 @JsExport
 enum class NodeSide {
-    TOP, BOTTOM, RIGHT, LEFT;
+    TOP, BOTTOM, RIGHT, LEFT
 }

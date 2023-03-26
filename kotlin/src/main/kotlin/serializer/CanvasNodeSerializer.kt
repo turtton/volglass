@@ -14,7 +14,7 @@ object CanvasNodeSerializer : KSerializer<CanvasNode> {
 
     override fun deserialize(decoder: Decoder): CanvasNode {
         val surrogate = CanvasNodeSurrogate.serializer().deserialize(decoder)
-        val nodeData = when(surrogate.type) {
+        val nodeData = when (surrogate.type) {
             "file" -> NodeFile(surrogate.file ?: "")
             "text" -> NodeText(surrogate.text ?: "")
             else -> error("Unknown node type:${surrogate.type}")
@@ -26,7 +26,7 @@ object CanvasNodeSerializer : KSerializer<CanvasNode> {
 
     override fun serialize(encoder: Encoder, value: CanvasNode) {
         val nodeData = value.nodeData
-        val type = when(nodeData) {
+        val type = when (nodeData) {
             is NodeFile -> "file"
             is NodeText -> "text"
         }
