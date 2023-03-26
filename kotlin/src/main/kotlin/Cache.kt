@@ -99,17 +99,23 @@ fun getCacheData(): Promise<Array<String>> = cacheScope.promise {
 fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder, mermaidRender: MermaidRender): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
     val fileName = FileNameString(fileNameString)
-    return if (fileName.isImageFile) {
-        FC {
-            img {
-                // FIXME: Not work. Images are always floated to the left of its view.
-                className = ClassName("float-none object-none object-center")
-                src = fileNameInfo.fileNameToMediaSlug[fileName]!!.slug
-                alt = fileName.fileName
+    return when {
+        fileName.isImageFile -> {
+            FC {
+                img {
+                    // FIXME: Not work. Images are always floated to the left of its view.
+                    className = ClassName("float-none object-none object-center")
+                    src = fileNameInfo.fileNameToMediaSlug[fileName]!!.slug
+                    alt = fileName.fileName
+                }
             }
         }
-    } else {
-        convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender)
+        fileName.isCanvasFile -> {
+            TODO()
+        }
+        else -> {
+            convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender)
+        }
     }
 }
 
