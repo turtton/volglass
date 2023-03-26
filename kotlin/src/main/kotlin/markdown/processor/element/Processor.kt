@@ -32,7 +32,6 @@ import react.dom.html.ReactHTML.h4
 import react.dom.html.ReactHTML.h5
 import react.dom.html.ReactHTML.h6
 import react.dom.html.ReactHTML.hr
-import react.dom.html.ReactHTML.p
 import react.dom.html.ReactHTML.strong
 import react.dom.html.ReactHTML.ul
 
@@ -96,7 +95,7 @@ fun <Parent> createReactElementGeneratingProcessors(
         MarkdownTokenTypes.HORIZONTAL_RULE to SingleElementProcessor(hr),
         MarkdownTokenTypes.HARD_LINE_BREAK to SingleElementProcessor(br),
 
-        MarkdownElementTypes.PARAGRAPH to SandwichTrimmingElementProcessor(p),
+        MarkdownElementTypes.PARAGRAPH to SandwichTrimmingElementProcessor(div),
         MarkdownElementTypes.EMPH to SimpleInlineElementProcessor(em, 1, -1),
         MarkdownElementTypes.STRONG to SimpleInlineElementProcessor(strong, 2, -2),
         MarkdownElementTypes.CODE_SPAN to CodeSpanElementProvider(),

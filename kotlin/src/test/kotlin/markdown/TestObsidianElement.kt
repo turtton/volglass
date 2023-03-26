@@ -5,14 +5,14 @@ import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.code
-import react.dom.html.ReactHTML.p
+import react.dom.html.ReactHTML.div
 
 class TestObsidianElement : ReactTestSupport {
     @Test
     fun testObsidianLink1() = doTest(
         "[[link]]",
     ) {
-        p {
+        div {
             a {
                 // TODO FIX link
                 href = "link"
@@ -26,7 +26,7 @@ class TestObsidianElement : ReactTestSupport {
     fun testObsidianLink2() = doTest(
         "[[link | title]]",
     ) {
-        p {
+        div {
             a {
                 // TODO FIX link
                 href = "link"
@@ -40,7 +40,7 @@ class TestObsidianElement : ReactTestSupport {
     fun testObsidianLink3() = doTest(
         "[[link|title]]",
     ) {
-        p {
+        div {
             a {
                 // TODO FIX link
                 href = "link"
@@ -54,7 +54,7 @@ class TestObsidianElement : ReactTestSupport {
     fun testObsidianLineBreak1() = doTest(
         "aaa\nbbb",
     ) {
-        p {
+        div {
             +"aaa"
             +"\n"
             br()
@@ -66,7 +66,7 @@ class TestObsidianElement : ReactTestSupport {
     fun testObsidianLineBreak2() = doTest(
         "`line1`\n`line2`",
     ) {
-        p {
+        div {
             code {
                 +"line1"
             }
