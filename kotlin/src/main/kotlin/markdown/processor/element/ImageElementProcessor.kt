@@ -51,7 +51,11 @@ class ImageElementProcessor<Parent>(
 
     override fun <Visitor> renderLink(visitor: Visitor, markdownText: String, node: ASTNode, info: LinkGeneratingProvider.RenderInfo) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
         visitor.consumeTagOpen(node, img.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
-        val url = makeAbsoluteUrl(info.destination)
+
+        val url = when (val resolvedDestination = resolveUrl(info.destination)) {
+            is Destination.Router -> resolvedDestination.slug.slug
+            is Destination.RawLink -> resolvedDestination.link.toString()
+        }
         val label = getPlainTextFrom(info.label, markdownText)
         val title = info.title?.toString()
         visitor.consume {

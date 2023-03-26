@@ -36,12 +36,12 @@ fun getRawGraphData(slugString: String, cacheData: String): GraphData {
     val targetFileName = slug.toFileName(fileNameInfo.duplicatedFile)
     nodes += Node(slugString, targetFileName.fileName)
     dependencyData.dependingLinks[targetFileName]?.forEach {
-        val targetSlug = fileNameInfo.fileNameToSlug[it]!!
+        val targetSlug = fileNameInfo.fileNameToSlug[it] ?: error("Failed to get slug. FileName:$it")
         nodes += Node(targetSlug.slug, it.fileName)
         edges += Edge(slugString, targetSlug.slug)
     }
     dependencyData.linkDependencies[targetFileName]?.forEach {
-        val targetSlug = fileNameInfo.fileNameToSlug[it]!!
+        val targetSlug = fileNameInfo.fileNameToSlug[it] ?: error("Failed to get slug. FileName:$it")
         nodes += Node(targetSlug.slug, it.fileName)
         edges += Edge(targetSlug.slug, slugString)
     }
