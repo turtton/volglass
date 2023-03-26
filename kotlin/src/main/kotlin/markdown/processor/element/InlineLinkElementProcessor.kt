@@ -12,9 +12,9 @@ import org.intellij.markdown.html.InlineLinkGeneratingProvider
 import org.intellij.markdown.html.LinkGeneratingProvider
 import org.intellij.markdown.html.URI
 import org.intellij.markdown.parser.LinkMap
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.dom.html.HTMLAttributes
+import web.html.HTMLElement
 
 /**
  * Related [InlineLinkGeneratingProvider]

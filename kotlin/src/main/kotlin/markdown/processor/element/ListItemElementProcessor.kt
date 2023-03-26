@@ -8,12 +8,12 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.accept
 import org.intellij.markdown.ast.impl.ListCompositeNode
 import org.intellij.markdown.ast.impl.ListItemCompositeNode
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLLIElement
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.LiHTMLAttributes
 import react.dom.html.ReactHTML.li
+import web.html.HTMLElement
+import web.html.HTMLLIElement
 
 class ListItemElementProcessor<Parent : HTMLAttributes<HTMLElement>> :
     SimpleElementNodeProcessor<

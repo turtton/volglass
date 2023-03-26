@@ -14,14 +14,14 @@ import org.intellij.markdown.html.LinkGeneratingProvider
 import org.intellij.markdown.html.URI
 import org.intellij.markdown.html.makeXssSafeDestination
 import org.intellij.markdown.html.resolveToStringSafe
-import org.w3c.dom.HTMLAnchorElement
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.AnchorHTMLAttributes
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.a
 import removeMdExtension
+import web.html.HTMLAnchorElement
+import web.html.HTMLElement
 
 /**
  * Related [LinkGeneratingProvider]

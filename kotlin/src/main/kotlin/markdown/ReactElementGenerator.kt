@@ -6,12 +6,12 @@ import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.acceptChildren
 import org.intellij.markdown.ast.visitors.Visitor
 import org.intellij.markdown.html.HtmlGenerator
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.ElementType
 import react.FC
 import react.Props
 import react.dom.html.HTMLAttributes
+import web.html.HTMLElement
 
 class ReactElementGenerator<Parent>(
     private val markdownText: String,

@@ -6,11 +6,11 @@ import markdown.processor.NodeProcessor
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.html.CodeSpanGeneratingProvider
 import org.intellij.markdown.html.HtmlGenerator
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.code
+import web.html.HTMLElement
 
 /**
  * Related [CodeSpanGeneratingProvider]

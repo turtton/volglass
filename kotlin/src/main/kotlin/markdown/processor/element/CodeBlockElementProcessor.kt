@@ -7,12 +7,12 @@ import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
-import org.w3c.dom.HTMLElement
 import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.code
 import react.dom.html.ReactHTML.pre
+import web.html.HTMLElement
 
 /**
  * Related [CommonMarkFlavourDescriptor]:L132-149(MarkdownElementTypes.CODE_BLOCK)
