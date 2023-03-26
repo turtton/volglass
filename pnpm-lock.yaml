@@ -17,7 +17,7 @@ specifiers:
   '@types/react-cytoscapejs': ^1.2.2
   '@types/react-dom': ^18.0.11
   '@types/unist': ^2.0.6
-  '@types/uuid': ^8.3.4
+  '@types/uuid': ^9.0.0
   '@types/wanakana': ^4.0.3
   autoprefixer: ^10.4.13
   cytoscape: ^3.17.0
@@ -76,7 +76,7 @@ devDependencies:
   '@types/react-cytoscapejs': 1.2.2
   '@types/react-dom': 18.0.11
   '@types/unist': 2.0.6
-  '@types/uuid': 8.3.4
+  '@types/uuid': 9.0.1
   autoprefixer: 10.4.13_postcss@8.4.21
   cytoscape: 3.23.0
   postcss: 8.4.21
@@ -977,8 +977,8 @@ packages:
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
 
-  /@types/uuid/8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+  /@types/uuid/9.0.1:
+    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
     dev: true
 
   /@types/wanakana/4.0.3:
