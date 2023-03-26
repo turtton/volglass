@@ -110,8 +110,7 @@ fun getContent(fileNameString: String, content: String, cacheData: String, route
     return if (fileName.isImageFile) {
         FC {
             img {
-                // FIXME: Not work. Images are always floated to the left of its view.
-                className = ClassName("float-none object-none object-center")
+                className = ClassName("mx-auto")
                 src = fileNameInfo.fileNameToMediaSlug[fileName]!!.slug
                 alt = fileName.fileName
             }
