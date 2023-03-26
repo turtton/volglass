@@ -15,16 +15,16 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.github.mysticfall:kotlin-react-test:18.2.0-pre.346+build.17")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.346")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.346")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.9.3-pre.346")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:6.3.0-pre.346")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.522")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.522")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.10.6-pre.522")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:6.9.0-pre.522")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains:markdown:0.4.1")
 
-    implementation("io.github.xxfast:kstore:0.3.0")
+    implementation("io.github.xxfast:kstore:0.4.0")
 
     // I'm waiting for supporting to ESM package support!!!!!!!!!!
     // implementation(npm("refractor", "4.8.1"))

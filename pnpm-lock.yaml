@@ -11,7 +11,7 @@ specifiers:
   '@types/babel__core': ^7.20.0
   '@types/cytoscape': ^3.19.9
   '@types/d3': ^7.0.0
-  '@types/eslint': 8.4.10
+  '@types/eslint': 8.21.3
   '@types/node': ^18.11.18
   '@types/react': ^18.0.27
   '@types/react-cytoscapejs': ^1.2.2
@@ -70,7 +70,7 @@ devDependencies:
   '@types/babel__core': 7.20.0
   '@types/cytoscape': 3.19.9
   '@types/d3': 7.4.0
-  '@types/eslint': 8.4.10
+  '@types/eslint': 8.21.3
   '@types/node': 18.11.18
   '@types/react': 18.0.28
   '@types/react-cytoscapejs': 1.2.2
@@ -895,8 +895,8 @@ packages:
       '@types/d3-zoom': 2.0.3
     dev: true
 
-  /@types/eslint/8.4.10:
-    resolution: {integrity: sha512-Sl/HOqN8NKPmhWo2VBEPm0nvHnu2LL3v9vKo8MEq0EtbJ4eVzGPl41VNPvn5E1i5poMk4/XD8UriLHpJvEP/Nw==}
+  /@types/eslint/8.21.3:
+    resolution: {integrity: sha512-fa7GkppZVEByMWGbTtE5MbmXWJTVbrjjaS8K6uQj+XtuuUv1fsuPAxhygfqLmsb/Ufb3CV8deFCpiMfAgi00Sw==}
     dependencies:
       '@types/estree': 1.0.0
       '@types/json-schema': 7.0.11
