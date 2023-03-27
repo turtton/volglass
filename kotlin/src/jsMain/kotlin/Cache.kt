@@ -122,7 +122,7 @@ fun getContent(fileNameString: String, content: String, cacheData: String, route
             TODO()
         }
         else -> {
-            convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender)
+            convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender, texRender)
         }
     }
 }
