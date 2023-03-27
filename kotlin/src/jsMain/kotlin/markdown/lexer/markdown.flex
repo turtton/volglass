@@ -5,6 +5,11 @@ import org.intellij.markdown.MarkdownTokenTypes;
 import org.intellij.markdown.IElementType;
 import org.intellij.markdown.lexer.GeneratedLexer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /* Auto generated File. Based on https://github.com/JetBrains/markdown/blob/master/src/commonMain/kotlin/org/intellij/markdown/lexer/markdown.flex */
 %%
 
@@ -67,7 +72,7 @@ import org.intellij.markdown.lexer.GeneratedLexer;
           case ']': return MarkdownTokenTypes.RBRACKET;
           case '<': return MarkdownTokenTypes.LT;
           case '>': return MarkdownTokenTypes.GT;
-          case '$': return ObsidianTokenTypes.INSTANCE.getDOLLAR();
+          case '$': return (IElementType) ObsidianTokenTypes.INSTANCE.getDOLLAR();
           default: return MarkdownTokenTypes.BAD_CHARACTER;
         }
       }
