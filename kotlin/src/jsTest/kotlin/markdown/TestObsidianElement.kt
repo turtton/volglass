@@ -94,4 +94,16 @@ class TestObsidianElement : ReactTestSupport {
             }
         }
     }
+
+    @Test
+    fun testTeX1() = doTest(
+        "$\$a$$",
+    ) {
+    }
+
+    @Test
+    fun testTeX2() = doTest(
+        "$\$a\nb$$",
+    ) {
+    }
 }

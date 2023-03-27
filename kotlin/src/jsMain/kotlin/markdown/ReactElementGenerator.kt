@@ -41,11 +41,13 @@ class ReactElementGenerator<Parent>(
             }
         }
         override fun visitNode(node: ASTNode) {
+            println("Type: ${node.type}")
             providers[node.type]?.processNode(this, markdownText, node)
                 ?: node.acceptChildren(this)
         }
 
         override fun visitLeaf(node: ASTNode) {
+            println("lType: ${node.type}")
             providers[node.type]?.processNode(this, markdownText, node)
                 ?: run {
                     val leafText = HtmlGenerator.leafText(markdownText, node)
