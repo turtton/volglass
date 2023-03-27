@@ -6,12 +6,12 @@ import serializer.CanvasNodeSerializer
 
 @JsExport
 @Serializable
-data class Canvas(val nodes: Array<CanvasNode>, val edges: Array<CanvasEdge>) {
+data class CanvasData(val nodes: Array<CanvasNode>, val edges: Array<CanvasEdge>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || this::class.js != other::class.js) return false
 
-        other as Canvas
+        other as CanvasData
 
         if (!nodes.contentEquals(other.nodes)) return false
         if (!edges.contentEquals(other.edges)) return false
