@@ -1,0 +1,4 @@
+{
+    "extends": ["github>turtton/renovate"],
+    "includeForks": true
+}

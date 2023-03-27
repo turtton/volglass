@@ -8,6 +8,7 @@ import {
 	getBackLinks,
 	getCacheData,
 	initCache,
+	isMediaFile,
 	toFileName,
 	toFilePath,
 } from "volglass-backend";
@@ -150,7 +151,7 @@ export async function getStaticProps({
 	const slugString = `/${params.id.join("/")}`;
 	const fileName = toFileName(slugString, cacheData);
 	const filePath = toFilePath(slugString, cacheData);
-	const markdownContent = readFileSync(filePath);
+	const markdownContent = isMediaFile(fileName) ? "" : readFileSync(filePath);
 	const flattenNodes = getFlattenArray(tree);
 	const backLinks = getBackLinks(slugString, cacheData, readFileSync);
 

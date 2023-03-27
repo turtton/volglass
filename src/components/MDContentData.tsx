@@ -1,12 +1,11 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import Footer from "./Footer";
 import { useRouter } from "next/router";
 import { deserializeBackLinks, getContent } from "volglass-backend";
 import { refractor } from "refractor/lib/all";
 import { toHtml } from "hast-util-to-html";
-import dynamic from "next/dynamic";
 import mermaid from "mermaid";
 import { useCurrentTheme } from "./ThemeSwitcher";
+import katex from "katex";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -56,9 +55,12 @@ const renderMermaid =
 				setter(
 					"<p class='text-red-600 dark:text-red-400'>Mermaid: Syntax error in graph</p>",
 				);
-				console.error(e);
+				console.error(`Error occurred by Mermaid.\nContent:\n${content}\n`, e);
 			});
 	};
+
+const renderTex = (content: string) =>
+	katex.renderToString(content, { throwOnError: false });
 
 export interface MDContentData {
 	fileName: string;
@@ -76,15 +78,17 @@ function MDContent({
 	const router = useRouter();
 	const Content = getContent(
 		fileName,
-		`# ${fileName}\n${content}`,
+		`${content}`,
 		cacheData,
 		router,
 		(code, language) => toHtml(refractor.highlight(code, language)),
 		renderMermaid(useCurrentTheme() === "dark"),
+		renderTex,
 	);
 	return (
 		<div className="markdown-rendered">
 			<div className="mt-4 overflow-hidden overflow-y-auto px-8">
+				<h1>{fileName}</h1>
 				<Content />
 				<div style={{ marginBottom: "3em" }}>
 					<BackLinks backLink={backLinks} />
