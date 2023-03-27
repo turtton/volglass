@@ -165,11 +165,19 @@ class TestReactElementGenerator : ReactTestSupport {
         hr {}
     }
 
+    /**
+     * Modified
+     * Reason: To detect TeX code, duller char is treated as special MarkdownToken.
+     * Related: [TestObsidianElement.testTeX1]
+     */
     @Test
     fun testBackslashEscapesExample12() =
         doTest("\\!\\\"\\#\\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n") {
             div {
-                +"!&quot;#\$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
+                // This backslash was not printed default _MarkdownLexer. So this behavior may be problem.
+                +"!&quot;#\\"
+                +"\$"
+                +"%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
                 +"`"
                 +"{|}~"
             }
@@ -9679,6 +9687,11 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: To detect TeX code, duller char is treated as special MarkdownToken.
+     * Related: [TestObsidianElement.testTeX1]
+     */
     @Test
     fun testTextualContentExample650() = doTest(
         markdown = "hello \$.;'there\n",
@@ -9686,7 +9699,8 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"hello"
             +" "
-            +"\$.;"
+            +"\$"
+            +".;"
             +"'"
             +"there"
         }
