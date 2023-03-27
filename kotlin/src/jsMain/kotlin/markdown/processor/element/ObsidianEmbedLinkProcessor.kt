@@ -9,6 +9,7 @@ import embedTargets
 import external.CodeEncoder
 import external.MermaidRender
 import external.NextRouter
+import external.TexRender
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.convertMarkdownToReactElement
@@ -35,6 +36,7 @@ class ObsidianEmbedLinkProcessor<Parent>(
     fileNameInfo: FileNameInfo,
     private val codeEncoder: CodeEncoder?,
     private val mermaidRender: MermaidRender?,
+    private val texRender: TexRender?,
     resolveAnchors: Boolean = false,
 ) : LinkElementProcessor<Parent>(baseURI, router, fileName, dependencyData, fileNameInfo, resolveAnchors)
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
@@ -95,7 +97,7 @@ class ObsidianEmbedLinkProcessor<Parent>(
                     embedTargets?.add(targetFile)
                 } else {
                     val content = dependencyData.embedContents[targetFileName] ?: ""
-                    val element = convertMarkdownToReactElement(targetFileName, content, dependencyData, fileNameInfo, router, codeEncoder, mermaidRender)
+                    val element = convertMarkdownToReactElement(targetFileName, content, dependencyData, fileNameInfo, router, codeEncoder, mermaidRender, texRender)
                     visitor.consume {
                         div {
                             className = ClassName("border-l-2 px-4 border-gray-300 dark:border-gray-600")
