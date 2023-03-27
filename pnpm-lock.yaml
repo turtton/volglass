@@ -12,6 +12,7 @@ specifiers:
   '@types/cytoscape': ^3.19.9
   '@types/d3': ^7.0.0
   '@types/eslint': 8.21.3
+  '@types/katex': ^0.16.0
   '@types/node': ^18.11.18
   '@types/react': ^18.0.27
   '@types/react-cytoscapejs': ^1.2.2
@@ -26,6 +27,7 @@ specifiers:
   fuse.js: ^6.6.2
   hast-util-to-html: ^8.0.4
   jotai: ^2.0.1
+  katex: ^0.16.4
   mermaid: ^10.0.2
   next: ^13.0.0
   path: ^0.12.7
@@ -55,6 +57,7 @@ dependencies:
   fuse.js: 6.6.2
   hast-util-to-html: 8.0.4
   jotai: 2.0.1_react@18.2.0
+  katex: 0.16.4
   mermaid: 10.0.2
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   path: 0.12.7
@@ -71,6 +74,7 @@ devDependencies:
   '@types/cytoscape': 3.19.9
   '@types/d3': 7.4.0
   '@types/eslint': 8.21.3
+  '@types/katex': 0.16.0
   '@types/node': 18.11.18
   '@types/react': 18.0.28
   '@types/react-cytoscapejs': 1.2.2
@@ -920,6 +924,10 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
+  /@types/katex/0.16.0:
+    resolution: {integrity: sha512-hz+S3nV6Mym5xPbT9fnO8dDhBFQguMYpY0Ipxv06JMi1ORgnEM4M1ymWDUhUNer3ElLmT583opRo4RzxKmh9jw==}
+    dev: true
+
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
     dev: true
@@ -1192,6 +1200,11 @@ packages:
   /commander/7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
+    dev: false
+
+  /commander/8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
     dev: false
 
   /convert-source-map/1.9.0:
@@ -1906,6 +1919,13 @@ packages:
 
   /json-parse-even-better-errors/2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
+    dev: false
+
+  /katex/0.16.4:
+    resolution: {integrity: sha512-WudRKUj8yyBeVDI4aYMNxhx5Vhh2PjpzQw1GRu/LVGqL4m1AxwD1GcUp0IMbdJaf5zsjtj8ghP0DOQRYhroNkw==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
     dev: false
 
   /khroma/2.0.0:

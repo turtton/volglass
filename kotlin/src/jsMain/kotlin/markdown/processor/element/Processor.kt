@@ -6,6 +6,7 @@ import FileNameString
 import external.CodeEncoder
 import external.MermaidRender
 import external.NextRouter
+import external.TexRender
 import markdown.processor.EmptyNodeProcessor
 import markdown.processor.NodeProcessor
 import markdown.processor.TransparentInlineHolderNodeProcessor
@@ -45,6 +46,7 @@ fun <Parent> createReactElementGeneratingProcessors(
     router: NextRouter? = null,
     encoder: CodeEncoder? = null,
     mermaidRender: MermaidRender? = null,
+    texRender: TexRender? = null,
     dependencyData: DependencyData = DependencyData(),
     fileNameInfo: FileNameInfo = FileNameInfo(),
     useSafeLinks: Boolean = true,
@@ -53,7 +55,8 @@ fun <Parent> createReactElementGeneratingProcessors(
     where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder =
     mapOf(
         ObsidianElementTypes.LINK to ObsidianLinkElementProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
-        ObsidianElementTypes.EMBED_LINK to ObsidianEmbedLinkProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, encoder, mermaidRender, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        ObsidianElementTypes.EMBED_LINK to ObsidianEmbedLinkProcessor<Parent>(baseURI, router, filename, dependencyData, fileNameInfo, encoder, mermaidRender, texRender, absolutizeAnchorLinks).makeXssSafe(useSafeLinks),
+        ObsidianElementTypes.TEX to TexElementProcessor(texRender),
 
         MarkdownElementTypes.MARKDOWN_FILE to SimpleElementNodeProcessor(div),
         MarkdownElementTypes.HTML_BLOCK to HtmlBlockElementProcessor(),

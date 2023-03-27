@@ -4,6 +4,7 @@
 /posts/.obsidian/
 /.vscode
 /.yarn
+/kotlin/jflex*.jar
 
 # dependencies
 /node_modules

@@ -94,4 +94,31 @@ class TestObsidianElement : ReactTestSupport {
             }
         }
     }
+
+    @Test
+    fun testTeX1() = doTest(
+        "$\$a$$",
+    ) {
+        div {
+            +"a"
+        }
+    }
+
+    @Test
+    fun testTeX2() = doTest(
+        "$\$a\nb$$",
+    ) {
+        div {
+            +"a\nb"
+        }
+    }
+
+    @Test
+    fun testTeX3() = doTest(
+        "\$x, y, z$",
+    ) {
+        div {
+            +"x, y, z"
+        }
+    }
 }
