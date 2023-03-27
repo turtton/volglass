@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalJsExport::class)
 
 import csstype.ClassName
+import external.CanvasRender
 import external.CodeEncoder
 import external.MermaidRender
 import external.NextRouter
@@ -23,7 +24,7 @@ import react.dom.html.ReactHTML.img
 
 val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-val json = Json
+val json = Json { ignoreUnknownKeys = true }
 
 // only available on initializing cache
 var embedTargets: MutableSet<FileNameString>? = null
@@ -83,14 +84,26 @@ fun initCache(
     val dependencyData = DependencyData()
     val fileNameInfo = FileNameInfo(postFolder, duplicatedFile, fileNameToPath, fileNameToSlug, fileNameToMediaSlug)
     getAllFiles().forEach { filePath ->
-        val content = readContent(filePath)
-        if (filePath.contains("\\.md$".toRegex())) {
+        val fileName = PathString(filePath).toFileName(postFolder, duplicatedFile)
+
+        if (fileName.isCanvasFile) {
+            val canvasData = deserialize<CanvasData>(readContent(filePath))
+            canvasData.nodes
+                .mapNotNull { node -> (node.nodeData as? NodeFile)?.file }
+                .forEach { file ->
+                    val nodeFileName = SlugString("/${file.removeMdExtension()}").toFileName(duplicatedFile)
+                    if (!nodeFileName.isMediaFile) {
+                        embedTargets!!.add(nodeFileName)
+                    }
+                }
+        } else if (!fileName.isMediaFile) {
+            val content = readContent(filePath)
             // Analyze Dependencies
             convertMarkdownToReactElement(PathString(filePath).toFileName(postFolder, duplicatedFile), content, dependencyData, fileNameInfo, null, null, null, null)
         }
     }
     embedTargets!!.forEach {
-        val path = fileNameToPath[it]!!
+        val path = fileNameToPath[it] ?: error("Failed to get path. Target:${it.fileName}")
         dependencyData.embedContents[it] = readContent(path.path)
     }
 
@@ -105,7 +118,7 @@ fun getCacheData(): Promise<Array<String>> = cacheScope.promise {
 }
 
 @JsExport
-fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder, mermaidRender: MermaidRender, texRender: TexRender): FC<Props> {
+fun getContent(fileNameString: String, content: String, cacheData: String, router: NextRouter, codeEncoder: CodeEncoder, mermaidRender: MermaidRender, texRender: TexRender, renderCanvas: CanvasRender): FC<Props> {
     val (dependingLinks, fileNameInfo) = deserialize<CacheData>(cacheData)
     val fileName = FileNameString(fileNameString)
     return when {
@@ -119,7 +132,13 @@ fun getContent(fileNameString: String, content: String, cacheData: String, route
             }
         }
         fileName.isCanvasFile -> {
-            TODO()
+            val canvasData = deserialize<CanvasData>(content)
+            val contentGetter: (String) -> FC<Props> = {
+                val contentFileName = SlugString(it.removeMdExtension()).toFileName(fileNameInfo.duplicatedFile)
+                val embedContent = dependingLinks.embedContents[contentFileName] ?: ""
+                getContent(contentFileName.fileName, embedContent, cacheData, router, codeEncoder, mermaidRender, texRender, renderCanvas)
+            }
+            renderCanvas(canvasData, contentGetter)
         }
         else -> {
             convertMarkdownToReactElement(fileName, content, dependingLinks, fileNameInfo, router, codeEncoder, mermaidRender, texRender)

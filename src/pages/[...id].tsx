@@ -4,21 +4,8 @@ import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
 import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import {
-	getBackLinks,
-	getCacheData,
-	initCache,
-	isMediaFile,
-	toFileName,
-	toFilePath,
-} from "volglass-backend";
-import {
-	clearPublicDir,
-	getMarkdownFolder,
-	getPublicFolder,
-	copyToPublicFolder,
-	readFileSync,
-} from "../lib/io";
+import { getBackLinks, getCacheData, initCache, isMediaFile, toFileName, toFilePath } from "volglass-backend";
+import { clearPublicDir, copyToPublicFolder, getMarkdownFolder, getPublicFolder, readFileSync } from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
 import FolderTree from "../components/FolderTree";
@@ -78,7 +65,7 @@ export default function Home({
 	return (
 		<Layout>
 			<Head>{<meta name="title" content={fileName} />}</Head>
-			<div className="fixed flex h-full w-full flex-row overflow-hidden">
+			<div className="fixed flex h-full w-full flex-row overflow-hidden dark:bg-dark-background-primary">
 				<div className="burger-menu">
 					<input type="checkbox" id={burgerId} />
 					<label id="hamburger-menu" htmlFor="hamburger-input">
@@ -109,7 +96,11 @@ export default function Home({
 					cacheData={cacheData}
 					backLinks={backLinks}
 				/>
-				<DynamicGraph graph={graphData} />
+				{!fileName.match(".canvas") ? (
+					<DynamicGraph graph={graphData} />
+				) : (
+					<></>
+				)}
 			</div>
 		</Layout>
 	);
