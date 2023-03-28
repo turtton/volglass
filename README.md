@@ -13,6 +13,8 @@ https://volglass.turtton.net
 - **Dark** Theme
 - **Embed Link** Support
 - **Mermaid** Support
+- **TeX** Support(partial)
+- **Canvas** Support
 
 Also, I fixed many issues that the original has.
 
