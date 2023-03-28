@@ -5,8 +5,9 @@ import { refractor } from "refractor/lib/all";
 import { toHtml } from "hast-util-to-html";
 import mermaid from "mermaid";
 import { useCurrentTheme } from "./ThemeSwitcher";
-import katex from "katex";
 import Canvas from "./Canvas";
+import { MathJax } from "better-react-mathjax";
+import { FC } from "react";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -60,8 +61,17 @@ const renderMermaid =
 			});
 	};
 
-const renderTex = (content: string) =>
-	katex.renderToString(content, { throwOnError: false });
+const renderTex =
+	(content: string): FC =>
+	() =>
+		(
+			<MathJax
+				inline={true}
+				renderMode="pre"
+				text={content}
+				typesettingOptions={{ fn: "tex2chtml" }}
+			/>
+		);
 
 export interface MDContentData {
 	fileName: string;

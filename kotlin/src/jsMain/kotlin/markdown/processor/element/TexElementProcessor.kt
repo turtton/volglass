@@ -2,7 +2,6 @@ package markdown.processor.element
 
 import csstype.ClassName
 import external.TexRender
-import js.core.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor
@@ -21,15 +20,13 @@ class TexElementProcessor<Parent>(private val renderTex: TexRender?) : NodeProce
         val tex = node.children
             .filter { it.type != ObsidianTokenTypes.DOLLAR }
             .joinToString("") { it.getTextInNode(markdownText).toString() }
-        // println("tex:$tex")
+        println("tex:$tex")
         val html = renderTex?.invoke(tex)
         visitor.consume {
             if (html != null) {
                 p {
                     className = ClassName("inline")
-                    dangerouslySetInnerHTML = jso {
-                        __html = html
-                    }
+                    html()
                 }
             } else {
                 +tex

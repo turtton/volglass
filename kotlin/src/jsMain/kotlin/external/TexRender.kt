@@ -1,6 +1,9 @@
 package external
 
+import react.FC
+import react.Props
+
 /**
- * related katex.render(String): String
+ * (Contents) -> FC
  */
-typealias TexRender = (String) -> String
+typealias TexRender = (String) -> FC<Props>
