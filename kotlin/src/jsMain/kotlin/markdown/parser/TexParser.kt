@@ -53,7 +53,7 @@ class TexParser : SequentialParser {
 
             var found = false
             var willClose = false
-            if (current.type != MarkdownTokenTypes.TEXT) return null
+            if (!isDualDuller && current.type == MarkdownTokenTypes.WHITE_SPACE) return null
             while (current.type != null) {
                 if (current.type == ObsidianTokenTypes.DOLLAR) {
                     if (!willClose) {
