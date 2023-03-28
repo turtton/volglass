@@ -5,9 +5,14 @@ import { useRouter } from "next/router";
 export interface LinkData {
 	slug?: string;
 	contentHtml: FC;
-	positions: Position[];
+	positions: PositionData[];
 	width: number;
 	height: number;
+}
+
+export interface PositionData {
+	position: Position;
+	type: "target" | "source";
 }
 
 function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
@@ -31,9 +36,9 @@ function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
 			</div>
 			{data.positions.map((position) => (
 				<Handle
-					id={position}
-					type="target"
-					position={position}
+					id={position.position}
+					type={position.type}
+					position={position.position}
 					style={{ background: "#555" }}
 					isConnectable={isConnectable}
 				/>

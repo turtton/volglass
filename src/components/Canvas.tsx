@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import ReactFlow, { Background, ConnectionLineType, Controls, Edge, Node, Position } from "reactflow";
-import LinkNode, { LinkData } from "./LinkNode";
+import LinkNode, { LinkData, PositionData } from "./LinkNode";
 import { CanvasData, CanvasEdge, NodeFile, NodeSide, NodeText } from "volglass-backend";
 import { match, P } from "ts-pattern";
 
@@ -77,13 +77,13 @@ const findTargetSide = (targetNode: string, edges: CanvasEdge[]) =>
 	edges
 		.map((edge) =>
 			edge.toNode === targetNode
-				? edge.toSide
+				? { position: convertSideData(edge.toSide), type: "target" }
 				: edge.fromNode === targetNode
-				? edge.fromSide
+				? { position: convertSideData(edge.fromSide), type: "source" }
 				: null,
 		)
 		.filter((side) => side !== null)
 		.filter((side, i, array) => array.indexOf(side) === i)
-		.map((side) => convertSideData(side!!));
+		.map((side) => side as PositionData);
 
 export default Canvas;
