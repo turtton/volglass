@@ -53,7 +53,7 @@ export function toSlug(filePath: string): string {
 	if (isFile(filePath) && filePath.includes(getMarkdownFolder())) {
 		return filePath
 			.replace(getMarkdownFolder(), "")
-			.replace(" ", "+")
+			.replaceAll(" ", "+")
 			.replace(".md", "");
 	} else {
 		// TODO handle this properly

@@ -23,9 +23,12 @@ value class PathString(val path: String) {
         return toSlugString(postFolder).toFileName(duplicatedFile)
     }
 
+    /**
+     * Ref: project/src/lib/slug.ts$toSlug()
+     */
     fun toSlugString(postFolder: String): SlugString {
         // /path/to/post/dir/README.md -> /dir/README.md -> /dir/README
-        return SlugString(path.replace(postFolder, "").removeMdExtension())
+        return SlugString(path.replace(postFolder, "").replace(" ", "+").removeMdExtension())
     }
 }
 
