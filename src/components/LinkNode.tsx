@@ -4,26 +4,30 @@ import { useRouter } from "next/router";
 
 export interface LinkData {
 	slug?: string;
-	contentReader: (slug: string) => FC;
+	contentHtml: FC;
 	positions: Position[];
+	width: number;
+	height: number;
 }
 
 function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
 	const router = useRouter();
-	const Content =
-		data.slug !== undefined ? data.contentReader(data.slug) : () => <></>;
-
+	const Content = data.contentHtml;
 	return (
 		<div
-			className="link-node dark:bg-gray-500"
+			className="block link-node border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-background-primary m-2 p-4 overflow-auto hover:overflow-scroll"
+			style={{ width: data.width, height: data.height }}
 			onClick={() => {
 				if (data.slug !== undefined) {
 					void router.push(data.slug);
 				}
 			}}
 		>
-			<div className="flex">
-				<Content />
+			<div className="w-fit h-fit">
+				<h1 className="font-bold text-xl">{data.slug?.split("/")?.pop()}</h1>
+				<div className="my-4">
+					<Content />
+				</div>
 			</div>
 			{data.positions.map((position) => (
 				<Handle

@@ -10,18 +10,23 @@ const Canvas =
 			(node): Node<LinkData> => ({
 				id: node.id,
 				position: { x: node.x, y: node.y },
+				// FIXME: not work
 				width: node.width,
 				height: node.height,
+				type: "link",
 				data: match(node.nodeData)
 					.with(P.instanceOf(NodeText), (nodeText) => ({
-						children: TextElement(nodeText.text),
-						contentReader: readContent,
+						contentHtml: () => <p>{nodeText.text}</p>,
 						positions: findTargetSide(node.id, canvas.edges),
+						width: node.width,
+						height: node.height,
 					}))
 					.with(P.instanceOf(NodeFile), (nodeFile) => ({
-						slug: `/${nodeFile.file}`,
-						contentReader: readContent,
+						slug: `/${nodeFile.file}`.replace(".md", ""),
+						contentHtml: readContent(`/${nodeFile.file}`),
 						positions: findTargetSide(node.id, canvas.edges),
+						width: node.width,
+						height: node.height,
 					}))
 					.run(),
 			}),
@@ -59,11 +64,6 @@ const Canvas =
 			</div>
 		);
 	};
-
-const TextElement =
-	(text: string): FC =>
-	() =>
-		<p>{text}</p>;
 
 const convertSideData = (side: NodeSide) =>
 	match(side.name)
