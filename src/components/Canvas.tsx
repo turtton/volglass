@@ -1,7 +1,20 @@
 import { FC, useMemo } from "react";
-import ReactFlow, { Background, ConnectionLineType, Controls, Edge, Node, Position } from "reactflow";
+import ReactFlow, {
+	Background,
+	ConnectionLineType,
+	Controls,
+	Edge,
+	Node,
+	Position,
+} from "reactflow";
 import LinkNode, { LinkData, PositionData } from "./LinkNode";
-import { CanvasData, CanvasEdge, NodeFile, NodeSide, NodeText } from "volglass-backend";
+import {
+	CanvasData,
+	CanvasEdge,
+	NodeFile,
+	NodeSide,
+	NodeText,
+} from "volglass-backend";
 import { match, P } from "ts-pattern";
 
 const Canvas =

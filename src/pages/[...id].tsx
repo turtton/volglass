@@ -4,8 +4,21 @@ import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
 import { getLocalGraphData, LocalGraphData } from "../lib/graph";
 import { getFlattenArray, TreeData } from "../lib/markdown";
 import { getSearchIndex, SearchData } from "../lib/search";
-import { getBackLinks, getCacheData, initCache, isMediaFile, toFileName, toFilePath } from "volglass-backend";
-import { clearPublicDir, copyToPublicFolder, getMarkdownFolder, getPublicFolder, readFileSync } from "../lib/io";
+import {
+	getBackLinks,
+	getCacheData,
+	initCache,
+	isMediaFile,
+	toFileName,
+	toFilePath,
+} from "volglass-backend";
+import {
+	clearPublicDir,
+	copyToPublicFolder,
+	getMarkdownFolder,
+	getPublicFolder,
+	readFileSync,
+} from "../lib/io";
 import dynamic from "next/dynamic";
 import MDContent from "../components/MDContentData";
 import FolderTree from "../components/FolderTree";
