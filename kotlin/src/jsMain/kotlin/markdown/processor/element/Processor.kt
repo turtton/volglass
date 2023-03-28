@@ -64,7 +64,7 @@ fun <Parent> createReactElementGeneratingProcessors(
         MarkdownElementTypes.BLOCK_QUOTE to SimpleElementNodeProcessor(blockquote),
         MarkdownElementTypes.ORDERED_LIST to OrderedListElementProcessor(),
         MarkdownElementTypes.UNORDERED_LIST to SimpleElementNodeProcessor(ul),
-        MarkdownElementTypes.LIST_ITEM to ListItemElementProcessor(),
+        MarkdownElementTypes.LIST_ITEM to ListItemElementProcessor(texRender),
 
         MarkdownTokenTypes.SETEXT_CONTENT to TrimmingInlineHolderNodeProcessor(),
         MarkdownElementTypes.SETEXT_1 to SimpleElementNodeProcessor(h1),

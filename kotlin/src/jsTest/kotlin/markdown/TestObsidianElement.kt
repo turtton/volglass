@@ -7,7 +7,9 @@ import react.dom.html.ReactHTML.a
 import react.dom.html.ReactHTML.br
 import react.dom.html.ReactHTML.code
 import react.dom.html.ReactHTML.div
+import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.strong
+import react.dom.html.ReactHTML.ul
 
 class TestObsidianElement : ReactTestSupport {
     @Test
@@ -119,6 +121,26 @@ class TestObsidianElement : ReactTestSupport {
     ) {
         div {
             +"x, y, z"
+        }
+    }
+
+    @Test
+    fun testTeX4() = doTest(
+        "- \$(\\x, y, z)\$",
+    ) {
+        ul {
+            li {
+                +"(\\x, y, z)"
+            }
+        }
+    }
+
+    @Test
+    fun texTeX5() = doTest(
+        "$$\na\nb\n$$",
+    ) {
+        div {
+            +"\na\nb\n"
         }
     }
 }
