@@ -33,11 +33,6 @@ Steps to run it on your local machine:
 
 See [volglass-docs repository](https://github.com/turtton/volglass-docs) for an example.
 
-## Future development 
-
-- Embed markdown/image rendering
-- Tag list view
-
 ## For developers
 Instead of cloning this repository, I recommend to use [volglass-cli](https://github.com/turtton/volglass-cli).
 
