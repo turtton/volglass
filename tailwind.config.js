@@ -3,6 +3,12 @@ module.exports = {
 	mode: "jit",
 	content: ["./src/**/*.{js,ts,jsx,tsx}", "./kotlin/**/*.{js,ts,jsx,tsx}"],
 	theme: {
+		listStyleType: {
+			nonde: "none",
+			disc: "disc",
+			decimal: "decimal",
+			unset: "unset",
+		},
 		extend: {
 			colors: {
 				"dark-primary-alt": "#171818",

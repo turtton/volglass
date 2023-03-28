@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+    ul {
+        @apply list-unset;
+        @apply m-auto;
+        @apply pl-4;
+    }
+}
 
 html,
 body {
