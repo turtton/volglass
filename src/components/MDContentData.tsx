@@ -91,7 +91,9 @@ function MDContent({
 		return (
 			<>
 				<div className="mt-4 overflow-hidden overflow-y-auto px-8 w-full dark:text-white">
-					<strong className="text-center">{fileName}</strong>
+					<div className="mx-auto text-center">
+						<strong>{fileName.replace(".canvas", "")}</strong>
+					</div>
 					<Content />
 				</div>
 				<Footer />
