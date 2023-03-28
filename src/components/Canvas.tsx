@@ -47,7 +47,7 @@ const Canvas =
 			[],
 		);
 		return (
-			<div className="canvas h-5/6">
+			<div className="canvas">
 				{nodes && (
 					<ReactFlow
 						connectionLineType={ConnectionLineType.Bezier}
@@ -58,7 +58,7 @@ const Canvas =
 						minZoom={0.03}
 					>
 						<Background />
-						<Controls />
+						<Controls className="rounded-md dark:bg-dark-background-primary dark:border-gray-600 dark:fill-gray-200" />
 					</ReactFlow>
 				)}
 			</div>
