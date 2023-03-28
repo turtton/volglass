@@ -14,9 +14,9 @@ import {
 } from "volglass-backend";
 import {
 	clearPublicDir,
+	copyToPublicFolder,
 	getMarkdownFolder,
 	getPublicFolder,
-	copyToPublicFolder,
 	readFileSync,
 } from "../lib/io";
 import dynamic from "next/dynamic";
@@ -78,7 +78,7 @@ export default function Home({
 	return (
 		<Layout>
 			<Head>{<meta name="title" content={fileName} />}</Head>
-			<div className="fixed flex h-full w-full flex-row overflow-hidden">
+			<div className="fixed flex h-full w-full flex-row overflow-hidden dark:bg-dark-background-primary">
 				<div className="burger-menu">
 					<input type="checkbox" id={burgerId} />
 					<label id="hamburger-menu" htmlFor="hamburger-input">
@@ -109,7 +109,11 @@ export default function Home({
 					cacheData={cacheData}
 					backLinks={backLinks}
 				/>
-				<DynamicGraph graph={graphData} />
+				{!fileName.match(".canvas") ? (
+					<DynamicGraph graph={graphData} />
+				) : (
+					<></>
+				)}
 			</div>
 		</Layout>
 	);

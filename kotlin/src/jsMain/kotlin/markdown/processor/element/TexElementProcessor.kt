@@ -21,7 +21,7 @@ class TexElementProcessor<Parent>(private val renderTex: TexRender?) : NodeProce
         val tex = node.children
             .filter { it.type != ObsidianTokenTypes.DOLLAR }
             .joinToString("") { it.getTextInNode(markdownText).toString() }
-        println("tex:$tex")
+        // println("tex:$tex")
         val html = renderTex?.invoke(tex)
         visitor.consume {
             if (html != null) {

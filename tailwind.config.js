@@ -6,6 +6,7 @@ module.exports = {
 		extend: {
 			colors: {
 				"dark-primary-alt": "#171818",
+				"dark-background-primary": "#212323",
 				"text-accent": "rgba(201, 19, 133, 0.77)",
 				"text-accent-hover": "#1ea2cc",
 				"dark-text-accent": "#892f99",

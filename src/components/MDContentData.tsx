@@ -6,6 +6,7 @@ import { toHtml } from "hast-util-to-html";
 import mermaid from "mermaid";
 import { useCurrentTheme } from "./ThemeSwitcher";
 import katex from "katex";
+import Canvas from "./Canvas";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -84,11 +85,29 @@ function MDContent({
 		(code, language) => toHtml(refractor.highlight(code, language)),
 		renderMermaid(useCurrentTheme() === "dark"),
 		renderTex,
+		Canvas,
 	);
+	if (fileName.match(".canvas")) {
+		return (
+			<>
+				<div className="mt-4 overflow-hidden overflow-y-auto px-8 w-full dark:text-white">
+					<div className="mx-auto text-center">
+						<strong>{fileName.replace(".canvas", "")}</strong>
+					</div>
+					<Content />
+				</div>
+				<Footer />
+			</>
+		);
+	}
 	return (
 		<div className="markdown-rendered">
 			<div className="mt-4 overflow-hidden overflow-y-auto px-8">
-				<h1>{fileName}</h1>
+				{fileName.match(/\.[a-zA-Z0-9]/) ? (
+					<strong>{fileName}</strong>
+				) : (
+					<h1>{fileName}</h1>
+				)}
 				<Content />
 				<div style={{ marginBottom: "3em" }}>
 					<BackLinks backLink={backLinks} />

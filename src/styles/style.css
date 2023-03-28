@@ -414,3 +414,24 @@ hr {
     }
 
 }
+
+.canvas {
+    height: 90%;
+}
+
+.react-flow__controls-button {
+    background: var(--background-primary);
+    border-color: var(--background-secondary-alt);
+}
+
+.react-flow__controls-button:hover {
+    background: var(--background-primary-alt);
+}
+
+html[class="dark"] .react-flow__attribution a {
+    color: #E1E2E6FF
+}
+
+html[class="dark"] .react-flow__attribution:hover a {
+    color: #25F8FFFF
+}
