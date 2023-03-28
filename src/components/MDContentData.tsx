@@ -61,7 +61,11 @@ const renderMermaid =
 	};
 
 const renderTex = (content: string) =>
-	katex.renderToString(content, { throwOnError: false });
+	katex.renderToString(content, {
+		throwOnError: false,
+		trust: true,
+		output: "mathml",
+	});
 
 export interface MDContentData {
 	fileName: string;
