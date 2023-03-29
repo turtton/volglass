@@ -138,7 +138,6 @@ export async function getStaticPaths(): Promise<{
 	const paths = slugs.map((p) => ({
 		params: { id: p.replace("/", "").split("/") },
 	}));
-	paths.push({ params: { id: ["index"] } });
 	return {
 		paths,
 		fallback: false,
@@ -153,9 +152,6 @@ export async function getStaticProps({
 	const [cacheData, rawTreeData] = await getCacheData();
 	const tree: TreeData = JSON.parse(rawTreeData);
 	let slugString = `/${params.id.join("/")}`;
-	if (slugString === "/index") {
-		slugString = `/${FIRST_PAGE()}`;
-	}
 	const fileName = toFileName(slugString, cacheData);
 	const filePath = toFilePath(slugString, cacheData);
 	const markdownContent = isMediaFile(fileName) ? "" : readFileSync(filePath);

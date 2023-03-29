@@ -8,13 +8,4 @@ module.exports = {
 		return config;
 	},
 	output: "standalone",
-	async redirects() {
-		return [
-			{
-				source: "/",
-				destination: "/README",
-				permanent: true,
-			},
-		];
-	},
 };
