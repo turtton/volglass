@@ -1,9 +1,11 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document(): JSX.Element {
 	return (
 		<Html>
 			<Head>
+				<Script src="/theme.js" strategy="beforeInteractive" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link
 					rel="preconnect"

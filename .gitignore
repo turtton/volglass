@@ -24,6 +24,7 @@
 !/posts/.gitkeep
 /public
 !/public/favicon.ico
+!/public/theme.js
 
 # misc
 .DS_Store
