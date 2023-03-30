@@ -38,7 +38,8 @@ Instead of cloning this repository, I recommend to use [volglass-cli](https://gi
 
 1. `npm init --yes`
 2. `npm install --save-dev volglass-cli`
-3. `npx volglass dev --use-ssh -T`
+3. `npx volglass init`
+4. `npx volglass dev --use-ssh -T`
 
 Now, volglass-cli does these tasks
 - clone this repository(with ssh`--use-ssh`) to dev directory
