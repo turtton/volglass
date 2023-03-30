@@ -5,6 +5,7 @@ import markdown.TagConsumer
 import markdown.processor.NodeProcessor
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
+import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import react.ChildrenBuilder
@@ -24,7 +25,8 @@ class CodeBlockElementProcessor<Parent> : NodeProcessor<IntrinsicType<HTMLAttrib
 
         node.children.forEach { child ->
             if (child.type == MarkdownTokenTypes.CODE_LINE) {
-                val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4)
+                // val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), 4)
+                val code = HtmlGenerator.trimIndents(child.getTextInNode(markdownText), 4)
                 visitor.consume {
                     +code.toString()
                 }

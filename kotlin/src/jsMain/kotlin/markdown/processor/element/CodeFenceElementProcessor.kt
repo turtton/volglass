@@ -21,7 +21,6 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.pre
 import react.useEffect
 import react.useState
-import restoreReplacements
 import web.html.HTMLElement
 
 /**
@@ -45,12 +44,14 @@ class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, priva
 
         childrenToConsider.forEach { child ->
             if (child.type in listOf(MarkdownTokenTypes.CODE_FENCE_CONTENT, MarkdownTokenTypes.EOL)) {
-                val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore)
+                // val code = HtmlGenerator.trimIndents(HtmlGenerator.leafText(markdownText, child, false), indentBefore)
+                val code = HtmlGenerator.trimIndents(child.getTextInNode(markdownText), indentBefore)
                 codes += code.toString()
                 lastChildWasContent = child.type == MarkdownTokenTypes.CODE_FENCE_CONTENT
             }
             if (child.type == MarkdownTokenTypes.FENCE_LANG) {
-                language = HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0]
+                // language = HtmlGenerator.leafText(markdownText, child).toString().trim().split(' ')[0]
+                language = child.getTextInNode(markdownText).toString().trim().split(' ')[0]
             }
         }
         if (lastChildWasContent) {
@@ -64,7 +65,7 @@ class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, priva
 
         val codeElement = if (language == "mermaid" && mermaidRender != null) {
             FC {
-                val content = codes.joinToString(separator = "").restoreReplacements()
+                val content = codes.joinToString(separator = "")
                 val (mermaidHtml, htmlSetter) = useState("")
                 useEffect(content) {
                     mermaidRender.invoke(content) { htmlSetter(it) }

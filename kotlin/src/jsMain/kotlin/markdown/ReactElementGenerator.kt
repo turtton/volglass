@@ -4,8 +4,8 @@ import markdown.processor.NodeProcessor
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.acceptChildren
+import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.ast.visitors.Visitor
-import org.intellij.markdown.html.HtmlGenerator
 import react.ChildrenBuilder
 import react.ElementType
 import react.FC
@@ -50,7 +50,8 @@ class ReactElementGenerator<Parent>(
             // println("lType: ${node.type}")
             providers[node.type]?.processNode(this, markdownText, node)
                 ?: run {
-                    val leafText = HtmlGenerator.leafText(markdownText, node)
+                    // val leafText = HtmlGenerator.leafText(markdownText, node)
+                    val leafText = node.getTextInNode(markdownText)
                     consume {
                         +leafText.toString()
                     }

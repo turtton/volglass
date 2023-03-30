@@ -169,17 +169,19 @@ class TestReactElementGenerator : ReactTestSupport {
      * Modified
      * Reason: To detect TeX code, duller char is treated as special MarkdownToken.
      * Related: [TestObsidianElement.testTeX1]
+     *
+     * Reason: Disabled substitution of specific escape characters.
+     * Related: [ReactElementGenerator.ReactElementGeneratingVisitor.visitLeaf]
      */
     @Test
     fun testBackslashEscapesExample12() =
         doTest("\\!\\\"\\#\\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n") {
             div {
-                // This backslash was not printed default _MarkdownLexer. So this behavior may be problem.
-                +"!&quot;#\\"
-                +"\$"
-                +"%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_"
-                +"`"
-                +"{|}~"
+                +"\\!\\\"\\#\\"
+                +"$"
+                +"\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_"
+                +"\\`"
+                +"\\{\\|\\}\\~"
             }
         }
 
@@ -198,69 +200,75 @@ class TestReactElementGenerator : ReactTestSupport {
      * Modified
      * Reason: Overlapping with obsidian line breaking rule
      * Related: [TestObsidianElement.testObsidianLineBreak1]
+     *
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     fun testBackslashEscapesExample14() =
         doTest("\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity\n") {
             div {
-                +"*not emphasized"
+                +"\\*not emphasized"
                 +"*"
                 +"\n"
                 br()
-                +"&lt;br/"
-                +"&gt;"
+                +"\\<br/"
+                +">"
                 +" "
                 +"not a tag"
                 +"\n"
                 br()
-                +"[not a link"
+                +"\\[not a link"
                 +"]"
                 +"("
                 +"/foo"
                 +")"
                 +"\n"
                 br()
-                +"`"
+                +"\\`"
                 +"not code"
                 +"`"
                 +"\n"
                 br()
-                +"1."
+                +"1\\."
                 +" "
                 +"not a list"
                 +"\n"
                 br()
-                +"*"
+                +"\\*"
                 +" "
                 +"not a list"
                 +"\n"
                 br()
-                +"#"
+                +"\\#"
                 +" "
                 +"not a heading"
                 +"\n"
                 br()
-                +"[foo"
+                +"\\[foo"
                 +"]"
                 +":"
                 +" "
                 +"/url"
                 +" "
-                +"&quot;"
+                +"\""
                 +"not a reference"
-                +"&quot;"
+                +"\""
                 +"\n"
                 br()
-                +"&amp;ouml;"
+                +"\\&ouml;"
                 +" "
                 +"not a character entity"
             }
         }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testBackslashEscapesExample15() = doTest("\\\\*emphasis*\n") {
         div {
-            +"\\"
+            +"\\\\"
             em {
                 +"emphasis"
             }
@@ -347,11 +355,15 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testBackslashEscapesExample24() = doTest("``` foo\\+bar\nfoo\n```\n") {
         pre {
             code {
-                className = ClassName("language-foo+bar")
+                className = ClassName("language-foo\\+bar")
                 +"foo"
                 +"\n"
             }
@@ -375,14 +387,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample27() = doTest("&#X22; &#XD06; &#xcab;\n") {
         div {
-            +"&quot;"
+            +"&#X22;"
             +" "
-            +"ആ"
+            +"&#XD06;"
             +" "
-            +"ಫ"
+            +"&#xcab;"
         }
     }
 
@@ -392,23 +408,31 @@ class TestReactElementGenerator : ReactTestSupport {
         "&nbsp &x; &#; &#x;\n&#87654321;\n&#abcdef0;\n&ThisIsNotDefined; &hi?;\n",
     ) {
         div {
-            +"&amp;nbsp &amp;x; &amp;#; &amp;#x;\n&amp;#87654321;\n&amp;#abcdef0;\n&amp;ThisIsNotDefined; &amp;hi?;"
+            +"&nbsp &x; &#; &#x;\n&#87654321;\n&#abcdef0;\n&ThisIsNotDefined; &hi?;"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample29() = doTest(
         markdown = "&copy\n",
     ) {
         div {
-            +"&amp;copy"
+            +"&copy"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample30() = doTest(markdown = "&MadeUpEntity;\n") {
         div {
-            +"&amp;MadeUpEntity;"
+            +"&MadeUpEntity;"
         }
     }
 
@@ -455,31 +479,39 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         pre {
             code {
-                className = ClassName("language-föö")
+                className = ClassName("language-f&ouml;&ouml;")
                 +"foo"
                 +"\n"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample35() = doTest(
         markdown = "`f&ouml;&ouml;`\n",
     ) {
         div {
             code {
-                +"f&amp;ouml;&amp;ouml;"
+                +"f&ouml;&ouml;"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample36() = doTest(
         markdown = "    f&ouml;f&ouml;\n",
     ) {
         pre {
             code {
-                +"f&amp;ouml;f&amp;ouml;"
+                +"f&ouml;f&ouml;"
                 +"\n"
             }
         }
@@ -489,13 +521,15 @@ class TestReactElementGenerator : ReactTestSupport {
      * Modified
      * Reason: Overlapping with obsidian line breaking rule
      * Related: [TestObsidianElement.testObsidianLineBreak1]
+     *
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     fun testEntityAndNumericCharacterReferencesExample37() = doTest(
         markdown = "&#42;foo&#42;\n*foo*\n",
     ) {
         div {
-            +"*foo*"
+            +"&#42;foo&#42;"
             +"\n"
             br()
             em {
@@ -504,12 +538,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample38() = doTest(
         markdown = "&#42; foo\n\n* foo\n",
     ) {
         div {
-            +"*"
+            +"&#42;"
             +" "
             +"foo"
         }
@@ -520,21 +558,29 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample39() = doTest(
         markdown = "foo&#10;&#10;bar\n",
     ) {
         div {
-            +"foo\n\nbar"
+            +"foo&#10;&#10;bar"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample40() = doTest(
         markdown = "&#9;foo\n",
     ) {
         div {
-            +"\tfoo"
+            +"&#9;foo"
         }
     }
 
@@ -836,17 +882,25 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testATXHeadingsExample65() = doTest(
         markdown = "\\## foo\n",
     ) {
         div {
-            +"##"
+            +"\\##"
             +" "
             +"foo"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testATXHeadingsExample66() = doTest(
         markdown = "# foo *bar* \\*baz\\*\n",
@@ -858,7 +912,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"bar"
             }
             +" "
-            +"*baz*"
+            +"\\*baz\\*"
         }
     }
 
@@ -970,17 +1024,17 @@ class TestReactElementGenerator : ReactTestSupport {
         h3 {
             +"foo"
             +" "
-            +"###"
+            +"\\###"
         }
         h2 {
             +"foo"
             +" "
-            +"###"
+            +"#\\##"
         }
         h1 {
             +"foo"
             +" "
-            +"#"
+            +"\\#"
         }
     }
 
@@ -1170,6 +1224,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testSetextHeadingsExample91() = doTest(
         markdown = "`Foo\n----\n`\n\n<a title=\"a lot\n---\nof dashes\"/>\n",
@@ -1182,16 +1240,16 @@ class TestReactElementGenerator : ReactTestSupport {
             +"`"
         }
         h2 {
-            +"&lt;"
+            +"<"
             +"a title="
-            +"&quot;"
+            +"\""
             +"a lot"
         }
         div {
             +"of dashes"
-            +"&quot;"
+            +"\""
             +"/"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -1321,12 +1379,16 @@ class TestReactElementGenerator : ReactTestSupport {
         hr()
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testSetextHeadingsExample102() = doTest(
         markdown = "\\> foo\n------\n",
     ) {
         h2 {
-            +"&gt;"
+            +"\\>"
             +" "
             +"foo"
         }
@@ -1393,6 +1455,8 @@ class TestReactElementGenerator : ReactTestSupport {
      * Modified
      * Reason: Overlapping with obsidian line breaking rule
      * Related: [TestObsidianElement.testObsidianLineBreak1]
+     *
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     fun testSetextHeadingsExample106() = doTest(
@@ -1405,7 +1469,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"bar"
             +"\n"
             br()
-            +"---"
+            +"\\---"
             +"\n"
             br()
             +"baz"
@@ -1460,13 +1524,17 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testIndentedCodeBlocksExample110() = doTest(
         markdown = "    <a/>\n    *hi*\n\n    - one\n",
     ) {
         pre {
             code {
-                +"&lt;a/&gt;"
+                +"<a/>"
                 +"\n"
                 +"*hi*"
                 +"\n"
@@ -1601,29 +1669,37 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testFencedCodeBlocksExample119() = doTest(
         markdown = "```\n<\n >\n```\n",
     ) {
         pre {
             code {
-                +"&lt;"
+                +"<"
                 +"\n"
-                +" &gt;"
+                +" >"
                 +"\n"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testFencedCodeBlocksExample120() = doTest(
         markdown = "~~~\n<\n >\n~~~\n",
     ) {
         pre {
             code {
-                +"&lt;"
+                +"<"
                 +"\n"
-                +" &gt;"
+                +" >"
                 +"\n"
             }
         }
@@ -2486,6 +2562,9 @@ class TestReactElementGenerator : ReactTestSupport {
 
     /**
      * FIXME: Same case in [testHTMLBlocksExample152]
+     *
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     @Ignore
@@ -2494,11 +2573,15 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "  <!-- foo -->\n<pre><code>&lt;!-- foo --&gt;\n</code></pre>\n"
+                __html = "  <!-- foo -->\n<pre><code><!-- foo -->\n</code></pre>\n"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testHTMLBlocksExample184() = doTest(
         markdown = "  <div>\n\n    <div>\n",
@@ -2510,7 +2593,7 @@ class TestReactElementGenerator : ReactTestSupport {
         }
         pre {
             code {
-                +"&lt;div&gt;"
+                +"<div>"
                 +"\n"
             }
         }
@@ -2607,6 +2690,9 @@ class TestReactElementGenerator : ReactTestSupport {
 
     /**
      * FIXME: Same case in [testHTMLBlocksExample152]
+     *
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     @Ignore
@@ -2615,7 +2701,7 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             dangerouslySetInnerHTML = jso {
-                __html = "<table>\n  <tr>\n<pre><code>&lt;td&gt;\n  Hi\n&lt;/td&gt;\n</code></pre>\n  </tr>\n</table>\n"
+                __html = "<table>\n  <tr>\n<pre><code><td>\n  Hi\n</td>\n</code></pre>\n  </tr>\n</table>\n"
             }
         }
     }
@@ -2646,6 +2732,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinkReferenceDefinitionsExample194() = doTest(
         markdown = "[Foo*bar\\]]:my_(url) 'title (with parens)'\n\n[Foo*bar\\]]\n",
@@ -2656,7 +2746,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 title = "title (with parens)"
                 +"Foo"
                 +"*"
-                +"bar]"
+                +"bar\\]"
             }
         }
     }
@@ -2840,6 +2930,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinkReferenceDefinitionsExample209() = doTest(
         markdown = "[foo]: /url \"title\" ok\n",
@@ -2852,34 +2946,42 @@ class TestReactElementGenerator : ReactTestSupport {
             +" "
             +"/url"
             +" "
-            +"&quot;"
+            +"\""
             +"title"
-            +"&quot;"
+            +"\""
             +" "
             +"ok"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinkReferenceDefinitionsExample210() = doTest(
         markdown = "[foo]: /url\n\"title\" ok\n",
     ) {
         div {
-            +"&quot;"
+            +"\""
             +"title"
-            +"&quot;"
+            +"\""
             +" "
             +"ok"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinkReferenceDefinitionsExample211() = doTest(
         markdown = "    [foo]: /url \"title\"\n\n[foo]\n",
     ) {
         pre {
             code {
-                +"[foo]: /url &quot;title&quot;"
+                +"[foo]: /url \"title\""
                 +"\n"
             }
         }
@@ -3206,17 +3308,21 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testBlockQuotesExample231() = doTest(
         markdown = "    > # Foo\n    > bar\n    > baz\n",
     ) {
         pre {
             code {
-                +"&gt; # Foo"
+                +"> # Foo"
                 +"\n"
-                +"&gt; bar"
+                +"> bar"
                 +"\n"
-                +"&gt; baz"
+                +"> baz"
                 +"\n"
             }
         }
@@ -4195,6 +4301,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testListItemsExample289() = doTest(
         markdown = "    1.  A paragraph\n        with two lines.\n\n            indented code\n\n        > A block quote.\n",
@@ -4209,7 +4319,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 +"        indented code"
                 +"\n"
                 +"\n"
-                +"    &gt; A block quote."
+                +"    > A block quote."
                 +"\n"
             }
         }
@@ -5210,6 +5320,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testCodeSpansExample343() = doTest(
@@ -5217,9 +5331,9 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             code {
-                +"&lt;a href=&quot;"
+                +"<a href=\""
             }
-            +"&quot;&gt;`"
+            +"\">`"
         }
     }
 
@@ -5237,6 +5351,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testCodeSpansExample345() = doTest(
@@ -5244,9 +5362,9 @@ class TestReactElementGenerator : ReactTestSupport {
     ) {
         div {
             code {
-                +"&lt;http://foo.bar."
+                +"<http://foo.bar."
             }
-            +"baz&gt;`"
+            +"baz>`"
         }
     }
 
@@ -5318,6 +5436,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample352() = doTest(
         markdown = "a*\"foo\"*\n",
@@ -5325,9 +5447,9 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"a"
             +"*"
-            +"&quot;"
+            +"\""
             +"foo"
-            +"&quot;"
+            +"\""
             +"*"
         }
     }
@@ -5391,6 +5513,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample358() = doTest(
         markdown = "a_\"foo\"_\n",
@@ -5398,9 +5524,9 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"a"
             +"_"
-            +"&quot;"
+            +"\""
             +"foo"
-            +"&quot;"
+            +"\""
             +"_"
         }
     }
@@ -5434,6 +5560,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample362() = doTest(
         markdown = "aa_\"bb\"_cc\n",
@@ -5441,9 +5571,9 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"aa"
             +"_"
-            +"&quot;"
+            +"\""
             +"bb"
-            +"&quot;"
+            +"\""
             +"_"
             +"cc"
         }
@@ -5646,6 +5776,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample379() = doTest(
         markdown = "a**\"foo\"**\n",
@@ -5654,9 +5788,9 @@ class TestReactElementGenerator : ReactTestSupport {
             +"a"
             +"*"
             +"*"
-            +"&quot;"
+            +"\""
             +"foo"
-            +"&quot;"
+            +"\""
             +"*"
             +"*"
         }
@@ -5719,6 +5853,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample384() = doTest(
         markdown = "a__\"foo\"__\n",
@@ -5727,9 +5865,9 @@ class TestReactElementGenerator : ReactTestSupport {
             +"a"
             +"_"
             +"_"
-            +"&quot;"
+            +"\""
             +"foo"
-            +"&quot;"
+            +"\""
             +"_"
             +"_"
         }
@@ -5872,6 +6010,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testEmphasisAndStrongEmphasisExample394() = doTest(
         markdown = "**foo \"*bar*\" foo**\n",
@@ -5880,11 +6022,11 @@ class TestReactElementGenerator : ReactTestSupport {
             strong {
                 +"foo"
                 +" "
-                +"&quot;"
+                +"\""
                 em {
                     +"bar"
                 }
-                +"&quot;"
+                +"\""
                 +" "
                 +"foo"
             }
@@ -7289,6 +7431,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample492() = doTest(
         markdown = "[link](<foo\\>)\n",
@@ -7298,19 +7444,23 @@ class TestReactElementGenerator : ReactTestSupport {
             +"link"
             +"]"
             +"("
-            +"&lt;"
-            +"foo&gt;"
+            +"<"
+            +"foo\\>"
             +")"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testLinksExample493() = doTest(
         markdown = "[a](<b)c\n[a](<b)c>\n[a](<b>c)\n",
     ) {
         div {
-            +"[a](&lt;b)c\n[a](&lt;b)c&gt;\n[a](<b>c)"
+            +"[a](<b)c\n[a](<b)c>\n[a](<b>c)"
         }
     }
 
@@ -7513,6 +7663,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample507() = doTest(
         markdown = "[link](/url \"title \"and\" title\")\n",
@@ -7524,15 +7678,15 @@ class TestReactElementGenerator : ReactTestSupport {
             +"("
             +"/url"
             +" "
-            +"&quot;"
+            +"\""
             +"title"
             +" "
-            +"&quot;"
+            +"\""
             +"and"
-            +"&quot;"
+            +"\""
             +" "
             +"title"
-            +"&quot;"
+            +"\""
             +")"
         }
     }
@@ -7630,6 +7784,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample514() = doTest(
         markdown = "[link \\[bar](/uri)\n",
@@ -7639,7 +7797,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 href = "/uri"
                 +"link"
                 +" "
-                +"[bar"
+                +"\\[bar"
             }
         }
     }
@@ -7871,6 +8029,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample528() = doTest(
         markdown = "[link \\[bar][ref]\n\n[ref]: /uri\n",
@@ -7880,7 +8042,7 @@ class TestReactElementGenerator : ReactTestSupport {
                 href = "/uri"
                 +"link"
                 +" "
-                +"[bar"
+                +"\\[bar"
             }
         }
     }
@@ -8129,6 +8291,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample544() = doTest(
         markdown = "[bar][foo\\!]\n\n[foo!]: /url\n",
@@ -8138,7 +8304,7 @@ class TestReactElementGenerator : ReactTestSupport {
             +"bar"
             +"]"
             +"["
-            +"foo!"
+            +"foo\\!"
             +"]"
         }
     }
@@ -8234,6 +8400,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample549() = doTest(
         markdown = "[bar\\\\]: /uri\n\n[bar\\\\]\n",
@@ -8241,7 +8411,7 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             a {
                 href = "/uri"
-                +"bar\\"
+                +"bar\\\\"
             }
         }
     }
@@ -8434,12 +8604,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testLinksExample562() = doTest(
         markdown = "\\[foo]\n\n[foo]: /url \"title\"\n",
     ) {
         div {
-            +"[foo"
+            +"\\[foo"
             +"]"
         }
     }
@@ -8795,6 +8969,9 @@ class TestReactElementGenerator : ReactTestSupport {
      * Ignored
      * Reason: Duplicates with obsidian link style
      * Related: [TestObsidianElement.testObsidianLink1]
+     *
+     Modified
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     @Ignore
@@ -8819,9 +8996,9 @@ class TestReactElementGenerator : ReactTestSupport {
             +" "
             +"/url"
             +" "
-            +"&quot;"
+            +"\""
             +"title"
-            +"&quot;"
+            +"\""
         }
     }
 
@@ -8838,13 +9015,17 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testImagesExample591() = doTest(
         markdown = "!\\[foo]\n\n[foo]: /url \"title\"\n",
     ) {
         div {
             +"!"
-            +"[foo"
+            +"\\[foo"
             +"]"
         }
     }
@@ -8854,7 +9035,7 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "\\![foo]\n\n[foo]: /url \"title\"\n",
     ) {
         div {
-            +"!"
+            +"\\!"
             a {
                 href = "/url"
                 title = "title"
@@ -8966,11 +9147,11 @@ class TestReactElementGenerator : ReactTestSupport {
         markdown = "<http://foo.bar/baz bim>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"http"
             +":"
             +"//foo.bar/baz bim"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -9013,64 +9194,84 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testAutolinksExample605() = doTest(
         markdown = "<foo\\+@bar.example.com>\n",
     ) {
         div {
-            +"&lt;"
-            +"foo+@bar.example.com"
-            +"&gt;"
+            +"<"
+            +"foo\\+@bar.example.com"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testAutolinksExample606() = doTest(
         markdown = "<>\n",
     ) {
         div {
-            +"&lt;"
-            +"&gt;"
+            +"<"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testAutolinksExample607() = doTest(
         markdown = "< http://foo.bar >\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +" "
             +"http"
             +":"
             +"//foo.bar"
             +" "
-            +"&gt;"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testAutolinksExample608() = doTest(
         markdown = "<m:abc>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"m"
             +":"
             +"abc"
-            +"&gt;"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testAutolinksExample609() = doTest(
         markdown = "<foo.bar.baz>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"foo.bar.baz"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -9184,54 +9385,66 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample617() = doTest(
         markdown = "<33> <__>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"33"
-            +"&gt;"
+            +">"
             +" "
-            +"&lt;"
+            +"<"
             +"_"
             +"_"
-            +"&gt;"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample618() = doTest(
         markdown = "<a h*#ref=\"hi\">\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"a h"
             +"*"
             +"#ref="
-            +"&quot;"
+            +"\""
             +"hi"
-            +"&quot;"
-            +"&gt;"
+            +"\""
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample619() = doTest(
         markdown = "<a href=\"hi'> <a href=hi'>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"a href="
-            +"&quot;"
+            +"\""
             +"hi"
             +"'"
-            +"&gt;"
+            +">"
             +" "
-            +"&lt;"
+            +"<"
             +"a href=hi"
             +"'"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -9239,28 +9452,30 @@ class TestReactElementGenerator : ReactTestSupport {
      * Modified
      * Reason: Overlapping with obsidian line breaking rule
      * Related: [TestObsidianElement.testObsidianLineBreak1]
+     *
+     * Reason: Disabled substitution of specific escape characters.
      */
     @Test
     fun testRawHTMLExample620() = doTest(
         markdown = "< a><\nfoo><bar/ >\n<foo bar=baz\nbim!bop />\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +" "
             +"a"
-            +"&gt;"
-            +"&lt;"
+            +">"
+            +"<"
             +"\n"
             br()
             +"foo"
-            +"&gt;"
-            +"&lt;"
+            +">"
+            +"<"
             +"bar/"
             +" "
-            +"&gt;"
+            +">"
             +"\n"
             br()
-            +"&lt;"
+            +"<"
             +"foo bar=baz"
             +"\n"
             br()
@@ -9269,22 +9484,26 @@ class TestReactElementGenerator : ReactTestSupport {
             +"bop"
             +" "
             +"/"
-            +"&gt;"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample621() = doTest(
         markdown = "<a href='bar'title=title>\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"a href="
             +"'"
             +"bar"
             +"'"
             +"title=title"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -9306,17 +9525,21 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample623() = doTest(
         markdown = "</a href=\"foo\">\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"/a href="
-            +"&quot;"
+            +"\""
             +"foo"
-            +"&quot;"
-            +"&gt;"
+            +"\""
+            +">"
         }
     }
 
@@ -9335,6 +9558,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     fun testRawHTMLExample625() = doTest(
         markdown = "foo <!-- not a comment -- two hyphens -->\n",
@@ -9342,7 +9569,7 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"foo"
             +" "
-            +"&lt;"
+            +"<"
             +"!"
             +"--"
             +" "
@@ -9353,10 +9580,14 @@ class TestReactElementGenerator : ReactTestSupport {
             +"two hyphens"
             +" "
             +"--"
-            +"&gt;"
+            +">"
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testRawHTMLExample626() = doTest(
@@ -9365,26 +9596,26 @@ class TestReactElementGenerator : ReactTestSupport {
         div {
             +"foo"
             +" "
-            +"&lt;"
+            +"<"
             +"!"
             +"--"
-            +"&gt;"
+            +">"
             +" "
             +"foo"
             +" "
             +"--"
-            +"&gt;"
+            +">"
         }
         div {
             +"foo"
             +" "
-            +"&lt;"
+            +"<"
             +"!"
             +"--"
             +" "
             +"foo"
             +"---"
-            +"&gt;"
+            +">"
         }
     }
 
@@ -9464,20 +9695,24 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: Disabled substitution of specific escape characters.
+     */
     @Test
     @Ignore
     fun testRawHTMLExample632() = doTest(
         markdown = "<a href=\"\\\"\">\n",
     ) {
         div {
-            +"&lt;"
+            +"<"
             +"a"
             +" "
             +"href="
-            +"&quot;"
-            +"&quot;"
-            +"&quot;"
-            +"&gt;"
+            +"\""
+            +"\""
+            +"\""
+            +">"
         }
     }
 
