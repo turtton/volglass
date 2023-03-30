@@ -304,10 +304,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testBackslashEscapesExample19() = doTest("~~~\n\\[\\]\n~~~\n") {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"\\[\\]"
                 +"\n"
             }
@@ -358,10 +364,13 @@ class TestReactElementGenerator : ReactTestSupport {
     /**
      * Modified
      * Reason: Disabled substitution of specific escape characters.
+     *
+     * Reason: By changing to attach a language information class to the code fence.
      */
     @Test
     fun testBackslashEscapesExample24() = doTest("``` foo\\+bar\nfoo\n```\n") {
         pre {
+            className = ClassName("language-foo\\+bar")
             code {
                 className = ClassName("language-foo\\+bar")
                 +"foo"
@@ -473,11 +482,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testEntityAndNumericCharacterReferencesExample34() = doTest(
         markdown = "``` f&ouml;&ouml;\nfoo\n```\n",
     ) {
         pre {
+            className = ClassName("language-f&ouml;&ouml;")
             code {
                 className = ClassName("language-f&ouml;&ouml;")
                 +"foo"
@@ -1672,13 +1686,17 @@ class TestReactElementGenerator : ReactTestSupport {
     /**
      * Modified
      * Reason: Disabled substitution of specific escape characters.
+     *
+     * Reason: By changing to attach a language information class to the code fence.
      */
     @Test
     fun testFencedCodeBlocksExample119() = doTest(
         markdown = "```\n<\n >\n```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"<"
                 +"\n"
                 +" >"
@@ -1690,13 +1708,17 @@ class TestReactElementGenerator : ReactTestSupport {
     /**
      * Modified
      * Reason: Disabled substitution of specific escape characters.
+     *
+     * Reason: By changing to attach a language information class to the code fence.
      */
     @Test
     fun testFencedCodeBlocksExample120() = doTest(
         markdown = "~~~\n<\n >\n~~~\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"<"
                 +"\n"
                 +" >"
@@ -1716,12 +1738,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample122() = doTest(
         markdown = "```\naaa\n~~~\n```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"~~~"
@@ -1730,12 +1758,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample123() = doTest(
         markdown = "~~~\naaa\n```\n~~~\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"```"
@@ -1744,12 +1778,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample124() = doTest(
         markdown = "````\naaa\n```\n``````\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"```"
@@ -1758,12 +1798,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample125() = doTest(
         markdown = "~~~~\naaa\n~~~\n~~~~\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"~~~"
@@ -1772,21 +1818,34 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample126() = doTest(
         markdown = "```\n",
     ) {
         pre {
-            code()
+            className = ClassName("language-")
+            code {
+                className = ClassName("language-")
+            }
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample127() = doTest(
         markdown = "`````\n\n```\naaa\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"\n"
                 +"```"
                 +"\n"
@@ -1796,13 +1855,19 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample128() = doTest(
         markdown = "> ```\n> aaa\n\nbbb\n",
     ) {
         blockquote {
             pre {
+                className = ClassName("language-")
                 code {
+                    className = ClassName("language-")
                     +"aaa"
                     +"\n"
                 }
@@ -1813,12 +1878,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample129() = doTest(
         markdown = "```\n\n  \n```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"\n"
                 +"  "
                 +"\n"
@@ -1826,21 +1897,34 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample130() = doTest(
         markdown = "```\n```\n",
     ) {
         pre {
-            code()
+            className = ClassName("language-")
+            code {
+                className = ClassName("language-")
+            }
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample131() = doTest(
         markdown = " ```\n aaa\naaa\n```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"aaa"
@@ -1849,12 +1933,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample132() = doTest(
         markdown = "  ```\naaa\n  aaa\naaa\n  ```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"aaa"
@@ -1865,12 +1955,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample133() = doTest(
         markdown = "   ```\n   aaa\n    aaa\n  aaa\n   ```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +" aaa"
@@ -1897,36 +1993,54 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample135() = doTest(
         markdown = "```\naaa\n  ```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample136() = doTest(
         markdown = "   ```\naaa\n  ```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
             }
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample137() = doTest(
         markdown = "```\naaa\n    ```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"    ```"
@@ -1946,12 +2060,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample139() = doTest(
         markdown = "~~~~~~\naaa\n~~~ ~~\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"aaa"
                 +"\n"
                 +"~~~ ~~"
@@ -1960,6 +2080,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample140() = doTest(
         markdown = "foo\n```\nbar\n```\nbaz\n",
@@ -1968,7 +2092,9 @@ class TestReactElementGenerator : ReactTestSupport {
             +"foo"
         }
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"bar"
                 +"\n"
             }
@@ -1978,6 +2104,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample141() = doTest(
         markdown = "foo\n---\n~~~\nbar\n~~~\n# baz\n",
@@ -1986,7 +2116,9 @@ class TestReactElementGenerator : ReactTestSupport {
             +"foo"
         }
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"bar"
                 +"\n"
             }
@@ -1996,11 +2128,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample142() = doTest(
         markdown = "```ruby\ndef foo(x)\n  return 3\nend\n```\n",
     ) {
         pre {
+            className = ClassName("language-ruby")
             code {
                 className = ClassName("language-ruby")
                 +"def foo(x)"
@@ -2013,11 +2150,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample143() = doTest(
         markdown = "~~~~    ruby startline=3 \$%@#\$\ndef foo(x)\n  return 3\nend\n~~~~~~~\n",
     ) {
         pre {
+            className = ClassName("language-ruby")
             code {
                 className = ClassName("language-ruby")
                 +"def foo(x)"
@@ -2030,11 +2172,16 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample144() = doTest(
         markdown = "````;\n````\n",
     ) {
         pre {
+            className = ClassName("language-;")
             code {
                 className = ClassName("language-;")
             }
@@ -2067,12 +2214,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testFencedCodeBlocksExample147() = doTest(
         markdown = "```\n``` aaa\n```\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"``` aaa"
                 +"\n"
             }
@@ -2992,12 +3145,18 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testLinkReferenceDefinitionsExample212() = doTest(
         markdown = "```\n[foo]: /url\n```\n\n[foo]\n",
     ) {
         pre {
+            className = ClassName("language-")
             code {
+                className = ClassName("language-")
                 +"[foo]: /url"
                 +"\n"
             }
@@ -3416,20 +3575,30 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testBlockQuotesExample237() = doTest(
         markdown = "> ```\nfoo\n```\n",
     ) {
         blockquote {
             pre {
-                code()
+                className = ClassName("language-")
+                code {
+                    className = ClassName("language-")
+                }
             }
         }
         div {
             +"foo"
         }
         pre {
-            code()
+            className = ClassName("language-")
+            code {
+                className = ClassName("language-")
+            }
         }
     }
 
@@ -3840,6 +4009,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testListItemsExample263() = doTest(
         markdown = "1.  foo\n\n    ```\n    bar\n    ```\n\n    baz\n\n    > bam\n",
@@ -3850,7 +4023,9 @@ class TestReactElementGenerator : ReactTestSupport {
                     +"foo"
                 }
                 pre {
+                    className = ClassName("language-")
                     code {
+                        className = ClassName("language-")
                         +"bar"
                         +"\n"
                     }
@@ -4100,6 +4275,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testListItemsExample278() = doTest(
         markdown = "-\n  foo\n-\n  ```\n  bar\n  ```\n-\n      baz\n",
@@ -4110,7 +4289,9 @@ class TestReactElementGenerator : ReactTestSupport {
             }
             li {
                 pre {
+                    className = ClassName("language-")
                     code {
+                        className = ClassName("language-")
                         +"bar"
                         +"\n"
                     }
@@ -4931,6 +5112,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testListsExample318() = doTest(
         markdown = "- a\n- ```\n  b\n\n\n  ```\n- c\n",
@@ -4941,7 +5126,9 @@ class TestReactElementGenerator : ReactTestSupport {
             }
             li {
                 pre {
+                    className = ClassName("language-")
                     code {
+                        className = ClassName("language-")
                         +"b"
                         +"\n"
                         +"\n"
@@ -4998,6 +5185,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testListsExample321() = doTest(
         markdown = "- a\n  > b\n  ```\n  c\n  ```\n- d\n",
@@ -5011,7 +5202,9 @@ class TestReactElementGenerator : ReactTestSupport {
                     }
                 }
                 pre {
+                    className = ClassName("language-")
                     code {
+                        className = ClassName("language-")
                         +"c"
                         +"\n"
                     }
@@ -5050,6 +5243,10 @@ class TestReactElementGenerator : ReactTestSupport {
         }
     }
 
+    /**
+     * Modified
+     * Reason: By changing to attach a language information class to the code fence.
+     */
     @Test
     fun testListsExample324() = doTest(
         markdown = "1. ```\n   foo\n   ```\n\n   bar\n",
@@ -5057,7 +5254,9 @@ class TestReactElementGenerator : ReactTestSupport {
         ol {
             li {
                 pre {
+                    className = ClassName("language-")
                     code {
+                        className = ClassName("language-")
                         +"foo"
                         +"\n"
                     }

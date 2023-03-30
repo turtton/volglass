@@ -26,7 +26,6 @@ import web.html.HTMLElement
 /**
  * Related [org.intellij.markdown.html.CodeFenceGeneratingProvider]
  */
-@Suppress("KDocUnresolvedReference")
 class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, private val mermaidRender: MermaidRender?) :
     NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent> where Parent : HTMLAttributes<HTMLElement>, Parent : ChildrenBuilder {
     override fun <Visitor> processNode(visitor: Visitor, markdownText: String, node: ASTNode) where Visitor : TagConsumer<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>, Visitor : org.intellij.markdown.ast.visitors.Visitor, Visitor : LeafVisitor {
@@ -80,9 +79,7 @@ class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, priva
             generateCodeBlock(codes, html, language)
         }
         visitor.consume {
-            if (html != null && language.isNotEmpty()) {
-                className = ClassName("language-$language")
-            }
+            className = ClassName("language-$language")
             codeElement()
         }
         visitor.consumeTagClose(pre.unsafeCast<IntrinsicType<HTMLAttributes<HTMLElement>>>())
@@ -90,9 +87,7 @@ class CodeFenceElementProcessor<Parent>(private val encoder: CodeEncoder?, priva
 
     private fun generateCodeBlock(codes: List<String>, html: String?, language: String): FC<Props> = FC {
         code {
-            if (language.isNotEmpty()) {
-                className = ClassName("language-$language")
-            }
+            className = ClassName("language-$language")
             if (html != null) {
                 dangerouslySetInnerHTML = jso {
                     __html = html

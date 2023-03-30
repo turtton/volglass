@@ -44,6 +44,17 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	);
 }
 
+const codeEncoder = (code, language) => {
+	let result: string;
+	try {
+		result = toHtml(refractor.highlight(code, language));
+	} catch (e) {
+		console.error("Failed to parse code block", e);
+		result = code;
+	}
+	return result;
+};
+
 let currentId = 0;
 const createUuid = () => `mermaid-${currentId++}`;
 const renderMermaid =
@@ -86,7 +97,7 @@ function MDContent({
 		`${content}`,
 		cacheData,
 		router,
-		(code, language) => toHtml(refractor.highlight(code, language)),
+		codeEncoder,
 		renderMermaid(useCurrentTheme() === "dark"),
 		renderTex,
 		Canvas,
