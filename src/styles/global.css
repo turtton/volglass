@@ -7,6 +7,11 @@
         @apply m-auto;
         @apply pl-4;
     }
+    ol {
+        @apply list-decimal;
+        @apply m-auto;
+        @apply pl-4;
+    }
 }
 
 html,
