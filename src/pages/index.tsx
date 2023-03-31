@@ -6,11 +6,7 @@ import Home, {
 
 export const Index = (prop: Prop) => Home(prop);
 
-/**
- * This id is related to [...id]$FIRST_PAGE()
- * {@link FIRST_PAGE}
- */
 export const getStaticProps = async () =>
-	getDefaultStaticProps({ params: { id: ["README"] } });
+	getDefaultStaticProps({ params: { id: [FIRST_PAGE()] } });
 
 export default Index;
