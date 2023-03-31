@@ -7,7 +7,7 @@ import Home, {
 export const Index = (prop: Prop) => Home(prop);
 
 /**
- * This id is related to FIRST_PAGE()
+ * This id is related to [...id]$FIRST_PAGE()
  * {@link FIRST_PAGE}
  */
 export const getStaticProps = async () =>
