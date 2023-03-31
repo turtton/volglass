@@ -125,7 +125,7 @@ export async function getStaticPaths(): Promise<{
 }> {
 	clearPublicDir();
 	const directoryData = getDirectoryData();
-	const searchIndex = getSearchIndex()
+	const searchIndex = getSearchIndex();
 	const slugs = await initCache(
 		JSON.stringify(directoryData),
 		JSON.stringify(searchIndex),
@@ -138,7 +138,7 @@ export async function getStaticPaths(): Promise<{
 	);
 	// TODO allows to put in image files in `posts` directory
 	const paths = slugs.map((p) => ({
-		params: { id: p.replace("/", "").split("/") },
+		params: { id: p.replace(/^\//, "").split("/") },
 	}));
 	return {
 		paths,
