@@ -17,6 +17,7 @@ FROM node:18-bullseye-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY posts ./
 
 # Install java11
 RUN apt -q update && apt -y -q install --no-install-recommends openjdk-11-jdk-headless
