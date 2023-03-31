@@ -29,8 +29,10 @@ val json = Json { ignoreUnknownKeys = true }
 // only available on initializing cache
 var embedTargets: MutableSet<FileNameString>? = null
 
-// CacheData + DirectoryTreeData
-val cacheData: KStore<Pair<CacheData, String>> = storeOf("volglass.cache")
+val cacheData: KStore<VolglassCache> = storeOf("volglass.cache")
+
+@Serializable
+data class VolglassCache(val cacheData: CacheData, val directoryTreeData: String, val searchIndex: String)
 
 @Serializable
 data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileNameInfo)
@@ -38,6 +40,7 @@ data class CacheData(val dependencyData: DependencyData, val fileNameInfo: FileN
 @JsExport
 fun initCache(
     directoryTreeData: String,
+    searchIndex: String,
     // -> filePath
     getAllFiles: () -> Array<String>,
     // -> absolute path for markdown folder (`post directory`)
@@ -107,14 +110,14 @@ fun initCache(
         dependencyData.embedContents[it] = readContent(path.path)
     }
 
-    cacheData.set(CacheData(dependencyData, fileNameInfo) to directoryTreeData)
+    cacheData.set(VolglassCache(CacheData(dependencyData, fileNameInfo), directoryTreeData, searchIndex))
     return@promise fileNameToSlug.values.map { it.slug }.toTypedArray()
 }
 
 @JsExport
 fun getCacheData(): Promise<Array<String>> = cacheScope.promise {
-    val (cacheData, directoryTreeData) = cacheData.get()!!
-    arrayOf(serialize(cacheData), directoryTreeData)
+    val (cacheData, directoryTreeData, searchIndex) = cacheData.get()!!
+    arrayOf(serialize(cacheData), directoryTreeData, searchIndex)
 }
 
 @JsExport

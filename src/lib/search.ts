@@ -1,5 +1,4 @@
-import { getAllMarkdownFiles, isFile } from "./io";
-import path from "path";
+import { getAllMarkdownFiles } from "./io";
 import fs from "fs";
 import { Transformer } from "./transformer";
 import { isJapanese, toKana, tokenize, toRomaji } from "wanakana";
@@ -21,15 +20,7 @@ export interface RawContent {
 }
 
 export function getSearchIndex(): SearchData[] {
-	const filePath = path.join(process.cwd(), "search-index.json");
-	if (fs.existsSync(filePath) && isFile(filePath)) {
-		const rawData = fs.readFileSync(filePath);
-		return JSON.parse(rawData.toString());
-	} else {
 		const result: SearchData[] = [];
-		try {
-			fs.rmSync(filePath);
-		} catch (ignore) {}
 		const filePaths = getAllMarkdownFiles();
 		filePaths.forEach((markdownFile) => {
 			const title = Transformer.parseFileNameFromPath(markdownFile);
@@ -71,7 +62,5 @@ export function getSearchIndex(): SearchData[] {
 					});
 				});
 		});
-		fs.writeFileSync(filePath, JSON.stringify(result), "utf-8");
 		return result;
-	}
 }

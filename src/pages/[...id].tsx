@@ -125,8 +125,10 @@ export async function getStaticPaths(): Promise<{
 }> {
 	clearPublicDir();
 	const directoryData = getDirectoryData();
+	const searchIndex = getSearchIndex()
 	const slugs = await initCache(
 		JSON.stringify(directoryData),
+		JSON.stringify(searchIndex),
 		getAllContentFilePaths,
 		getMarkdownFolder,
 		getPublicFolder,
@@ -149,8 +151,9 @@ export async function getStaticProps({
 }: {
 	params: { id: string[] };
 }): Promise<{ props: Prop }> {
-	const [cacheData, rawTreeData] = await getCacheData();
+	const [cacheData, rawTreeData, rawSearchIndex] = await getCacheData();
 	const tree: TreeData = JSON.parse(rawTreeData);
+	const searchIndex: SearchData[] = JSON.parse(rawSearchIndex);
 	let slugString = `/${params.id.join("/")}`;
 	const fileName = toFileName(slugString, cacheData);
 	const filePath = toFilePath(slugString, cacheData);
@@ -160,7 +163,6 @@ export async function getStaticProps({
 
 	const graphData = getLocalGraphData(slugString, cacheData);
 
-	const searchIndex = getSearchIndex();
 	return {
 		props: {
 			fileName,

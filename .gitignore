@@ -37,5 +37,4 @@ yarn-error.log*
 
 .vercel
 
-/search-index.json
 /volglass.cache
