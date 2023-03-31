@@ -97,8 +97,8 @@ jobs:
           curl -L -o temp.zip https://github.com/turtton/volglass-docs/archive/refs/heads/main.zip
           7z x temp.zip
           cp -r volglass-docs-main/posts .
-          ls .
-          ls posts
+          tree .
+          tree posts
 
       - name: Build
         uses: docker/build-push-action@v4
