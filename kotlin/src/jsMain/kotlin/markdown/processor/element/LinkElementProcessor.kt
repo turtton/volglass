@@ -59,8 +59,10 @@ abstract class LinkElementProcessor<Parent>(
         }
         if (slug != null) {
             val targetFile = slug.toFileName(duplicatedFile)
-            dependencyData.dependingLinks.getOrPut(fileName) { mutableSetOf() }.add(targetFile)
-            dependencyData.linkDependencies.getOrPut(targetFile) { mutableSetOf() }.add(fileName)
+            if (fileName != targetFile) {
+                dependencyData.dependingLinks.getOrPut(fileName) { mutableSetOf() }.add(targetFile)
+                dependencyData.linkDependencies.getOrPut(targetFile) { mutableSetOf() }.add(fileName)
+            }
 
             return Destination.Router(mediaSlug ?: slug)
         }
