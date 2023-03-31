@@ -24,7 +24,7 @@ export function getSearchIndex(): SearchData[] {
 		const filePaths = getAllMarkdownFiles();
 		filePaths.forEach((markdownFile) => {
 			const title = Transformer.parseFileNameFromPath(markdownFile);
-			if (title == null) {
+			if (title == null || title.match(/\.[a-zA-Z0-9]*$/)) {
 				return;
 			}
 			const rawTitle = isJapanese(title) ? toRomaji(title) : title;
