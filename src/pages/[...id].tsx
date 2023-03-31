@@ -125,7 +125,7 @@ export async function getStaticPaths(): Promise<{
 }> {
 	clearPublicDir();
 	const directoryData = getDirectoryData();
-	const searchIndex = getSearchIndex()
+	const searchIndex = getSearchIndex();
 	const slugs = await initCache(
 		JSON.stringify(directoryData),
 		JSON.stringify(searchIndex),
