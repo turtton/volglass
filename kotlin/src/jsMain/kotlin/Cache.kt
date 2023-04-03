@@ -61,6 +61,7 @@ fun initCache(
     val postFolder = getMarkdownFolder()
     val publicFolder = getPublicFolder()
     getAllFiles().forEach { filePath ->
+        if (filePath.contains(".gitkeep")) return@forEach
         var pathString = PathString(filePath)
         val plainFileName = pathString.toSlugString(postFolder).toPlainFileName()
         if (nameCache.contains(plainFileName.fileName)) {
