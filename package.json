@@ -10,8 +10,8 @@
     "build:kotlin": "cd kotlin && ./gradlew build --stacktrace",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push",
-    "format": "rome format --write src *.js && rome check --apply-suggested src *.js",
-    "lint": "rome check src *.js",
+    "format": "rome format --write src *.js && rome check --apply src *.js",
+    "lint": "tsc --noEmit && rome check src *.js",
     "export": "next export"
   },
   "dependencies": {
