@@ -33,8 +33,8 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 					width: node.width,
 					height: node.height,
 				}))
-				.with(P.instanceOf(NodeFile), (nodeFile) => ({
-					slug: `/${nodeFile.file as string}`.replace(".md", ""),
+				.with(P.instanceOf(NodeFile), (nodeFile: NodeFile) => ({
+					slug: `/${nodeFile.file}`.replace(".md", ""),
 					contentHtml: readContent(`/${nodeFile.file}`),
 					positions: findTargetSide(node.id, canvas.edges),
 					width: node.width,
