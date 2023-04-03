@@ -56,7 +56,7 @@
     "autoprefixer": "^10.4.13",
     "cytoscape": "^3.17.0",
     "postcss": "^8.4.21",
-    "rome": "^11.0.0",
+    "rome": "^12.0.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^5.0.0"
   },
