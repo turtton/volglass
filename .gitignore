@@ -5,6 +5,7 @@
 /.vscode
 /.yarn
 /kotlin/jflex*.jar
+/tsconfig.tsbuildinfo
 
 # dependencies
 /node_modules
