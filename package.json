@@ -45,7 +45,6 @@
     "@types/babel__core": "^7.20.0",
     "@types/cytoscape": "^3.19.9",
     "@types/d3": "^7.0.0",
-    "@types/eslint": "8.21.3",
     "@types/katex": "^0.16.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
