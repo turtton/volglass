@@ -154,7 +154,7 @@ export async function getStaticProps({
 	const [cacheData, rawTreeData, rawSearchIndex] = await getCacheData();
 	const tree: TreeData = JSON.parse(rawTreeData);
 	const searchIndex: SearchData[] = JSON.parse(rawSearchIndex);
-	let slugString = `/${params.id.join("/")}`;
+	const slugString = `/${params.id.join("/")}`;
 	const fileName = toFileName(slugString, cacheData);
 	const filePath = toFilePath(slugString, cacheData);
 	const markdownContent = isMediaFile(fileName) ? "" : readFileSync(filePath);
