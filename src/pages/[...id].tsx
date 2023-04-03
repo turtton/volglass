@@ -138,8 +138,8 @@ export async function getStaticPaths(): Promise<{
 	);
 	// TODO allows to put in image files in `posts` directory
 	const paths = slugs.map((p) => ({
-		params: { id: p.replace("/", "").split("/") },
-	}));
+		params: { id: p.replace(/^\//, "").split("/") },
+	})).filter((p) => p.params.id.length !== 0 && p.params.id[0] !== "");
 	return {
 		paths,
 		fallback: false,
