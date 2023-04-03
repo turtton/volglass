@@ -45,7 +45,9 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
-                implementation("io.github.xxfast:kstore:0.5.0")
+                implementation("io.github.xxfast:kstore:0.5.0")?.version?.also {
+                    implementation("io.github.xxfast:kstore-file:$it")
+                }
 
                 // I'm waiting for supporting to ESM package support!!!!!!!!!!
                 // implementation(npm("refractor", "4.8.1"))

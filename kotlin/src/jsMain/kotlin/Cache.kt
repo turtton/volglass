@@ -7,7 +7,7 @@ import external.MermaidRender
 import external.NextRouter
 import external.TexRender
 import io.github.xxfast.kstore.KStore
-import io.github.xxfast.kstore.storeOf
+import io.github.xxfast.kstore.file.storeOf
 import kotlin.js.Promise
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
