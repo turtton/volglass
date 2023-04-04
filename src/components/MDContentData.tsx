@@ -71,8 +71,9 @@ const renderMermaid =
 			});
 	};
 
-const renderTex = (content: string) =>
+const renderTex = (content: string, isNewLine: boolean) =>
 	katex.renderToString(content, {
+		displayMode: isNewLine,
 		throwOnError: false,
 		trust: true,
 		output: "mathml",
