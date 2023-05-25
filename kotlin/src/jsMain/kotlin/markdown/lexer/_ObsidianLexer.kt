@@ -1,3 +1,4 @@
+@file:Suppress("ktlint")
 package markdown.lexer
 
 import markdown.type.ObsidianTokenTypes.DOLLAR
