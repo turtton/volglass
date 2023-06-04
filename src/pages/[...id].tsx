@@ -158,9 +158,9 @@ export async function getStaticProps({
 	const tree: TreeData = JSON.parse(rawTreeData);
 	const searchIndex: SearchData[] = JSON.parse(rawSearchIndex);
 	const slugString = `/${params.id.join("/")}`;
-	const fileName = toFileName(slugString, cacheData);
+	const slugName = toFileName(slugString, cacheData);
 	const filePath = toFilePath(slugString, cacheData);
-	const markdownContent = isMediaFile(fileName) ? "" : readFileSync(filePath);
+	const markdownContent = isMediaFile(slugName) ? "" : readFileSync(filePath);
 	const flattenNodes = getFlattenArray(tree);
 	const backLinks = getBackLinks(slugString, cacheData, readFileSync);
 
@@ -168,7 +168,7 @@ export async function getStaticProps({
 
 	return {
 		props: {
-			slugName: fileName,
+			slugName,
 			markdownContent,
 			cacheData,
 			tree,
