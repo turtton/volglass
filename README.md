@@ -19,19 +19,8 @@ https://volglass.turtton.net
 Also, I fixed many issues that the original has.
 
 ## Getting started
-### Run on your local machine
 
-Steps to run it on your local machine:
-1. `npm init --yes`
-2. `npm install --save-dev volglass-cli`
-3. `npx volglass init`
-4. Put in your vault contents in `posts` directory.
-5. `npx volglass serve`
-6. Open this link in your browser http://localhost:3000/ 
-
-### Publish your page
-
-See [volglass-docs repository](https://github.com/turtton/volglass-docs) for an example.
+See [Getting Started](https://volglass.turtton.net/docs/learn/Getting+Started)
 
 ## For developers
 Instead of cloning this repository, I recommend to use [volglass-cli](https://github.com/turtton/volglass-cli).
