@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJsCompilation
+import org.jetbrains.kotlin.library.impl.buildKotlinLibrary
+
 plugins {
     kotlin("multiplatform") version "1.8.21"
     kotlin("plugin.serialization") version "1.8.21"
@@ -27,6 +30,7 @@ kotlin {
             }
         }
         binaries.library()
+        generateTypeScriptDefinitions()
     }
     sourceSets {
         val commonMain by getting {
