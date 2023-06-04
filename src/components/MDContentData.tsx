@@ -80,6 +80,7 @@ const renderTex = (content: string, isNewLine: boolean) =>
 	});
 
 export interface MDContentData {
+	slugName: string;
 	fileName: string;
 	content: string;
 	cacheData: string;
@@ -87,6 +88,7 @@ export interface MDContentData {
 }
 
 function MDContent({
+	slugName,
 	fileName,
 	content,
 	cacheData,
@@ -94,7 +96,7 @@ function MDContent({
 }: MDContentData): JSX.Element {
 	const router = useRouter();
 	const Content = getContent(
-		fileName,
+		slugName,
 		`${content}`,
 		cacheData,
 		router,
