@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalJsExport::class)
 
-import csstype.ClassName
 import external.CanvasRender
 import external.CodeEncoder
 import external.MermaidRender
@@ -14,13 +13,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.promise
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import markdown.convertMarkdownToReactElement
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.img
+import web.cssom.ClassName
 
 val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 

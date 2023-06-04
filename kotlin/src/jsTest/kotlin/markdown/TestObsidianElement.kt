@@ -1,6 +1,5 @@
 package markdown
 
-import csstype.ClassName
 import kotlin.test.Test
 import mysticfall.kotlin.react.test.ReactTestSupport
 import react.dom.html.ReactHTML.a
@@ -10,6 +9,7 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.li
 import react.dom.html.ReactHTML.strong
 import react.dom.html.ReactHTML.ul
+import web.cssom.ClassName
 
 class TestObsidianElement : ReactTestSupport {
     @Test

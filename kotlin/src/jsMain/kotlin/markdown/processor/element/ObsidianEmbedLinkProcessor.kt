@@ -4,7 +4,6 @@ import DependencyData
 import FileNameInfo
 import FileNameString
 import SlugString
-import csstype.ClassName
 import embedTargets
 import external.CodeEncoder
 import external.MermaidRender
@@ -23,6 +22,7 @@ import react.dom.html.ReactHTML.audio
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.img
 import react.dom.html.ReactHTML.strong
+import web.cssom.ClassName
 import web.html.HTMLElement
 
 /**

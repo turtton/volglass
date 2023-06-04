@@ -19,7 +19,8 @@ import web.html.HTMLOListElement
  */
 class OrderedListElementProcessor<Parent : HTMLAttributes<HTMLElement>> :
     SimpleElementNodeProcessor<
-        Parent, HTMLOListElement,
+        Parent,
+        HTMLOListElement,
         OlHTMLAttributes<HTMLOListElement>,
         IntrinsicType<OlHTMLAttributes<HTMLOListElement>>,
         >(ol) {

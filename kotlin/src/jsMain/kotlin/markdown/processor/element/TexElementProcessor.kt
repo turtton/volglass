@@ -1,6 +1,5 @@
 package markdown.processor.element
 
-import csstype.ClassName
 import external.TexRender
 import js.core.jso
 import markdown.LeafVisitor
@@ -13,6 +12,7 @@ import react.ChildrenBuilder
 import react.IntrinsicType
 import react.dom.html.HTMLAttributes
 import react.dom.html.ReactHTML.p
+import web.cssom.ClassName
 import web.html.HTMLElement
 
 class TexElementProcessor<Parent>(private val renderTex: TexRender?) : NodeProcessor<IntrinsicType<HTMLAttributes<HTMLElement>>, Parent>
