@@ -53,7 +53,10 @@ abstract class LinkElementProcessor<Parent>(
         val duplicatedFile = fileNameInfo.duplicatedFile
         val (mediaSlug, slug) = if (!destination.startsWith("http")) {
             val expectedFileNameString = SlugString("/$expectedFileName").toFileName(duplicatedFile)
-            fileNameToMediaSlug[expectedFileNameString] to fileNameToSlug[expectedFileNameString]
+            val blankRemoved = FileNameString(expectedFileNameString.fileName.replace(' ', '+'))
+            val mediaSlug = fileNameToMediaSlug[expectedFileNameString] ?: fileNameToMediaSlug[blankRemoved]
+            val slug = fileNameToSlug[expectedFileNameString] ?: fileNameToSlug[blankRemoved]
+            mediaSlug to slug
         } else {
             null to null
         }
