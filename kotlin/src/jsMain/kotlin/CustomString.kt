@@ -72,6 +72,8 @@ value class SlugString(val slug: String) {
 /**
  * Includes extension expect markdown(.md)
  *
+ * [fileName] is replaced blank to `+`
+ *
  * This may contain path if same name file exists.
  *
  * Related: [SlugString.toFileName]
@@ -109,6 +111,11 @@ fun toFilePath(slug: String, cacheData: String): String? {
 fun toFileName(slug: String, cacheData: String): String {
     val (_, fileNameInfo) = deserialize<CacheData>(cacheData)
     return SlugString(slug).toFileName(fileNameInfo.duplicatedFile).fileName
+}
+
+@JsExport
+fun toRawFileName(slug: String, cacheData: String): String? {
+    return SlugString(slug).toFilePath(deserialize(cacheData))?.path?.split('/')?.last()?.removeMdExtension()
 }
 
 @JsExport
