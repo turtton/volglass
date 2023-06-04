@@ -105,7 +105,7 @@ function MDContent({
 		renderTex,
 		Canvas,
 	);
-	if (fileName.match(".canvas")) {
+	if (slugName.match(".canvas")) {
 		return (
 			<>
 				<div className="mt-4 overflow-hidden overflow-y-auto px-8 w-full dark:text-white">
@@ -121,7 +121,7 @@ function MDContent({
 	return (
 		<div className="markdown-rendered">
 			<div className="mt-4 overflow-hidden overflow-y-auto px-8">
-				{fileName.match(/\.[a-zA-Z0-9]/) ? (
+				{slugName.match(/\.[a-zA-Z0-9]/) ? (
 					<strong>{fileName}</strong>
 				) : (
 					<h1>{fileName}</h1>
