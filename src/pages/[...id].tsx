@@ -11,6 +11,7 @@ import {
 	isMediaFile,
 	toFileName,
 	toFilePath,
+	toRawFileName,
 } from "volglass-backend";
 import {
 	clearPublicDir,
@@ -48,6 +49,7 @@ const DynamicGraph = dynamic(async () => await import("../components/Graph"), {
 });
 export interface Prop {
 	slugName: string;
+	fileName: string;
 	markdownContent: string;
 	cacheData: string;
 	tree: TreeData;
@@ -59,6 +61,7 @@ export interface Prop {
 
 export default function Home({
 	slugName,
+	fileName,
 	markdownContent,
 	cacheData,
 	backLinks,
@@ -105,7 +108,7 @@ export default function Home({
 				</div>
 				<MDContent
 					slugName={slugName}
-					fileName={tree.name}
+					fileName={fileName}
 					content={markdownContent}
 					cacheData={cacheData}
 					backLinks={backLinks}
@@ -159,6 +162,7 @@ export async function getStaticProps({
 	const searchIndex: SearchData[] = JSON.parse(rawSearchIndex);
 	const slugString = `/${params.id.join("/")}`;
 	const slugName = toFileName(slugString, cacheData);
+	const fileName = toRawFileName(slugString, cacheData) ?? slugName;
 	const filePath = toFilePath(slugString, cacheData);
 	const markdownContent = isMediaFile(slugName) ? "" : readFileSync(filePath);
 	const flattenNodes = getFlattenArray(tree);
@@ -169,6 +173,7 @@ export async function getStaticProps({
 	return {
 		props: {
 			slugName,
+			fileName,
 			markdownContent,
 			cacheData,
 			tree,
