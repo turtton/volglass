@@ -1,6 +1,5 @@
 package markdown.processor.element
 
-import csstype.ClassName
 import external.CodeEncoder
 import external.MermaidRender
 import js.core.jso
@@ -21,6 +20,7 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.pre
 import react.useEffect
 import react.useState
+import web.cssom.ClassName
 import web.html.HTMLElement
 
 /**

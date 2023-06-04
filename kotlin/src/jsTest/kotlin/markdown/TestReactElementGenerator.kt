@@ -1,6 +1,5 @@
 package markdown
 
-import csstype.ClassName
 import js.core.jso
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -27,6 +26,7 @@ import react.dom.html.ReactHTML.table
 import react.dom.html.ReactHTML.td
 import react.dom.html.ReactHTML.tr
 import react.dom.html.ReactHTML.ul
+import web.cssom.ClassName
 
 /**
  * Related [CommonMarkSpecTest.kt](https://github.com/JetBrains/markdown/blob/master/src/commonTest/kotlin/org/intellij/markdown/CommonMarkSpecTest.kt)
