@@ -47,16 +47,13 @@ abstract class LinkElementProcessor<Parent>(
         if (!resolveAnchors && destination.startsWith('#')) {
             return Destination.RawLink(destination)
         }
-        val expectedFileName = destination.toString().removePrefix("/").removeMdExtension()
         val fileNameToSlug = fileNameInfo.fileNameToSlug
         val fileNameToMediaSlug = fileNameInfo.fileNameToMediaSlug
         val duplicatedFile = fileNameInfo.duplicatedFile
         val (mediaSlug, slug) = if (!destination.startsWith("http")) {
+            val expectedFileName = destination.toString().removePrefix("/").removeMdExtension().replace(' ', '+')
             val expectedFileNameString = SlugString("/$expectedFileName").toFileName(duplicatedFile)
-            val blankRemoved = FileNameString(expectedFileNameString.fileName.replace(' ', '+'))
-            val mediaSlug = fileNameToMediaSlug[expectedFileNameString] ?: fileNameToMediaSlug[blankRemoved]
-            val slug = fileNameToSlug[expectedFileNameString] ?: fileNameToSlug[blankRemoved]
-            mediaSlug to slug
+            fileNameToMediaSlug[expectedFileNameString] to fileNameToSlug[expectedFileNameString]
         } else {
             null to null
         }
