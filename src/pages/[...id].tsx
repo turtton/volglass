@@ -9,7 +9,6 @@ import {
 	getCacheData,
 	initCache,
 	isMediaFile,
-	toFileName,
 	toFilePath,
 } from "volglass-backend";
 import {
@@ -157,7 +156,7 @@ export async function getStaticProps({
 	const tree: TreeData = JSON.parse(rawTreeData);
 	const searchIndex: SearchData[] = JSON.parse(rawSearchIndex);
 	const slugString = `/${params.id.join("/")}`;
-	const fileName = toFileName(slugString, cacheData);
+	const fileName = tree.name;
 	const filePath = toFilePath(slugString, cacheData);
 	const markdownContent = isMediaFile(fileName) ? "" : readFileSync(filePath);
 	const flattenNodes = getFlattenArray(tree);
