@@ -13,9 +13,9 @@ RUN yarn global add pnpm && pnpm i
 
 FROM gradle:8.1.1-jdk11 AS kdeps
 WORKDIR /app
-COPY kotlin/gradle/wrapper/gradle-wrapper.properties kotlin/build.gradle.kts kotlin/gradle.properties kotlin/settings.gradle.kts kotlin/gradlew kotlin/gradlew.bat kotlin/kotlin-js-store ./kotlin/
+COPY kotlin/*gradle* kotlin/kotlin-js-store ./kotlin/
 WORKDIR /app/kotlin
-RUN gradle wrap && chmod +x gradlew && ./gradlew assemble
+RUN gradle clean assemble --no-daemon > /dev/null 2>&1 || true
 
 
 # Rebuild the source code only when needed
@@ -26,7 +26,8 @@ WORKDIR /app
 RUN apt -q update && apt -y -q install --no-install-recommends openjdk-11-jdk-headless
 
 COPY --from=ndeps /app/node_modules ./node_modules
-COPY --from=kdeps /app/kotlin/build /app/kotlin/.gradle ./kotlin/
+COPY --from=kdeps /app/kotlin ./kotlin
+COPY --from=kdeps /root/.gradle /root/.gradle
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -34,7 +35,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn global add pnpm && pnpm run build
+RUN yarn global add pnpm && pnpm run buildnd
 
 # If using npm comment out above and use below instead
 # RUN npm run build
