@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "1.8.21"
-    kotlin("plugin.serialization") version "1.8.21"
-    id("org.jmailen.kotlinter") version "3.14.0"
+    kotlin("multiplatform") version "1.8.22"
+    kotlin("plugin.serialization") version "1.8.22"
+    id("org.jmailen.kotlinter") version "3.15.0"
 }
 
 group = "net.turtton"
@@ -37,7 +37,7 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.554"))
+                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.565"))
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")

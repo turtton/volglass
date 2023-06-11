@@ -213,6 +213,16 @@ packages:
       stylis: 4.1.3
     dev: false
 
+  /@emotion/cache@11.11.0:
+    resolution: {integrity: sha512-P34z9ssTCBi3e9EI1ZsWpNHcfY1r09ZO0rZbRO2ob3ZQMnFI35jB536qoXbkdesr5EUhYi22anuEJuyxifaqAQ==}
+    dependencies:
+      '@emotion/memoize': 0.8.1
+      '@emotion/sheet': 1.2.2
+      '@emotion/utils': 1.2.1
+      '@emotion/weak-memoize': 0.3.1
+      stylis: 4.2.0
+    dev: false
+
   /@emotion/hash@0.9.0:
     resolution: {integrity: sha512-14FtKiHhy2QoPIzdTcvh//8OyBlknNs2nXRwIhG904opCby3l+9Xaf/wuPvICBF0rc1ZCNBd3nKe9cd2mecVkQ==}
     dev: false
@@ -227,6 +237,10 @@ packages:
     resolution: {integrity: sha512-G/YwXTkv7Den9mXDO7AhLWkE3q+I92B+VqAE+dYG4NGPaHZGvt3G8Q0p9vmE+sq7rTGphUbAvmQ9YpbfMQGGlA==}
     dev: false
 
+  /@emotion/memoize@0.8.1:
+    resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
+    dev: false
+
   /@emotion/react@11.10.6(@types/react@18.0.28)(react@18.2.0):
     resolution: {integrity: sha512-6HT8jBmcSkfzO7mc+N1L9uwvOnlcGoix8Zn7srt+9ga0MjREo6lRpuVX0kzo6Jp6oTqDhREOFsygN6Ew4fEQbw==}
     peerDependencies:
@@ -238,7 +252,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@emotion/babel-plugin': 11.10.6
-      '@emotion/cache': 11.10.5
+      '@emotion/cache': 11.11.0
       '@emotion/serialize': 1.1.1
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.0(react@18.2.0)
       '@emotion/utils': 1.2.0
@@ -274,6 +288,10 @@ packages:
 
   /@emotion/sheet@1.2.1:
     resolution: {integrity: sha512-zxRBwl93sHMsOj4zs+OslQKg/uhF38MB+OMKoCrVuS0nyTkqnau+BM3WGEoOptg9Oz45T/aIGs1qbVAsEFo3nA==}
+    dev: false
+
+  /@emotion/sheet@1.2.2:
+    resolution: {integrity: sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA==}
     dev: false
 
   /@emotion/styled@11.10.6(@emotion/react@11.10.6)(@types/react@18.0.28)(react@18.2.0):
@@ -313,8 +331,16 @@ packages:
     resolution: {integrity: sha512-sn3WH53Kzpw8oQ5mgMmIzzyAaH2ZqFEbozVVBSYp538E06OSE6ytOp7pRAjNQR+Q/orwqdQYJSe2m3hCOeznkw==}
     dev: false
 
+  /@emotion/utils@1.2.1:
+    resolution: {integrity: sha512-Y2tGf3I+XVnajdItskUCn6LX+VUDmP6lTL4fcqsXAv43dnlbZiuW4MWQW38rW/BVWSE7Q/7+XQocmpnRYILUmg==}
+    dev: false
+
   /@emotion/weak-memoize@0.3.0:
     resolution: {integrity: sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==}
+    dev: false
+
+  /@emotion/weak-memoize@0.3.1:
+    resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==}
     dev: false
 
   /@mui/base@5.0.0-alpha.122(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0):
@@ -487,7 +513,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.21.0
-      '@emotion/cache': 11.10.5
+      '@emotion/cache': 11.11.0
       '@emotion/react': 11.10.6(@types/react@18.0.28)(react@18.2.0)
       '@emotion/styled': 11.10.6(@emotion/react@11.10.6)(@types/react@18.0.28)(react@18.2.0)
       csstype: 3.1.1
@@ -2615,6 +2641,10 @@ packages:
 
   /stylis@4.1.3:
     resolution: {integrity: sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==}
+    dev: false
+
+  /stylis@4.2.0:
+    resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
     dev: false
 
   /supports-color@5.5.0:
