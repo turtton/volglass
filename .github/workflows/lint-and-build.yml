@@ -100,24 +100,9 @@ jobs:
           7z x temp.zip
           cp -r volglass-docs-main/posts .
 
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Build
         uses: docker/build-push-action@v4
         with:
           file: ./Dockerfile
           push: false
           context: .
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-      # https://docs.docker.com/build/ci/github-actions/cache/#local-cache
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
