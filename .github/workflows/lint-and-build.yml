@@ -62,12 +62,14 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
-        name: Setup pnpm cache
+        name: Setup next cache
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: |
+            ${{ github.workspace }}/.next/cache
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-next-store-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-next-store-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Install dependencies
         run: pnpm install
