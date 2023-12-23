@@ -27,7 +27,7 @@ function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
 				style={{ width: data.width, height: data.height }}
 				onClick={() => {
 					if (data.slug !== undefined) {
-						void router.push(data.slug);
+						void router.push(data.slug?.replace(/ /g, '+'));
 					}
 				}}
 			>
