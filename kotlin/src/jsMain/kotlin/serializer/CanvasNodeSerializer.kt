@@ -20,7 +20,7 @@ object CanvasNodeSerializer : KSerializer<CanvasNode> {
             else -> error("Unknown node type:${surrogate.type}")
         }
         return surrogate.run {
-            CanvasNode(id, x, y, width, height, nodeData)
+            CanvasNode(id, x, y, width, height, nodeData, color)
         }
     }
 
@@ -33,11 +33,21 @@ object CanvasNodeSerializer : KSerializer<CanvasNode> {
         val file = if (nodeData is NodeFile) nodeData.file else null
         val text = if (nodeData is NodeText) nodeData.text else null
         value.run {
-            val surrogate = CanvasNodeSurrogate(id, x, y, width, height, type, file, text)
+            val surrogate = CanvasNodeSurrogate(id, x, y, width, height, type, file, text, color)
             CanvasNodeSurrogate.serializer().serialize(encoder, surrogate)
         }
     }
 
     @Serializable
-    data class CanvasNodeSurrogate(val id: String, val x: Int, val y: Int, val width: Int, val height: Int, val type: String, val file: String? = null, val text: String? = null)
+    data class CanvasNodeSurrogate(
+        val id: String,
+        val x: Int,
+        val y: Int,
+        val width: Int,
+        val height: Int,
+        val type: String,
+        val file: String? = null,
+        val text: String? = null,
+        val color: String? = null,
+    )
 }
