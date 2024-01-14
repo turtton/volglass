@@ -94,7 +94,8 @@ fun initCache(
             canvasData.nodes
                 .mapNotNull { node -> (node.nodeData as? NodeFile)?.file }
                 .forEach { file ->
-                    val nodeFileName = SlugString("/${file.removeMdExtension()}").toFileName(duplicatedFile)
+                    val slugString = "/${file.replace(' ', '+').removeMdExtension()}"
+                    val nodeFileName = SlugString(slugString).toFileName(duplicatedFile)
                     if (!nodeFileName.isMediaFile) {
                         embedTargets!!.add(nodeFileName)
                     }

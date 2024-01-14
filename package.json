@@ -22,7 +22,7 @@
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
-    "@mui/lab": "latest",
+    "@mui/x-tree-view": "latest",
     "@mui/material": "latest",
     "@types/wanakana": "^4.0.3",
     "directory-tree": "^3.2.2",
