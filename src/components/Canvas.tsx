@@ -28,7 +28,7 @@ const NODE_STYLES = {
 	"4": "bg-green-400/50 border-green-400",
 	"5": "bg-cyan-400/50 border-cyan-400",
 	"6": "bg-violet-500/50 border-violet-500",
-}
+};
 
 const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 	const nodes = canvas.nodes.map(
@@ -65,7 +65,7 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 			sourceHandle: convertSideData(edge.fromSide),
 			target: edge.toNode,
 			targetHandle: convertSideData(edge.toSide),
-			labelBgStyle: {opacity: 0.5},
+			labelBgStyle: { opacity: 0.5 },
 			label: edge.label,
 		}),
 	);
