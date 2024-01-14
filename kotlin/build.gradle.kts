@@ -1,3 +1,16 @@
+buildscript {
+    configurations.classpath {
+        resolutionStrategy {
+            val ktlintVersion = "0.48.0"
+            force(
+                // "com.pinterest.ktlint:ktlint-rule-engine:$ktlintVersion",
+                // "com.pinterest.ktlint:ktlint-rule-engine-core:$ktlintVersion",
+                "com.pinterest.ktlint:ktlint-cli-reporter-core:$ktlintVersion",
+                "com.pinterest.ktlint:ktlint-ruleset-standard:$ktlintVersion",
+            )
+        }
+    }
+}
 plugins {
     kotlin("multiplatform") version "1.8.22"
     kotlin("plugin.serialization") version "1.8.22"
