@@ -20,7 +20,7 @@ jobs:
       - name: Lint
         uses: musichin/ktlint-check@v2
         with:
-          ktlint_version: '0.48.0'
+          ktlint-version: '0.48.0'
           patterns: |
             ./kotlin/**/**.kt
             !./kotlin/**/generated/**
