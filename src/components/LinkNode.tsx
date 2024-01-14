@@ -1,6 +1,6 @@
+import { useRouter } from "next/router";
 import { FC, memo } from "react";
 import { Handle, NodeProps, Position } from "reactflow";
-import { useRouter } from "next/router";
 
 export interface LinkData {
 	slug?: string;
@@ -23,7 +23,7 @@ function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
 	return (
 		<>
 			{/* TODO Implement onKeyDown event
-									 rome-ignore lint: lint/a11y.useKeyWithClickEvents*/}
+									 biome-ignore lint: lint/a11y.useKeyWithClickEvents*/}
 			<div
 				className={className}
 				style={{ width: data.width, height: data.height }}

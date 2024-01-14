@@ -1,8 +1,8 @@
-import { getAllMarkdownFiles } from "./io";
 import fs from "fs";
-import { Transformer } from "./transformer";
-import { isJapanese, toKana, tokenize, toRomaji } from "wanakana";
+import { isJapanese, toKana, toRomaji, tokenize } from "wanakana";
+import { getAllMarkdownFiles } from "./io";
 import { getRouterPath } from "./slug";
+import { Transformer } from "./transformer";
 
 export interface SearchData {
 	title: string;
@@ -22,19 +22,19 @@ export interface RawContent {
 export function getSearchIndex(): SearchData[] {
 	const result: SearchData[] = [];
 	const filePaths = getAllMarkdownFiles();
-	filePaths.forEach((markdownFile) => {
+	for (const markdownFile of filePaths) {
 		const title = Transformer.parseFileNameFromPath(markdownFile);
 		if (title == null || title.match(/\.[a-zA-Z0-9]*$/)) {
-			return;
+			break;
 		}
 		const rawTitle = isJapanese(title) ? toRomaji(title) : title;
 		const content = fs.readFileSync(markdownFile);
 		if (content === null || content === undefined) {
-			return;
+			break;
 		}
 		const path = getRouterPath(`${title}.md`);
 		if (path === null) {
-			return;
+			break;
 		}
 		content
 			.toString()
@@ -61,6 +61,6 @@ export function getSearchIndex(): SearchData[] {
 					rawContent,
 				});
 			});
-	});
+	}
 	return result;
 }

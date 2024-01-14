@@ -1,12 +1,12 @@
-import Footer from "./Footer";
-import { useRouter } from "next/router";
-import { deserializeBackLinks, getContent } from "volglass-backend";
-import { refractor } from "refractor/lib/all";
 import { toHtml } from "hast-util-to-html";
-import mermaid from "mermaid";
-import { useCurrentTheme } from "./ThemeSwitcher";
 import katex from "katex";
+import mermaid from "mermaid";
+import { useRouter } from "next/router";
+import { refractor } from "refractor/lib/all";
+import { deserializeBackLinks, getContent } from "volglass-backend";
 import Canvas from "./Canvas";
+import Footer from "./Footer";
+import { useCurrentTheme } from "./ThemeSwitcher";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -20,7 +20,7 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 						{linkList.map((aLink) => (
 							<div key={aLink.slug}>
 								{/* TODO Implement onKeyDown event
-									 rome-ignore lint: lint/a11y.useKeyWithClickEvents*/}
+									 biome-ignore lint: lint/a11y.useKeyWithClickEvents*/}
 								<div
 									className="backlink text-text-accent hover:text-text-accent-hover dark:dark-text-accent dark:hover:dark-text-accent-hover"
 									onClick={() => {

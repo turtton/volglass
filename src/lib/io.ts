@@ -7,7 +7,7 @@ export function getAllMarkdownFiles(): string[] {
 
 export function getFiles(dir: string): string[] {
 	let results: string[] = [];
-	fs.readdirSync(dir).forEach(function (file) {
+	for (let file of fs.readdirSync(dir)) {
 		file = `${dir}/${file}`;
 		const stat = fs.statSync(file);
 		if (stat?.isDirectory()) {
@@ -17,7 +17,7 @@ export function getFiles(dir: string): string[] {
 			/* Is a file */
 			results.push(file);
 		}
-	});
+	}
 	return results.filter((f) => f !== ".gitignore");
 }
 
@@ -75,9 +75,9 @@ export function copyToPublicFolder(targetPath: string): string {
 }
 
 export function clearPublicDir(): void {
-	fs.readdirSync(getPublicFolder()).forEach((file) => {
+	for (const file of fs.readdirSync(getPublicFolder())) {
 		if (!file.endsWith("favicon.ico")) {
 			fs.rmSync(file, { recursive: true, force: true });
 		}
-	});
+	}
 }

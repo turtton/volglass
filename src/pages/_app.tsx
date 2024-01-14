@@ -1,9 +1,9 @@
+import { AppProps } from "next/app";
 import "reactflow/dist/style.css";
 import "../styles/global.css";
-import "../styles/style.css";
-import "../styles/prism.css";
 import "../styles/prism-dark.css";
-import { AppProps } from "next/app";
+import "../styles/prism.css";
+import "../styles/style.css";
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
 	return <Component {...pageProps} />;
