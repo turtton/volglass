@@ -39,7 +39,7 @@
     "react-dom": "^18.2.0",
     "reactflow": "^11.6.1",
     "refractor": "^4.8.1",
-    "ts-pattern": "^4.1.4",
+    "ts-pattern": "^5.0.0",
     "volglass-backend": "link:kotlin/build/dist/js/productionLibrary",
     "wanakana": "^5.0.2"
   },
