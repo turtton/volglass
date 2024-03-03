@@ -7,6 +7,7 @@ import { deserializeBackLinks, getContent } from "volglass-backend";
 import Canvas from "./Canvas";
 import Footer from "./Footer";
 import { useCurrentTheme } from "./ThemeSwitcher";
+import { Nodes } from "hast-util-to-html/lib";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
@@ -44,10 +45,10 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	);
 }
 
-const codeEncoder = (code, language) => {
+const codeEncoder = (code: string, language: string) => {
 	let result: string;
 	try {
-		result = toHtml(refractor.highlight(code, language));
+		result = toHtml(refractor.highlight(code, language) as Nodes);
 	} catch (e) {
 		console.error("Failed to parse code block", e);
 		result = code;
