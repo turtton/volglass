@@ -1,4 +1,5 @@
 import { DirectoryTree } from "directory-tree";
+import { getMarkdownFolder } from "./io";
 import { getRouterPath } from "./slug";
 
 export interface TreeData {
@@ -16,7 +17,7 @@ export function convertTreeData(thisObject: DirectoryTree): TreeData {
 	const newObject: TreeData = {
 		name: objectName.replace(".md", ""),
 		children,
-		id: routerPath ?? objectName,
+		id: thisObject.path.replace(getMarkdownFolder(), ""),
 		routePath: routerPath,
 	};
 
