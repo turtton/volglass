@@ -1,4 +1,5 @@
 import { toHtml } from "hast-util-to-html";
+import { Nodes } from "hast-util-to-html/lib";
 import katex from "katex";
 import mermaid from "mermaid";
 import { useRouter } from "next/router";
@@ -44,10 +45,10 @@ function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	);
 }
 
-const codeEncoder = (code, language) => {
+const codeEncoder = (code: string, language: string) => {
 	let result: string;
 	try {
-		result = toHtml(refractor.highlight(code, language));
+		result = toHtml(refractor.highlight(code, language) as Nodes);
 	} catch (e) {
 		console.error("Failed to parse code block", e);
 		result = code;

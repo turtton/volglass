@@ -28,7 +28,7 @@
     "directory-tree": "^3.2.2",
     "fs": "^0.0.1-security",
     "fuse.js": "^6.6.2",
-    "hast-util-to-html": "^8.0.4",
+    "hast-util-to-html": "^9.0.0",
     "jotai": "^2.0.1",
     "katex": "^0.16.4",
     "mermaid": "^10.0.2",
