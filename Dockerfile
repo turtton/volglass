@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 RUN yarn global add pnpm && pnpm i
 
-FROM gradle:8.1.1-jdk11 AS kdeps
+FROM gradle:8.6.0-jdk11 AS kdeps
 WORKDIR /app
 COPY kotlin/*gradle* kotlin/kotlin-js-store ./kotlin/
 WORKDIR /app/kotlin
