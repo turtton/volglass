@@ -1,4 +1,5 @@
 import { toHtml } from "hast-util-to-html";
+import { Nodes } from "hast-util-to-html/lib";
 import katex from "katex";
 import mermaid from "mermaid";
 import { useRouter } from "next/router";
@@ -7,7 +8,6 @@ import { deserializeBackLinks, getContent } from "volglass-backend";
 import Canvas from "./Canvas";
 import Footer from "./Footer";
 import { useCurrentTheme } from "./ThemeSwitcher";
-import { Nodes } from "hast-util-to-html/lib";
 
 function BackLinks({ backLink }: { backLink: string }): JSX.Element {
 	const linkList = deserializeBackLinks(backLink);
