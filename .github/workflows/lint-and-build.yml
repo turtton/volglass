@@ -25,8 +25,16 @@ jobs:
             ./kotlin/**/**.kt
             !./kotlin/**/generated/**
 
+  check-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: biomejs/setup-biome@v2
+      - name: Run Biome
+        run: biome ci src
+
   lint-and-build:
-    needs: check-kotlin
+    needs: [ check-kotlin, check-typescript ]
     runs-on: ubuntu-latest
 
     steps:
@@ -73,9 +81,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Lint
-        run: pnpm run lint
 
       - name: Download template contents
         run: |
