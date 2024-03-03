@@ -52,7 +52,7 @@
     "@types/react": "^18.0.27",
     "@types/react-cytoscapejs": "^1.2.2",
     "@types/react-dom": "^18.0.11",
-    "@types/unist": "^2.0.6",
+    "@types/unist": "^3.0.0",
     "@types/uuid": "^9.0.0",
     "autoprefixer": "^10.4.13",
     "cytoscape": "^3.17.0",
