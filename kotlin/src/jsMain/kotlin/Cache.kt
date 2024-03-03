@@ -65,12 +65,14 @@ fun initCache(
         var pathString = PathString(filePath)
         val plainFileName = pathString.toSlugString(postFolder).toPlainFileName()
         if (nameCache.contains(plainFileName.fileName)) {
-            duplicatedFile += plainFileName.fileName
-            val duplicatedPath = fileNameToPath.remove(plainFileName) ?: error("DuplicatedName:$plainFileName is not found in fileNameToPath")
-            val duplicatedFileName = duplicatedPath.toFileName(postFolder, nameCache)
-            fileNameToPath[duplicatedFileName] = duplicatedPath
-            val duplicatedSlug = fileNameToSlug.remove(plainFileName)!!
-            fileNameToSlug[duplicatedFileName] = duplicatedSlug
+            val duplicatedPath = fileNameToPath.remove(plainFileName)
+            if (duplicatedPath != null) {
+                duplicatedFile += plainFileName.fileName
+                val duplicatedFileName = duplicatedPath.toFileName(postFolder, nameCache)
+                fileNameToPath[duplicatedFileName] = duplicatedPath
+                val duplicatedSlug = fileNameToSlug.remove(plainFileName)!!
+                fileNameToSlug[duplicatedFileName] = duplicatedSlug
+            }
         }
         val fileName = pathString.toFileName(postFolder, nameCache)
         val slug = SlugString(toSlug(filePath))
