@@ -75,8 +75,8 @@ dependencies:
     specifier: ^4.1.4
     version: 4.3.0
   volglass-backend:
-    specifier: link:kotlin/build/productionLibrary
-    version: link:kotlin/build/productionLibrary
+    specifier: link:kotlin/build/dist/js/productionLibrary
+    version: link:kotlin/build/dist/js/productionLibrary
   wanakana:
     specifier: ^5.0.2
     version: 5.3.1
