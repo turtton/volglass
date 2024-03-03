@@ -80,15 +80,14 @@ export function getDirectoryData(): TreeData {
 	return convertTreeData(filteredDirectory);
 }
 
-export function getRouterPath(fileName: string): string | null {
+export function getRouterPath(path: string): string | null {
 	const routerPath = getAllSlugs().find((slug) => {
-		const slugFileName = Transformer.parseFileNameFromPath(toFilePath(slug));
 		return (
-			Transformer.normalizeFileName(slugFileName ?? "") ===
-			Transformer.normalizeFileName(fileName)
+			Transformer.normalizeFileName(slug ?? "") ===
+			Transformer.normalizeFileName(toSlug(path))
 		);
 	});
-	const nameAndExtension = fileName.split(".");
+	const nameAndExtension = path.split(".");
 	return nameAndExtension.length > 1 && routerPath !== undefined
 		? routerPath
 		: null;
