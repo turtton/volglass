@@ -1,6 +1,6 @@
 import { DirectoryTree } from "directory-tree";
 import { getMarkdownFolder } from "./io";
-import { getRouterPath, toSlug } from "./slug";
+import { getRouterPath } from "./slug";
 
 export interface TreeData {
 	name: string;
