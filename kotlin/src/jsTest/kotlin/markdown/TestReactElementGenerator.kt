@@ -1,6 +1,6 @@
 package markdown
 
-import js.core.jso
+import js.objects.jso
 import kotlin.test.Ignore
 import kotlin.test.Test
 import mysticfall.kotlin.react.test.ReactTestSupport

@@ -16,6 +16,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import markdown.convertMarkdownToReactElement
+import okio.Path.Companion.toPath
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.img
@@ -28,7 +29,7 @@ val json = Json { ignoreUnknownKeys = true }
 // only available on initializing cache
 var embedTargets: MutableSet<FileNameString>? = null
 
-val cacheData: KStore<VolglassCache> = storeOf("volglass.cache")
+val cacheData: KStore<VolglassCache> = storeOf("volglass.cache".toPath())
 
 @Serializable
 data class VolglassCache(val cacheData: CacheData, val directoryTreeData: String, val searchIndex: String)

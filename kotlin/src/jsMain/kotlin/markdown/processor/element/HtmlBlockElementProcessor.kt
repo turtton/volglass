@@ -1,6 +1,6 @@
 package markdown.processor.element
 
-import js.core.jso
+import js.objects.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor

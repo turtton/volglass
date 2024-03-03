@@ -2,7 +2,7 @@ package markdown.processor.element
 
 import external.CodeEncoder
 import external.MermaidRender
-import js.core.jso
+import js.objects.jso
 import markdown.LeafVisitor
 import markdown.TagConsumer
 import markdown.processor.NodeProcessor

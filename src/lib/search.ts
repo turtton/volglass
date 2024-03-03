@@ -44,7 +44,14 @@ export function getSearchIndex(): SearchData[] {
 				let rawContent: RawContent | null = null;
 				if (isJapanese(line)) {
 					const raw = toRomaji(line);
-					const kenized = tokenize(line);
+					const kenized = tokenize(line).map(
+						(t: string | { type: string; value: string }) => {
+							if (typeof t === "string") {
+								return t;
+							}
+							return t.value;
+						},
+					);
 					const kanaizedRomaji = kenized.map((k) => toRomaji(toKana(k)));
 					rawContent = {
 						raw,
