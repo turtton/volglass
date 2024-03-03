@@ -1,9 +1,5 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import Layout from "../components/Layout";
-import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
-import { getLocalGraphData, LocalGraphData } from "../lib/graph";
-import { getFlattenArray, TreeData } from "../lib/markdown";
-import { getSearchIndex, SearchData } from "../lib/search";
 import {
 	getBackLinks,
 	getCacheData,
@@ -13,6 +9,11 @@ import {
 	toFilePath,
 	toRawFileName,
 } from "volglass-backend";
+import FolderTree from "../components/FolderTree";
+import Layout from "../components/Layout";
+import MDContent from "../components/MDContentData";
+import { SearchBar } from "../components/Search";
+import { LocalGraphData, getLocalGraphData } from "../lib/graph";
 import {
 	clearPublicDir,
 	copyToPublicFolder,
@@ -20,10 +21,9 @@ import {
 	getPublicFolder,
 	readFileSync,
 } from "../lib/io";
-import dynamic from "next/dynamic";
-import MDContent from "../components/MDContentData";
-import FolderTree from "../components/FolderTree";
-import { SearchBar } from "../components/Search";
+import { TreeData, getFlattenArray } from "../lib/markdown";
+import { SearchData, getSearchIndex } from "../lib/search";
+import { getAllContentFilePaths, getDirectoryData, toSlug } from "../lib/slug";
 
 // TODO make customizable
 // FIXME This should be a string field, but I don't know to avoid init error

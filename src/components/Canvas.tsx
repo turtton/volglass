@@ -7,7 +7,7 @@ import ReactFlow, {
 	Node,
 	Position,
 } from "reactflow";
-import LinkNode, { LinkData, PositionData } from "./LinkNode";
+import { P, match } from "ts-pattern";
 import {
 	CanvasData,
 	CanvasEdge,
@@ -15,7 +15,7 @@ import {
 	NodeSide,
 	NodeText,
 } from "volglass-backend";
-import { match, P } from "ts-pattern";
+import LinkNode, { LinkData, PositionData } from "./LinkNode";
 
 // The class name has to be defined without interpolation at compile time
 // so tailwind will be able to see and not strip it from production css
@@ -28,7 +28,7 @@ const NODE_STYLES = {
 	"4": "bg-green-400/50 border-green-400",
 	"5": "bg-cyan-400/50 border-cyan-400",
 	"6": "bg-violet-500/50 border-violet-500",
-}
+};
 
 const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 	const nodes = canvas.nodes.map(
@@ -65,7 +65,7 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 			sourceHandle: convertSideData(edge.fromSide),
 			target: edge.toNode,
 			targetHandle: convertSideData(edge.toSide),
-			labelBgStyle: {opacity: 0.5},
+			labelBgStyle: { opacity: 0.5 },
 			label: edge.label,
 		}),
 	);
@@ -108,8 +108,8 @@ const findTargetSide = (targetNode: string, edges: CanvasEdge[]) =>
 			edge.toNode === targetNode
 				? { position: convertSideData(edge.toSide), type: "target" }
 				: edge.fromNode === targetNode
-				? { position: convertSideData(edge.fromSide), type: "source" }
-				: null,
+				  ? { position: convertSideData(edge.fromSide), type: "source" }
+				  : null,
 		)
 		.filter((side) => side !== null)
 		.filter((side, i, array) => array.indexOf(side) === i)

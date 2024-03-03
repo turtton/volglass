@@ -1,14 +1,14 @@
-import React, { CSSProperties, useEffect, useState } from "react";
 // import cytoscape from 'cytoscape';
 // import cola from 'cytoscape-cola';
 import { useRouter } from "next/router";
+import React, { CSSProperties, useEffect, useState } from "react";
 
-import CytoscapeComponent from "react-cytoscapejs";
+import { PaletteMode } from "@mui/material";
 import { Core } from "cytoscape";
+import CytoscapeComponent from "react-cytoscapejs";
 import { LocalGraphData } from "../lib/graph";
 import { TreeData } from "../lib/markdown";
 import { useCurrentTheme } from "./ThemeSwitcher";
-import { PaletteMode } from "@mui/material";
 
 const layout = {
 	name: "circle",
@@ -29,9 +29,7 @@ const layout = {
 	// animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
 	ready: undefined, // callback on layoutready
 	stop: undefined, // callback on layoutstop
-	transform: function (node, position) {
-		return position;
-	}, // transform a given node position. Useful for changing flow direction in discrete layouts
+	transform: (node, position) => position, // transform a given node position. Useful for changing flow direction in discrete layouts
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

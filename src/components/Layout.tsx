@@ -1,7 +1,7 @@
-import { useCurrentTheme } from "./ThemeSwitcher";
-import { useMemo } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useMemo } from "react";
+import { useCurrentTheme } from "./ThemeSwitcher";
 
 export default function Layout({ children }): JSX.Element {
 	const currentTheme = useCurrentTheme();

@@ -12,8 +12,8 @@
     "build:kotlinnd": "cd kotlin && ./gradlew build --stacktrace --no-daemon",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push",
-    "format": "rome format --write src *.js && rome check --apply src *.js",
-    "lint": "rome check src *.js",
+    "format": "pnpm dlx @biomejs/biome check --apply src *.js",
+    "lint": "pnpm dlx @biomejs/biome check src *.js",
     "export": "next export"
   },
   "dependencies": {
@@ -57,7 +57,7 @@
     "autoprefixer": "^10.4.13",
     "cytoscape": "^3.17.0",
     "postcss": "^8.4.21",
-    "rome": "^12.0.0",
+    "@biomejs/biome": "^1.0.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^5.0.0"
   },

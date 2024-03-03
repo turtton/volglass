@@ -1,8 +1,8 @@
-import { styled } from "@mui/material/styles";
 import { FormControlLabel, PaletteMode, Switch } from "@mui/material";
-import { useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { useEffect } from "react";
 
 export default function ThemeSwitcher(): JSX.Element {
 	const currentMode = useCurrentTheme();

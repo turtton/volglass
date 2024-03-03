@@ -1,6 +1,6 @@
 export const Transformer = {
 	/* Normalize File Names */
-	normalizeFileName: function (filename: string) {
+	normalizeFileName: (filename: string) => {
 		let processedFileName = filename.replace(".md", "");
 		processedFileName = processedFileName.replace("(", "").replace(")", "");
 		processedFileName = processedFileName.split(" ").join("-");
@@ -19,23 +19,22 @@ export const Transformer = {
 			["Ö", "O"],
 			["Ğ", "G"],
 		];
-		conversionLetters.forEach((letterPair) => {
+		for (const letterPair of conversionLetters) {
 			processedFileName = processedFileName
 				.split(letterPair[0])
 				.join(letterPair[1]);
 			// processedFileName = processedFileName.replace(letterPair[0], letterPair[1])
-		});
+		}
 		// console.log("filename", processedFileName)
 		return processedFileName;
 	},
 	/* Parse file name from path then sanitize it */
-	parseFileNameFromPath: function (filepath: string): string | null {
+	parseFileNameFromPath: (filepath: string): string | null => {
 		if (filepath.includes("/")) {
 			const splitPath = filepath.split("/");
 			const parsedFileFromPath = splitPath[splitPath.length - 1];
 			return parsedFileFromPath.replace(".md", "");
-		} else {
-			return null;
 		}
+		return null;
 	},
 };

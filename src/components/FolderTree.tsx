@@ -1,11 +1,11 @@
-import * as React from "react";
-import { TreeView } from "@mui/x-tree-view/TreeView";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { TreeItem } from "@mui/x-tree-view/TreeItem";
-import { useRouter } from "next/router";
-import { TreeData } from "../lib/markdown";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box, Typography } from "@mui/material";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+import { TreeView } from "@mui/x-tree-view/TreeView";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { TreeData } from "../lib/markdown";
 
 const FileNameElement: (props: { name: string }) => JSX.Element = ({
 	name,

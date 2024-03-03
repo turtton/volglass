@@ -21,24 +21,23 @@ export function convertTreeData(thisObject: DirectoryTree): TreeData {
 	};
 
 	if (thisObject.children != null && thisObject.children.length > 0) {
-		thisObject.children.forEach((aChild) => {
+		for (const aChild of thisObject.children) {
 			const newChild = convertTreeData(aChild);
 			children.push(newChild);
-		});
-		return newObject;
-	} else {
+		}
 		return newObject;
 	}
+	return newObject;
 }
 
 function flat(array: TreeData[]): TreeData[] {
 	let result: TreeData[] = [];
-	array.forEach(function (a) {
+	for (const a of array) {
 		result.push(a);
 		if (Array.isArray(a.children)) {
 			result = result.concat(flat(a.children));
 		}
-	});
+	}
 	return result;
 }
 

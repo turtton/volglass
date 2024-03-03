@@ -1,8 +1,8 @@
-import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile } from "./io";
 import directoryTree from "directory-tree";
-import { convertTreeData, TreeData } from "./markdown";
-import { Transformer } from "./transformer";
 import { FIRST_PAGE } from "../pages/[...id]";
+import { getAllMarkdownFiles, getFiles, getMarkdownFolder, isFile } from "./io";
+import { TreeData, convertTreeData } from "./markdown";
+import { Transformer } from "./transformer";
 
 interface SlugMap extends Map<string, string> {
 	index: string;
@@ -23,7 +23,7 @@ export function getSlugHashMap(): Map<string, string> {
 	// is not SEO-friendly and make url look ugly ==> I chose this
 
 	const slugMap = new Map<string, string>() as SlugMap;
-	getAllMarkdownFiles().forEach((aFile) => {
+	for (const aFile of getAllMarkdownFiles()) {
 		const aSlug = toSlug(aFile);
 		// if (slugMap.has(aSlug)) {
 		//     slugMap[aSlug].push(aFile)
@@ -32,7 +32,7 @@ export function getSlugHashMap(): Map<string, string> {
 		// }
 		// Note: [Future improvement] Resolve conflict
 		slugMap.set(aSlug, aFile);
-	});
+	}
 
 	const firstMd = `${FIRST_PAGE()}.md`;
 	slugMap.set(FIRST_PAGE(), `${getMarkdownFolder()}/${firstMd}`);
@@ -55,10 +55,9 @@ export function toSlug(filePath: string): string {
 			.replace(getMarkdownFolder(), "")
 			.replaceAll(" ", "+")
 			.replace(".md", "");
-	} else {
-		// TODO handle this properly
-		return "/";
 	}
+	// TODO handle this properly
+	return "/";
 }
 
 export function getAllContentFilePaths(): string[] {

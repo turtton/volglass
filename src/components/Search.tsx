@@ -1,11 +1,11 @@
 import { TextField } from "@mui/material";
 import Fuse from "fuse.js";
 import IFuseOptions = Fuse.IFuseOptions;
-import { SearchData } from "../lib/search";
-import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
-import { isJapanese, toRomaji } from "wanakana";
+import { Dispatch, SetStateAction, useState } from "react";
 import { match } from "ts-pattern";
+import { isJapanese, toRomaji } from "wanakana";
+import { SearchData } from "../lib/search";
 
 interface SearchProp {
 	index: readonly SearchData[];
@@ -109,8 +109,7 @@ function ResultList({
 					</li>
 				) : (
 					contents.map((data) => (
-						// TODO Implement onKeyDown event
-						// rome-ignore lint: lint/a11y.useKeyWithClickEvents
+						// biome-ignore lint: lint/a11y.useKeyWithClickEvents
 						<li
 							key={data.rawTitle}
 							className="inline-flex w-full px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -129,7 +128,11 @@ function ResultList({
 								setMouseOvering(false);
 							}}
 						>
-							<button className="w-full truncate" key={data.title}>
+							<button
+								className="w-full truncate"
+								key={data.title}
+								type="button"
+							>
 								<p className="w-full truncate text-left underline">
 									{data.title}
 								</p>
