@@ -1,7 +1,7 @@
 buildscript {
     configurations.classpath {
         resolutionStrategy {
-            val ktlintVersion = "0.48.0"
+            val ktlintVersion = "0.50.0"
             force(
                 // "com.pinterest.ktlint:ktlint-rule-engine:$ktlintVersion",
                 // "com.pinterest.ktlint:ktlint-rule-engine-core:$ktlintVersion",
@@ -12,9 +12,9 @@ buildscript {
     }
 }
 plugins {
-    kotlin("multiplatform") version "1.8.22"
-    kotlin("plugin.serialization") version "1.8.22"
-    id("org.jmailen.kotlinter") version "3.15.0"
+    kotlin("multiplatform") version "1.9.22"
+    kotlin("plugin.serialization") version "1.9.22"
+    id("org.jmailen.kotlinter") version "3.16.0"
 }
 
 group = "net.turtton"
@@ -45,21 +45,21 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains:markdown:0.4.1")
+                implementation("org.jetbrains:markdown:0.6.1")
             }
         }
         val jsMain by getting {
             dependencies {
-                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.565"))
+                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.707"))
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
 
-                implementation("io.github.xxfast:kstore:0.6.0")?.version?.also {
+                implementation("io.github.xxfast:kstore:0.7.1")?.version?.also {
                     implementation("io.github.xxfast:kstore-file:$it")
                 }
 
