@@ -32,7 +32,7 @@ export function getSearchIndex(): SearchData[] {
 		if (content === null || content === undefined) {
 			break;
 		}
-		const path = getRouterPath(`${title}.md`);
+		const path = getRouterPath(markdownFile);
 		if (path === null) {
 			break;
 		}

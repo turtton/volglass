@@ -12,11 +12,11 @@ export function convertTreeData(thisObject: DirectoryTree): TreeData {
 	const children: TreeData[] = [];
 
 	const objectName = thisObject.name;
-	const routerPath = getRouterPath(objectName);
+	const routerPath = getRouterPath(thisObject.path);
 	const newObject: TreeData = {
 		name: objectName.replace(".md", ""),
 		children,
-		id: objectName,
+		id: routerPath ?? objectName,
 		routePath: routerPath,
 	};
 
