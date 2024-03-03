@@ -17,17 +17,25 @@ object CanvasEdgeSerializer : KSerializer<CanvasEdge> {
         val fromSide = NodeSide.valueOf(surrogate.fromSide.uppercase())
         val toSide = NodeSide.valueOf(surrogate.toSide.uppercase())
         return surrogate.run {
-            CanvasEdge(id, fromNode, fromSide, toNode, toSide)
+            CanvasEdge(id, fromNode, fromSide, toNode, toSide, color, label)
         }
     }
 
     override fun serialize(encoder: Encoder, value: CanvasEdge) {
         val surrogate = value.run {
-            CanvasEdgeSurrogate(id, fromNode, fromSide.name.lowercase(), toNode, toSide.name.lowercase())
+            CanvasEdgeSurrogate(id, fromNode, fromSide.name.lowercase(), toNode, toSide.name.lowercase(), color, label)
         }
         CanvasEdgeSurrogate.serializer().serialize(encoder, surrogate)
     }
 
     @Serializable
-    data class CanvasEdgeSurrogate(val id: String, val fromNode: String, val fromSide: String, val toNode: String, val toSide: String)
+    data class CanvasEdgeSurrogate(
+        val id: String,
+        val fromNode: String,
+        val fromSide: String,
+        val toNode: String,
+        val toSide: String,
+        val color: String? = null,
+        val label: String? = null,
+    )
 }

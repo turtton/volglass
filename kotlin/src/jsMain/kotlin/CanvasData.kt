@@ -28,11 +28,11 @@ data class CanvasData(val nodes: Array<CanvasNode>, val edges: Array<CanvasEdge>
 
 @JsExport
 @Serializable(CanvasNodeSerializer::class)
-data class CanvasNode(val id: String, val x: Int, val y: Int, val width: Int, val height: Int, val nodeData: NodeData)
+data class CanvasNode(val id: String, val x: Int, val y: Int, val width: Int, val height: Int, val nodeData: NodeData, val color: String?)
 
 @JsExport
 @Serializable(CanvasEdgeSerializer::class)
-data class CanvasEdge(val id: String, val fromNode: String, val fromSide: NodeSide, val toNode: String, val toSide: NodeSide)
+data class CanvasEdge(val id: String, val fromNode: String, val fromSide: NodeSide, val toNode: String, val toSide: NodeSide, val color: String?, val label: String?)
 
 @JsExport
 sealed interface NodeData

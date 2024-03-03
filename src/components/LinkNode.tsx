@@ -8,6 +8,7 @@ export interface LinkData {
 	positions: PositionData[];
 	width: number;
 	height: number;
+	color?: string;
 }
 
 export interface PositionData {
@@ -18,12 +19,13 @@ export interface PositionData {
 function LinkNode({ data, isConnectable }: NodeProps<LinkData>) {
 	const router = useRouter();
 	const Content = data.contentHtml;
+	const className = `block link-node rounded-md border-2 ${data.color} m-2 p-4 overflow-auto hover:overflow-scroll`;
 	return (
 		<>
 			{/* TODO Implement onKeyDown event
 									 rome-ignore lint: lint/a11y.useKeyWithClickEvents*/}
 			<div
-				className="block link-node border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-background-primary m-2 p-4 overflow-auto hover:overflow-scroll"
+				className={className}
 				style={{ width: data.width, height: data.height }}
 				onClick={() => {
 					if (data.slug !== undefined) {

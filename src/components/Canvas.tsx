@@ -17,6 +17,19 @@ import {
 } from "volglass-backend";
 import { match, P } from "ts-pattern";
 
+// The class name has to be defined without interpolation at compile time
+// so tailwind will be able to see and not strip it from production css
+// TODO: support edge colors
+const NODE_STYLES = {
+	"0": "bg-gray-500/50 border-gray-500",
+	"1": "bg-red-600/50 border-red-600",
+	"2": "bg-orange-500/50 border-orange-500",
+	"3": "bg-yellow-300/50 border-yellow-300",
+	"4": "bg-green-400/50 border-green-400",
+	"5": "bg-cyan-400/50 border-cyan-400",
+	"6": "bg-violet-500/50 border-violet-500",
+}
+
 const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 	const nodes = canvas.nodes.map(
 		(node): Node<LinkData> => ({
@@ -32,6 +45,7 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 					positions: findTargetSide(node.id, canvas.edges),
 					width: node.width,
 					height: node.height,
+					color: NODE_STYLES[node.color || "0"],
 				}))
 				.with(P.instanceOf(NodeFile), (nodeFile: NodeFile) => ({
 					slug: `/${nodeFile.file}`.replace(".md", ""),
@@ -39,6 +53,7 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 					positions: findTargetSide(node.id, canvas.edges),
 					width: node.width,
 					height: node.height,
+					color: NODE_STYLES[node.color || "0"],
 				}))
 				.run(),
 		}),
@@ -50,6 +65,8 @@ const Canvas = (canvas: CanvasData, readContent: (id: string) => FC) => () => {
 			sourceHandle: convertSideData(edge.fromSide),
 			target: edge.toNode,
 			targetHandle: convertSideData(edge.toSide),
+			labelBgStyle: {opacity: 0.5},
+			label: edge.label,
 		}),
 	);
 	const nodeTypes = useMemo(
