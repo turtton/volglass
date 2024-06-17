@@ -6,6 +6,7 @@
 /.yarn
 /kotlin/jflex*.jar
 /tsconfig.tsbuildinfo
+/.direnv
 
 # dependencies
 /node_modules

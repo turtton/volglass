@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json pnpm-lock.yaml* ./
-RUN yarn global add pnpm && pnpm i
+RUN corepack enable && pnpm i
 
 FROM gradle:8.6.0-jdk11 AS kdeps
 WORKDIR /app
@@ -35,7 +35,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn global add pnpm && pnpm run buildnd
+RUN corepack enable && pnpm run buildnd
 
 # If using npm comment out above and use below instead
 # RUN npm run build
