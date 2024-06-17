@@ -27,8 +27,8 @@ dependencies:
     specifier: latest
     version: 6.17.0(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.4)(@mui/system@5.15.20)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
   '@types/wanakana':
-    specifier: ^4.0.3
-    version: 4.0.6
+    specifier: ^5.0.0
+    version: 5.3.0
   directory-tree:
     specifier: ^3.2.2
     version: 3.5.1
@@ -1397,8 +1397,11 @@ packages:
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
     dev: true
 
-  /@types/wanakana@4.0.6:
-    resolution: {integrity: sha512-al8hJELQI+RDcexy6JLV/BqghQ/nP0B9d62m0F3jEvPyxAq9RXFH9xDoGa73oT9/keCUKRxWCA6l37wv4TCfQw==}
+  /@types/wanakana@5.3.0:
+    resolution: {integrity: sha512-BDC8f0v/fcLxGx77e9vQtbRK/RZVPDSLYwE21Rt3LEqVuofjT9c0RU6yCh/SGqXpSAMNzKnfXPYaylmQ53q1YA==}
+    deprecated: This is a stub types definition. wanakana provides its own type definitions, so you do not need this installed.
+    dependencies:
+      wanakana: 5.3.1
     dev: false
 
   /@ungap/structured-clone@1.2.0:

@@ -24,7 +24,7 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@mui/x-tree-view": "latest",
-    "@types/wanakana": "^4.0.3",
+    "@types/wanakana": "^5.0.0",
     "directory-tree": "^3.2.2",
     "fs": "^0.0.1-security",
     "fuse.js": "^6.6.2",
