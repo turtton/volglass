@@ -12,8 +12,8 @@
     "build:kotlinnd": "cd kotlin && ./gradlew build --stacktrace --no-daemon",
     "start": "next start",
     "deploy": "pnpm build && git add . && git commit -m '...' && git push",
-    "format": "pnpm dlx @biomejs/biome check --apply src *.js",
-    "lint": "pnpm dlx @biomejs/biome check src *.js",
+    "format": "pnpm biome check --apply src *.js",
+    "lint": "pnpm biome check src *.js",
     "export": "next export"
   },
   "dependencies": {
@@ -22,8 +22,8 @@
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
-    "@mui/x-tree-view": "latest",
     "@mui/material": "latest",
+    "@mui/x-tree-view": "latest",
     "@types/wanakana": "^4.0.3",
     "directory-tree": "^3.2.2",
     "fs": "^0.0.1-security",
@@ -32,6 +32,7 @@
     "jotai": "^2.0.1",
     "katex": "^0.16.4",
     "mermaid": "^10.0.2",
+    "natural-compare": "^1.4.0",
     "next": "^13.0.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
@@ -44,10 +45,12 @@
     "wanakana": "^5.0.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@types/babel__core": "^7.20.0",
     "@types/cytoscape": "^3.19.9",
     "@types/d3": "^7.0.0",
     "@types/katex": "^0.16.0",
+    "@types/natural-compare": "^1.4.3",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
     "@types/react-cytoscapejs": "^1.2.2",
@@ -57,7 +60,6 @@
     "autoprefixer": "^10.4.13",
     "cytoscape": "^3.17.0",
     "postcss": "^8.4.21",
-    "@biomejs/biome": "1.5.3",
     "tailwindcss": "^3.2.4",
     "typescript": "^5.0.0"
   },

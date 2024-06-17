@@ -76,6 +76,7 @@ export function getAllSlugs(): string[] {
 export function getDirectoryData(): TreeData {
 	const filteredDirectory = directoryTree(getMarkdownFolder(), {
 		exclude: /.gitkeep/g,
+		attributes: ["type"],
 	});
 	return convertTreeData(filteredDirectory);
 }

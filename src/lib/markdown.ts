@@ -7,6 +7,7 @@ export interface TreeData {
 	children: TreeData[];
 	id: string;
 	routePath: string | null;
+	objectType: "file" | "directory";
 }
 
 export function convertTreeData(thisObject: DirectoryTree): TreeData {
@@ -19,6 +20,7 @@ export function convertTreeData(thisObject: DirectoryTree): TreeData {
 		children,
 		id: thisObject.path.replace(getMarkdownFolder(), ""),
 		routePath: routerPath,
+		objectType: thisObject.type,
 	};
 
 	if (thisObject.children != null && thisObject.children.length > 0) {

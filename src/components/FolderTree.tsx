@@ -3,8 +3,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box, Typography } from "@mui/material";
 import { TreeItem } from "@mui/x-tree-view/TreeItem";
 import { TreeView } from "@mui/x-tree-view/TreeView";
+import naturalCompare from "natural-compare";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useMemo } from "react";
 import { TreeData } from "../lib/markdown";
 
 const FileNameElement: (props: { name: string }) => JSX.Element = ({
@@ -23,12 +25,30 @@ const FileNameElement: (props: { name: string }) => JSX.Element = ({
 	</Typography>
 );
 
+function sortTreeDataArray(treeDataArray: TreeData[]): TreeData[] {
+	return treeDataArray.sort((prev, next) => {
+		if (prev.objectType === next.objectType) {
+			const prevName = prev.name;
+			const nextName = next.name;
+			return (
+				naturalCompare(prevName.toLowerCase(), nextName.toLowerCase()) ||
+				naturalCompare(prevName, nextName)
+			);
+		}
+		return prev.objectType === "directory" ? -1 : 1;
+	});
+}
+
 export default function FolderTree(props: {
 	onNodeSelect?: () => void;
 	tree: TreeData;
 	flattenNodes: TreeData[];
 }): JSX.Element {
 	const renderTree = (nodes: TreeData): JSX.Element => {
+		const children = useMemo(
+			() => sortTreeDataArray(nodes.children),
+			[nodes.children],
+		);
 		const dotSplit = nodes.name.split(".");
 		let extension: string | undefined;
 		if (dotSplit.length > 1) {
@@ -64,7 +84,7 @@ export default function FolderTree(props: {
 				}
 				className="dark:text-gray-200"
 			>
-				{nodes.children.map((node) => renderTree(node))}
+				{children.map((node) => renderTree(node))}
 			</TreeItem>
 		);
 	};
