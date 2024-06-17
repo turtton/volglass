@@ -30,7 +30,7 @@ dependencies:
     specifier: ^4.0.3
     version: 4.0.6
   directory-tree:
-    specifier: 3.5.1
+    specifier: ^3.2.2
     version: 3.5.1
   fs:
     specifier: ^0.0.1-security
