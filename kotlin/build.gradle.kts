@@ -14,7 +14,7 @@ buildscript {
 plugins {
     kotlin("multiplatform") version "1.9.25"
     kotlin("plugin.serialization") version "1.9.25"
-    id("org.jmailen.kotlinter") version "3.16.0"
+    id("org.jmailen.kotlinter") version "4.5.0"
 }
 
 group = "net.turtton"
