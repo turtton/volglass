@@ -50,14 +50,14 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.845"))
+                implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.854"))
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 
                 implementation("io.github.xxfast:kstore:0.9.1")?.version?.also {
                     implementation("io.github.xxfast:kstore-file:$it")
