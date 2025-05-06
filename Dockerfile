@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 RUN corepack enable && pnpm i
 
-FROM gradle:8.12.0-jdk11 AS kdeps
+FROM gradle:8.14.0-jdk11 AS kdeps
 WORKDIR /app
 COPY kotlin/*gradle* kotlin/kotlin-js-store ./kotlin/
 WORKDIR /app/kotlin
