@@ -43,7 +43,7 @@ dependencies:
     version: 9.0.5
   jotai:
     specifier: ^2.0.1
-    version: 2.12.3(@types/react@18.3.21)(react@18.3.1)
+    version: 2.12.4(@types/react@18.3.21)(react@18.3.1)
   katex:
     specifier: ^0.16.4
     version: 0.16.22
@@ -76,7 +76,7 @@ dependencies:
     version: 4.9.0
   ts-pattern:
     specifier: ^5.0.0
-    version: 5.7.0
+    version: 5.7.1
   volglass-backend:
     specifier: link:kotlin/build/dist/js/productionLibrary
     version: link:kotlin/build/dist/js/productionLibrary
@@ -105,7 +105,7 @@ devDependencies:
     version: 1.4.3
   '@types/node':
     specifier: ^20.0.0
-    version: 20.17.40
+    version: 20.17.47
   '@types/react':
     specifier: ^18.0.27
     version: 18.3.21
@@ -1374,8 +1374,8 @@ packages:
     resolution: {integrity: sha512-XCAxy+Gg6+S6VagwzcknnvCKujj/bVv1q+GFuCrFEelqaZPqJoC+FeXLwc2dp+oLP7qDZQ4ZfQiTJQ9sIUmlLw==}
     dev: true
 
-  /@types/node@20.17.40:
-    resolution: {integrity: sha512-XNlderXNxSooRdgQFCX2aYoRtHhbUK86Iogm4T7c+pWHbYfVz5frT8ywZ94kXoMjC0f7EReLRiM0tGNtcxXOIA==}
+  /@types/node@20.17.47:
+    resolution: {integrity: sha512-3dLX0Upo1v7RvUimvxLeXqwrfyKxUINk0EAM83swP2mlSUcwV73sZy8XhNz8bcZ3VbsfQyC/y6jRdL5tgCNpDQ==}
     dependencies:
       undici-types: 6.19.8
     dev: true
@@ -2448,8 +2448,8 @@ packages:
     hasBin: true
     dev: true
 
-  /jotai@2.12.3(@types/react@18.3.21)(react@18.3.1):
-    resolution: {integrity: sha512-DpoddSkmPGXMFtdfnoIHfueFeGP643nqYUWC6REjUcME+PG2UkAtYnLbffRDw3OURI9ZUTcRWkRGLsOvxuWMCg==}
+  /jotai@2.12.4(@types/react@18.3.21)(react@18.3.1):
+    resolution: {integrity: sha512-eFXLJol4oOLM8BS1+QV+XwaYQITG8n1tatBCFl4F5HE3zR5j2WIK8QpMt7VJIYmlogNUZfvB7wjwLoVk+umB9Q==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -3508,8 +3508,8 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-pattern@5.7.0:
-    resolution: {integrity: sha512-0/FvIG4g3kNkYgbNwBBW5pZBkfpeYQnH+2AA3xmjkCAit/DSDPKmgwC3fKof4oYUq6gupClVOJlFl+939VRBMg==}
+  /ts-pattern@5.7.1:
+    resolution: {integrity: sha512-EGs8PguQqAAUIcQfK4E9xdXxB6s2GK4sJfT/vcc9V1ELIvC4LH/zXu2t/5fajtv6oiRCxdv7BgtVK3vWgROxag==}
     dev: false
 
   /tslib@2.8.1:
