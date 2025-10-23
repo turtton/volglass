@@ -13,7 +13,7 @@ buildscript {
 }
 plugins {
     kotlin("multiplatform") version "1.9.25"
-    kotlin("plugin.serialization") version "1.9.25"
+    kotlin("plugin.serialization") version "2.2.21"
     id("org.jmailen.kotlinter") version "3.16.0"
 }
 
