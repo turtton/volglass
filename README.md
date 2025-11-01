@@ -1,4 +1,10 @@
 ## Volglass
+
+> [!WARNING]
+> This project archived.  
+> Initially, I created this project in March 2024 because I needed a self-hosted publishing solution that featured a file explorer view. 
+> Nowdays, I highly recommend [Quartz](https://quartz.jzhao.xyz/features/explorer) as a much better solution.
+
 Volglass is a fork of [MindStone(digital-garden)](https://github.com/TuanManhCao/digital-garden)
 
 It is this project's goal to assist publishing your Obsidian contents.
